@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const ServiceDetails = new Schema({
+const Service = new Schema({
     service_details_id: {
         type: String,
         required: true
@@ -10,4 +10,7 @@ const ServiceDetails = new Schema({
     closed_at: String
 })
 
-module.exports = mongoose.model('service_details', ServiceDetails)
+module.exports = {
+    Schema: Service,
+    ServiceModel: mongoose.model('Service', Service)
+}

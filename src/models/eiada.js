@@ -15,4 +15,7 @@ const Eiada = new Schema({
     specializations_ids: [String]
 })
 
-module.exports = mongoose.model('eiada', Eiada)
+module.exports = {
+    Schema: Eiada,
+    EiadaModel: mongoose.model('Eiada', Eiada)
+}

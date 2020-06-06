@@ -15,7 +15,7 @@ const Patient = new Schema({
         unique: true
     },
     phone: {
-        type: Number,
+        type: String,
         maxlength: 11,
         minlength: 11,
         trim: true,
@@ -37,4 +37,7 @@ const Patient = new Schema({
     }
 })
 
-module.exports = mongoose.model('patient', Patient)
+module.exports = {
+    Schema: Patient,
+    PatientModel: mongoose.model('Patient', Patient)
+}

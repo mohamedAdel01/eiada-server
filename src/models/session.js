@@ -32,4 +32,7 @@ const Session = new Schema({
     total: Number
 })
 
-module.exports = mongoose.model('session', Session)
+module.exports = {
+    Schema: Session,
+    SessionModel: mongoose.model('Session', Session)
+}

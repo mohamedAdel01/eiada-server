@@ -17,4 +17,7 @@ const ServiceDetails = new Schema({
     }
 })
 
-module.exports = mongoose.model('service_details', ServiceDetails)
+module.exports = {
+    Schema: ServiceDetails,
+    ServiceDetailsModel: mongoose.model('ServiceDetails', ServiceDetails)
+}

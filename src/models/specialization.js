@@ -10,12 +10,10 @@ const Specialization = new Schema({
         type: String,
         unique: true,
         required: true
-    },
-    price: {
-        type: Number,
-        required: true
-    },
-    
+    }
 })
 
-module.exports = mongoose.model('specialization', Specialization)
+module.exports = {
+    Schema: Specialization,
+    SpecializationModel: mongoose.model('Specialization', Specialization)
+}

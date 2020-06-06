@@ -6,6 +6,8 @@ mongoose.connect(process.env.MONGO_URI + process.env.DB_NAME, {
     useCreateIndex: true
 })
 
+// require('./dummy')
+
 mongoose.Promise = global.Promise
 mongoose.connection.once('open', function (err) {
     if (err) {
