@@ -12,7 +12,8 @@ const Eiada = new Schema({
     },
     location: String,
     logo: String,
-    specializations_ids: [String]
+    specializations_ids: [String],
+    theme_settings: String
 })
 
 module.exports = {

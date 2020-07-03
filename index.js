@@ -3,7 +3,6 @@ const express = require('express')
 const graphqlHTTP = require('express-graphql')
 const cors = require('cors')
 require('dotenv').config()
-const eiadaModel =  require('./src/models/eiada')
 // const schema = require('./src/graphQL/schema')
 
 // import database config
