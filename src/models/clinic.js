@@ -1,12 +1,19 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const Eiada = new Schema({
-    name: {
+const Clinic = new Schema({
+    clinic_name: {
         type: String,
         required: true
     },
-    owener_id: {
+    clinic_phone: {
+        type: String,
+        maxlength: 11,
+        minlength: 11,
+        trim: true,
+        unique: true
+    },
+    owner_id: {
         type: String,
         required: true
     },
@@ -17,6 +24,6 @@ const Eiada = new Schema({
 })
 
 module.exports = {
-    Schema: Eiada,
-    EiadaModel: mongoose.model('Eiada', Eiada)
+    Schema: Clinic,
+    ClinicModel: mongoose.model('Clinic', Clinic)
 }
