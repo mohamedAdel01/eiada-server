@@ -20,7 +20,7 @@ const ClinicType = new GraphQLObjectType({
         owener: {
             type: UserType,
             resolve(parent, args) {
-                return user.userModal.findById(parent.owener_id)
+                return user.findById(parent.owener_id)
             }
         },
 
@@ -40,13 +40,13 @@ const UserType = new GraphQLObjectType({
         role: {
             type: RoleType,
             resolve(parent, args) {
-                return role.roleModal.findById(parent.role_id)
+                return role.findById(parent.role_id)
             }
         },
         specialization: {
             type: SpecializationType,
             resolve(parent, args) {
-                return specialization.specializationModal.findById(parent.specialization_id)
+                return specialization.findById(parent.specialization_id)
             }
         },
 

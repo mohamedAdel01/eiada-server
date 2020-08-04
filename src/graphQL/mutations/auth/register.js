@@ -20,7 +20,7 @@ const RegisterMutation = {
         specializations_ids: { type: new GraphQLList(GraphQLString) },
     },
     async resolve(parent, args) {
-        let userObj = new user.UserModel({
+        let userObj = new user({
             name: args.name,
             email: args.email,
             phone: args.phone,
@@ -30,7 +30,7 @@ const RegisterMutation = {
 
 
         await userObj.save().then(async savedUser => {
-            let clinicObj = new clinic.ClinicModel({
+            let clinicObj = new clinic({
                 owner_id: savedUser._id,
                 clinic_name: args.clinic_name,
                 clinic_phone: args.clinic_phone,

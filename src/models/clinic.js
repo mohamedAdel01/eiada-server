@@ -23,7 +23,4 @@ const Clinic = new Schema({
     theme_settings: String
 })
 
-module.exports = {
-    Schema: Clinic,
-    ClinicModel: mongoose.model('Clinic', Clinic)
-}
+module.exports = mongoose.model('Clinic', Clinic)

@@ -9,7 +9,4 @@ const Specialization = new Schema({
     }
 })
 
-module.exports = {
-    Schema: Specialization,
-    SpecializationModel: mongoose.model('Specialization', Specialization)
-}
+module.exports = mongoose.model('Specialization', Specialization)

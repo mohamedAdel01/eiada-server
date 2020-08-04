@@ -20,7 +20,4 @@ const Subscription = new Schema({
     }
 })
 
-module.exports = {
-    Schema: Subscription,
-    SubscriptionModel: mongoose.model('Subscription', Subscription)
-}
+module.exports = mongoose.model('Subscription', Subscription)

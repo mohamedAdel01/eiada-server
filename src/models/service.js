@@ -10,7 +10,4 @@ const Service = new Schema({
     closed_at: String
 })
 
-module.exports = {
-    Schema: Service,
-    ServiceModel: mongoose.model('Service', Service)
-}
+module.exports = mongoose.model('Service', Service)

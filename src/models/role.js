@@ -8,7 +8,4 @@ const Role = new Schema({
     }
 })
 
-module.exports = {
-    Schema: Role,
-    RoleModel: mongoose.model('Role', Role)
-}
+module.exports = mongoose.model('Role', Role)
