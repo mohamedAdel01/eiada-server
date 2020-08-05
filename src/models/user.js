@@ -4,7 +4,7 @@ const Schema = mongoose.Schema
 const User = new Schema({
     name: {
         type: String,
-        required: true,
+        required: [true, "Name is required"],
     },
     email: {
         type: String,
@@ -17,8 +17,8 @@ const User = new Schema({
     },
     phone: {
         type: String,
-        maxlength: [11, 'please type 11 numbers'],
-        minlength: [11, 'please type 11 numbers'],
+        maxlength: [11, 'Phone number must be 11 number'],
+        minlength: [11, 'Phone number must be 11 number'],
         trim: true,
         required: true,
         unique: true

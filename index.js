@@ -19,11 +19,12 @@ app.use('/graphql', graphqlHTTP({
     schema,
     graphiql: true,
     customFormatErrorFn(err) {
-        return {
-            message: err.message,
-            path: err.path,
-            customField: [],
-        };
+        // console.log('koooo',err)
+        // return {
+        //     message: err.message,
+        //     path: err.path,
+        //     customField: err.customField,
+        // };
     },
 }))
 

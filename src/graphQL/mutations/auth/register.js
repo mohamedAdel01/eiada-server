@@ -3,6 +3,7 @@ const { GraphQLInt, GraphQLID, GraphQLString, GraphQLList } = graphql
 
 // GRAPHQL TYPES
 const { RegisterType } = require('../../types/types')
+const RegisterValidateSchema = require('../../../validations/registerValidation')
 
 // MONGODB MODELS
 const clinic = require('../../../models/clinic')
@@ -21,6 +22,17 @@ const RegisterMutation = {
     },
 
     async resolve(parent, args) {
+        console.log('--------------------------------')
+        let ee = RegisterValidateSchema.validate(args).reduce((initial,item)=> {
+            initial.push({
+                key: item.path,
+                message: item.message
+            })
+            return initial
+        },[])
+        console.log(ee)
+        console.log('--------------------------------')
+
         // let userObj = new user({
         //     name: args.name,
         //     email: args.email,
@@ -42,10 +54,10 @@ const RegisterMutation = {
         //     await clinicObj.save()
         // })
 
-
-        // return {
-        //     message: "please activate your account"
-        // }
+        throw {
+            message: 'RegisterValidateSchema.validate(args).toString()',
+            customField: RegisterValidateSchema.validate(args).toString()
+        }
 
 
     }
