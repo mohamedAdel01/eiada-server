@@ -19,32 +19,33 @@ const RegisterMutation = {
         clinic_phone: { type: GraphQLString },
         specializations_ids: { type: new GraphQLList(GraphQLString) },
     },
+
     async resolve(parent, args) {
-        let userObj = new user({
-            name: args.name,
-            email: args.email,
-            phone: args.phone,
-            role_id: "1",
-            password: args.password
-        })
+        // let userObj = new user({
+        //     name: args.name,
+        //     email: args.email,
+        //     phone: args.phone,
+        //     role_id: "1",
+        //     password: args.password
+        // })
 
 
-        await userObj.save().then(async savedUser => {
-            let clinicObj = new clinic({
-                owner_id: savedUser._id,
-                clinic_name: args.clinic_name,
-                clinic_phone: args.clinic_phone,
-                specializations_ids: args.specializations_ids
-            })
+        // await userObj.save().then(async savedUser => {
+        //     let clinicObj = new clinic({
+        //         owner_id: savedUser._id,
+        //         clinic_name: args.clinic_name,
+        //         clinic_phone: args.clinic_phone,
+        //         specializations_ids: args.specializations_ids
+        //     })
 
 
-            await clinicObj.save()
-        })
+        //     await clinicObj.save()
+        // })
 
 
-        return {
-            message: "please activate your account"
-        }
+        // return {
+        //     message: "please activate your account"
+        // }
 
 
     }

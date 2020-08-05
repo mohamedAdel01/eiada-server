@@ -8,6 +8,13 @@ const user = require('../../models/user')
 const role = require('../../models/role')
 const specialization = require('../../models/specialization')
 
+const RegisterType = new GraphQLObjectType({
+    name: 'Register',
+    fields: () => ({
+        message: { type: GraphQLString }
+    })
+})
+
 const ClinicType = new GraphQLObjectType({
     name: 'Clinic',
     fields: () => ({
@@ -50,13 +57,6 @@ const UserType = new GraphQLObjectType({
             }
         },
 
-    })
-})
-
-const RegisterType = new GraphQLObjectType({
-    name: 'Register',
-    fields: () => ({
-        message: { type: GraphQLString }
     })
 })
 

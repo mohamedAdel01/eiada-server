@@ -81,6 +81,11 @@ bytes@3.1.0:
   resolved "https://registry.yarnpkg.com/bytes/-/bytes-3.1.0.tgz#f6cf7933a360e0588fa9fde85651cdc7f805d1f6"
   integrity sha512-zauLjrfCG+xvoyaqLoV8bLVXXNGC4JqlxFCutSDWA6fJrTo2ZuvLYTqZ7aHBLZSMOopbzwv8f+wZcVzfVTI2Dg==
 
+component-type@1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/component-type/-/component-type-1.2.1.tgz#8a47901700238e4fc32269771230226f24b415a9"
+  integrity sha1-ikeQFwAjjk/DIml3EjAibyS0Fak=
+
 content-disposition@0.5.3:
   version "0.5.3"
   resolved "https://registry.yarnpkg.com/content-disposition/-/content-disposition-0.5.3.tgz#e130caf7e7279087c5616c2007d0485698984fbd"
@@ -168,6 +173,11 @@ ee-first@1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/ee-first/-/ee-first-1.1.1.tgz#590c61156b0ae2f4f0255732a158b266bc56b21d"
   integrity sha1-WQxhFWsK4vTwJVcyoViyZrxWsh0=
+
+eivindfjeldstad-dot@0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/eivindfjeldstad-dot/-/eivindfjeldstad-dot-0.0.1.tgz#22fc976bfaf306e0839a31db8e8213480fafb893"
+  integrity sha1-IvyXa/rzBuCDmjHbjoITSA+vuJM=
 
 encodeurl@~1.0.2:
   version "1.0.2"
@@ -849,6 +859,11 @@ type-is@~1.6.17, type-is@~1.6.18:
     media-typer "0.3.0"
     mime-types "~2.1.24"
 
+typecast@0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/typecast/-/typecast-0.0.1.tgz#fffb75dcb6bdf1def8e293b6b6e893d6c1ed19de"
+  integrity sha1-//t13La98d744pO2tuiT1sHtGd4=
+
 unpipe@1.0.0, unpipe@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/unpipe/-/unpipe-1.0.0.tgz#b2bf4ee8514aae6165b4817829d21b2ef49904ec"
@@ -868,6 +883,15 @@ uuid@3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.1.0.tgz#3dd3d3e790abc24d7b0d3a034ffababe28ebbc04"
   integrity sha512-DIWtzUkw04M4k3bf1IcpS2tngXEL26YUD2M0tMDUpnUrz2hgzUBlD55a4FjdLGPvfHxS6uluGWvaVEqgBcVa+g==
+
+validate@^5.1.0:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/validate/-/validate-5.1.0.tgz#12d685e346067646cba491b27994ad98b6319fce"
+  integrity sha512-Y+vJv+xR3XsaQM8W1rQvwc6is/sgCUBv3lvNKc2DZ1HcVcEWAaHVSFB5uoxkQnw2riUq77Rg5nv1u8YuuSu/Zw==
+  dependencies:
+    component-type "1.2.1"
+    eivindfjeldstad-dot "0.0.1"
+    typecast "0.0.1"
 
 vary@^1, vary@~1.1.2:
   version "1.1.2"
