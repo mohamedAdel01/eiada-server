@@ -8,7 +8,7 @@ const User = new Schema({
     },
     email: {
         type: String,
-        required: true,
+        required: [true, "Email is required"],
         unique: true
     },
     password: {
@@ -17,8 +17,8 @@ const User = new Schema({
     },
     phone: {
         type: String,
-        maxlength: 11,
-        minlength: 11,
+        maxlength: [11, 'please type 11 numbers'],
+        minlength: [11, 'please type 11 numbers'],
         trim: true,
         required: true,
         unique: true

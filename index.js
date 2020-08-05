@@ -17,8 +17,16 @@ app.use(cors())
 // // graphql for handle requests
 app.use('/graphql', graphqlHTTP({
     schema,
-    graphiql: true
+    graphiql: true,
+    customFormatErrorFn(err) {
+        return {
+            message: err.message,
+            path: err.path,
+            customField: [],
+        };
+    },
 }))
+
 
 // listen to PORT
 app.listen(process.env.PORT || 3000, () => {
