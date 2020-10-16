@@ -12,13 +12,10 @@ const user = require('../../../models/user')
 const RegisterMutation = {
     type: RegisterType,
     args: {
-        name: { type: GraphQLString },
+        fullname: { type: GraphQLString },
         email: { type: GraphQLString },
         phone: { type: GraphQLString },
-        password: { type: GraphQLString },
-        clinic_name: { type: GraphQLString },
-        clinic_phone: { type: GraphQLString },
-        specializations_ids: { type: new GraphQLList(GraphQLString) },
+        password: { type: GraphQLString }
     },
 
     async resolve(parent, args) {

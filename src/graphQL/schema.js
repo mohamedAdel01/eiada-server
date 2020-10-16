@@ -2,25 +2,24 @@ const graphql = require('graphql')
 const { GraphQLObjectType, GraphQLSchema } = graphql
 
 // GRAPHQL QUERIES
-const { clinics } = require('./queries/clinic')
-
+const queries  = require('./queries')
 
 // MUTATIONS
-const Register = require('./mutations/auth/register')
+const mutations = require('./mutations')
 
 
 // GRAPHQL ROOT QUERY
 const RootQuery = new GraphQLObjectType({
   name: 'RootQueryType',
   fields: {
-    clinics: clinics
+    ...queries
   }
 })
 
 const Mutation = new GraphQLObjectType({
   name: 'Mutations',
   fields: {
-    register: Register
+    ...mutations
   }
 })
 

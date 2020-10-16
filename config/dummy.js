@@ -30,7 +30,7 @@ User.Schema.plugin(autoIncrement.plugin, 'User');
 new Eiada.EiadaModel({
     _id: 1,
     name: 'Soliman Clinic',
-    owener_id: 1,
+    owner_id: 1,
     location: 'Obour shabab',
     logo: 'https://www.logolynx.com/images/logolynx/67/670c86579275e651dc165d9eb9debe49.png',
     specializations_ids: [1,2,3]

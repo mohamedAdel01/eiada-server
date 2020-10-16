@@ -1,9 +1,9 @@
 const graphql = require('graphql')
 const { GraphQLObjectType, GraphQLList, GraphQLInt, GraphQLString, GraphQLID } = graphql
-const ObjectId = require('mongodb').ObjectID
+// const ObjectId = require('mongodb').ObjectID
 
 // MONGODB MODELS
-const clinic = require('../../models/clinic')
+// const clinic = require('../../models/clinic')
 const user = require('../../models/user')
 const role = require('../../models/role')
 const specialization = require('../../models/specialization')
@@ -19,18 +19,15 @@ const ClinicType = new GraphQLObjectType({
     name: 'Clinic',
     fields: () => ({
         id: { type: GraphQLID },
-        clinic_name: { type: GraphQLString },
-        clinic_phone: { type: GraphQLString },
-        location: { type: GraphQLString },
+        name: { type: GraphQLString },
         logo: { type: GraphQLString },
         theme_settings: { type: GraphQLString },
-        owener: {
+        owner: {
             type: UserType,
             resolve(parent, args) {
-                return user.findById(parent.owener_id)
+                return user.findById(parent.owner_id)
             }
-        },
-
+        }
     })
 })
 
@@ -38,7 +35,7 @@ const UserType = new GraphQLObjectType({
     name: 'User',
     fields: () => ({
         id: { type: GraphQLID },
-        name: { type: GraphQLString },
+        fullname: { type: GraphQLString },
         email: { type: GraphQLString },
         phone: { type: GraphQLString },
         image: { type: GraphQLString },
