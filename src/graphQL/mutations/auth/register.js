@@ -20,24 +20,29 @@ const RegisterMutation = {
 
     async resolve(parent, args) {
         console.log('--------------------------------')
-        let ee = RegisterValidateSchema.validate(args).reduce((initial,item)=> {
-            initial.push({
-                key: item.path,
-                message: item.message
-            })
-            return initial
-        },[])
-        console.log(ee)
+        // let ee = RegisterValidateSchema.validate(args).reduce((initial,item)=> {
+        //     initial.push({
+        //         key: item.path,
+        //         message: item.message
+        //     })
+        //     return initial
+        // },[])
+        // console.log(ee)
         console.log('--------------------------------')
 
-        // let userObj = new user({
-        //     name: args.name,
-        //     email: args.email,
-        //     phone: args.phone,
-        //     role_id: "1",
-        //     password: args.password
-        // })
+        let userObj = new user({
+            fullname: args.fullname,
+            email: args.email,
+            phone: args.phone,
+            password: args.password,
+            role_id: "1"
+        })
 
+        let user = await userObj.save()
+
+        return {
+            message: 'Welcome ' + user.fullname
+        }
 
         // await userObj.save().then(async savedUser => {
         //     let clinicObj = new clinic({
@@ -51,10 +56,10 @@ const RegisterMutation = {
         //     await clinicObj.save()
         // })
 
-        throw {
-            message: 'RegisterValidateSchema.validate(args).toString()',
-            customField: RegisterValidateSchema.validate(args).toString()
-        }
+        // throw {
+        //     message: 'RegisterValidateSchema.validate(args).toString()',
+        //     customField: RegisterValidateSchema.validate(args).toString()
+        // }
 
 
     }

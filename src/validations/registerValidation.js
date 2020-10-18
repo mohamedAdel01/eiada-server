@@ -1,7 +1,7 @@
 const Schema = require('validate')
 
 const Register = new Schema({
-    name: {
+    fullname: {
         type: String,
         required: true,
         length: { min: 3, max: 32 },
@@ -17,6 +17,21 @@ const Register = new Schema({
         message: {
             type: 'Email must be a string.',
             required: 'Email is required.'
+        }
+    },
+    phone: {
+        type: String,
+        required: true,
+        message: {
+            type: 'Phone must be a string.',
+            required: 'Phone is required.'
+        }
+    },
+    password: {
+        type: String,
+        required: true,
+        message: {
+            required: 'Password is required.'
         }
     }
 })
