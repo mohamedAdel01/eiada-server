@@ -19,6 +19,7 @@
     "mongoose": "^5.9.17",
     "mongoose-auto-increment": "^5.0.1",
     "mongoose-dummy": "^1.0.8",
-    "validate": "^5.1.0"
+    "validate": "^5.1.0",
+    "validator": "^13.1.17"
   }
 }

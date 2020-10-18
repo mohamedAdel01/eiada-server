@@ -1,5 +1,5 @@
 const graphql = require('graphql')
-const { GraphQLObjectType, GraphQLList, GraphQLInt, GraphQLString, GraphQLID } = graphql
+const { GraphQLObjectType, GraphQLList, GraphQLNonNull, GraphQLInt, GraphQLString, GraphQLID } = graphql
 // const ObjectId = require('mongodb').ObjectID
 
 // MONGODB MODELS
@@ -11,7 +11,8 @@ const specialization = require('../../models/specialization')
 const RegisterType = new GraphQLObjectType({
     name: 'Register',
     fields: () => ({
-        message: { type: GraphQLString }
+        user: {type: UserType},
+        errors: { type: new GraphQLNonNull(new GraphQLList(ValidateType)) }
     })
 })
 
@@ -70,6 +71,14 @@ const SpecializationType = new GraphQLObjectType({
     fields: () => ({
         id: { type: GraphQLID },
         name: { type: GraphQLString }
+    })
+})
+
+const ValidateType = new GraphQLObjectType({
+    name: 'Validate',
+    fields: () => ({
+        key: {type: GraphQLString},
+        message: {type: GraphQLString}
     })
 })
 
