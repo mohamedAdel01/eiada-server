@@ -31,8 +31,7 @@ const service = async (args) => {
         errors: [],
         user: newUser
     }
-
-    
+     
 }
 
 module.exports = {
