@@ -4,9 +4,9 @@ const { GraphQLInt, GraphQLID, GraphQLString, GraphQLList } = graphql
 // GRAPHQL TYPES
 const { RegisterType } = require('../../types/types')
 const {validate} = require('../../../validations/registerValidation')
+const {service} = require('../../../services/registerServices')
 
 // MONGODB MODELS
-const clinic = require('../../../models/clinic')
 const User = require('../../../models/user')
 
 const RegisterMutation = {
@@ -20,29 +20,16 @@ const RegisterMutation = {
 
     async resolve(parent, args) {
 
-        let errors = validate(args)
+        let validationErrors = validate(args)
 
-        if(errors.length) {
+        if(validationErrors.length) {
             return {
                 user: null,
-                errors: errors
+                errors: validationErrors
             }
         }
 
-        let userObj = new User({
-            fullname: args.fullname,
-            email: args.email,
-            phone: args.phone,
-            password: args.password,
-            role_id: "1"
-        })
-
-        let createdUser = await userObj.save()
-
-        return {
-            user: createdUser,
-            errors: null
-        }
+        return await service(args)
 
     }
 }

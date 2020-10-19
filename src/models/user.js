@@ -4,11 +4,11 @@ const Schema = mongoose.Schema
 const User = new Schema({
     fullname: {
         type: String,
-        required: [true, "Name is required"],
+        required: true,
     },
     email: {
         type: String,
-        required: [true, "Email is required"],
+        required: true,
         unique: true
     },
     password: {
@@ -17,9 +17,6 @@ const User = new Schema({
     },
     phone: {
         type: String,
-        maxlength: [11, 'Phone number must be 11 number'],
-        minlength: [11, 'Phone number must be 11 number'],
-        trim: true,
         required: true,
         unique: true
     },
