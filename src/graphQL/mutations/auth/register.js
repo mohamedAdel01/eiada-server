@@ -1,13 +1,10 @@
 const graphql = require('graphql')
-const { GraphQLInt, GraphQLID, GraphQLString, GraphQLList } = graphql
+const { GraphQLString } = graphql
 
 // GRAPHQL TYPES
 const { RegisterType } = require('../../types/types')
 const {validate} = require('../../../validations/registerValidation')
 const {service} = require('../../../services/registerServices')
-
-// MONGODB MODELS
-const User = require('../../../models/user')
 
 const RegisterMutation = {
     type: RegisterType,
