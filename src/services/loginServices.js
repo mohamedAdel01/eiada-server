@@ -7,36 +7,35 @@ const service = async (args) => {
     let errors = []
     let exUser = await User.findOne({email: args.email})
 
-    if(exUser) {
+    if(!exUser) {
         errors.push({
             key: 'DB',
-            message: 'User is already exist'
+            message: "User isn't exist"
         })
         return {
             errors: errors
         }
     }
 
-    const hash = bcrypt.hashSync(args.password, 10);
-
-    let userObj = new User({
-        fullname: args.fullname,
-        email: args.email,
-        phone: args.phone,
-        password: hash,
-        role: "admin"
-    })
-
+    const check_password = bcrypt.compare(args.password, exUser.password);
     
-    let NewUser = await userObj.save()
+    if(!check_password) {
+        errors.push({
+            key: 'DB',
+            message: "wrong password"
+        })
+        return {
+            errors: errors
+        } 
+    }
 
     const Token = jwt.sign({
-        data: NewUser
+        data: exUser
       }, 'secret', { expiresIn: '1h' });
 
     return {
         token: Token,
-        user: NewUser,
+        user: exUser,
         errors: [],
     }
      

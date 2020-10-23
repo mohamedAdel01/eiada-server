@@ -4,14 +4,12 @@ const { GraphQLString } = graphql
 // GRAPHQL TYPES
 const { RegisterType } = require('../../types/types')
 const {validate} = require('../../../validations/registerValidation')
-const {service} = require('../../../services/registerServices')
+const {service} = require('../../../services/loginServices')
 
-const RegisterMutation = {
+const LoginMutation = {
     type: RegisterType,
     args: {
-        fullname: { type: GraphQLString },
         email: { type: GraphQLString },
-        phone: { type: GraphQLString },
         password: { type: GraphQLString }
     },
 
@@ -28,4 +26,4 @@ const RegisterMutation = {
     }
 }
 
-module.exports = RegisterMutation
+module.exports = LoginMutation
