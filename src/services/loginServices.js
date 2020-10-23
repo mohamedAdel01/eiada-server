@@ -31,7 +31,7 @@ const service = async (args) => {
 
     const Token = jwt.sign({
         data: exUser
-      }, 'secret', { expiresIn: '1h' });
+      }, 'secret', { expiresIn: '12h' });
 
     return {
         token: Token,

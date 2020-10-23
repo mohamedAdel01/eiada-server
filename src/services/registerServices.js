@@ -2,12 +2,17 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user')
+const {
+    mail
+} = require('../../config/nodemail')
 
 const service = async (args) => {
     let errors = []
-    let exUser = await User.findOne({email: args.email})
+    let exUser = await User.findOne({
+        email: args.email
+    })
 
-    if(exUser) {
+    if (exUser) {
         errors.push({
             key: 'DB',
             message: 'User is already exist'
@@ -27,19 +32,23 @@ const service = async (args) => {
         role: "admin"
     })
 
-    
+
     let NewUser = await userObj.save()
 
     const Token = jwt.sign({
         data: NewUser
-      }, 'secret', { expiresIn: '1h' });
+    }, 'secret', {
+        expiresIn: 60 * 10
+    });
+
+    mail(NewUser.email, 'Email verification', `Press here to Verify your email and this code is available for 10min: https:/verify-email/${Token}`)
 
     return {
-        token: Token,
+        token: "Please check your mail to verify mail",
         user: NewUser,
         errors: [],
     }
-     
+
 }
 
 module.exports = {

@@ -1,7 +1,7 @@
 "use strict";
 const nodemailer = require("nodemailer");
 
-  let transporter = nodemailer.createTransport({
+  const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
       user: "mohamed7adel96@gmail.com",
@@ -12,14 +12,16 @@ const nodemailer = require("nodemailer");
     }
   });
 
-  module.exports = {
-    transporter
+  let mail = (to, subject, text) => {
+      transporter.sendMail({
+        from: 'mohamed7adel96@gmail.com',
+        to: to,
+        subject: subject,
+        text: text
+      });
   }
 
-//   transporter.sendMail({
-//     from: 'mohamed7adel96@gmail.com', // sender address
-//     to: "mohamed7adel96@gmail.com", // list of receivers
-//     subject: "رسالة من ابلكيشن عيادة", // Subject line
-//     text: "احنا هنا ف الابلكيشن بنقولك ان احنا بنحبك اوي اوي و انتي اهم حاجه ف حياتنا.. ربنا يخليكي لينا يا قلبي ♥♥♥", // plain text body
-//   });
 
+  module.exports = {
+    mail
+  }
