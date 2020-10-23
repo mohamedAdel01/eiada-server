@@ -3,7 +3,6 @@ const { GraphQLObjectType, GraphQLList, GraphQLNonNull, GraphQLInt, GraphQLStrin
 // const ObjectId = require('mongodb').ObjectID
 
 // MONGODB MODELS
-// const clinic = require('../../models/clinic')
 const user = require('../../models/user')
 const role = require('../../models/role')
 const specialization = require('../../models/specialization')
@@ -95,6 +94,7 @@ const ErrorType = new GraphQLObjectType({
 module.exports = {
     RegisterType,
     CreateClinicType,
+    
     ClinicType,
     UserType,
     RoleType

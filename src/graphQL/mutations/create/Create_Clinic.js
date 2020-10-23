@@ -3,8 +3,8 @@ const { GraphQLString, GraphQLID } = graphql
 
 // GRAPHQL TYPES
 const { CreateClinicType } = require('../../types/types')
-// const {validate} = require('../../../validations/registerValidation')
-// const {service} = require('../../../services/registerServices')
+const { checkToken } = require('../../../policies')
+const {Add_Clinic} = require('../../../services/clinicServices')
 
 const ClinicMutation = {
     type: CreateClinicType,
@@ -13,8 +13,9 @@ const ClinicMutation = {
     },
 
     async resolve(parent, args, root) {
-        console.log('loooo',args.name)
-        console.log('loooo',root.headers.authorization)
+        let decoded = checkToken(root.headers.authorization)
+        if (decoded.errors.length) return decoded
+        return await Add_Clinic({name: args.name, owner_id: decoded.user._id})
     }
 }
 
