@@ -22,13 +22,9 @@ const User = new Schema({
     },
     image: String,
     birthdate: Date,
-    role_id: {
+    role: {
         type: String,
         required: true
-    },
-    permission_id: {
-        type: String,
-        // required: true
     },
     specialization_id: {
         type: String,

@@ -51,12 +51,7 @@ const UserType = new GraphQLObjectType({
         image: { type: GraphQLString },
         birthdate: { type: GraphQLString },
         password: { type: GraphQLString },
-        role: {
-            type: RoleType,
-            resolve(parent, args) {
-                return role.findById(parent.role_id)
-            }
-        },
+        role: { type: GraphQLString },
         specialization: {
             type: SpecializationType,
             resolve(parent, args) {

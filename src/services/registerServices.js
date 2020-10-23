@@ -25,7 +25,7 @@ const service = async (args) => {
         email: args.email,
         phone: args.phone,
         password: hash,
-        role_id: "1"
+        role: "admin"
     })
 
     

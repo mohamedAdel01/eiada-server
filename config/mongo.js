@@ -1,6 +1,7 @@
+require('dotenv').config()
 const mongoose = require('mongoose')
 
-mongoose.connect('mongodb://localhost:27017/eiada', {
+mongoose.connect(`${process.env.MONGO_URI}/${process.env.DB_NAME}`, {
     useUnifiedTopology: true,
     useNewUrlParser: true,
     useCreateIndex: true
