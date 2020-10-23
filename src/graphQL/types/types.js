@@ -17,11 +17,20 @@ const RegisterType = new GraphQLObjectType({
     })
 })
 
+const CreateClinicType = new GraphQLObjectType({
+    name: 'CraeteClinic',
+    fields: () => ({
+        clinic: {type: ClinicType},
+        errors: { type: new GraphQLNonNull(new GraphQLList(ErrorType)) }
+    })
+})
+
 const ClinicType = new GraphQLObjectType({
     name: 'Clinic',
     fields: () => ({
         id: { type: GraphQLID },
         name: { type: GraphQLString },
+        owner_id: {type: GraphQLID},
         logo: { type: GraphQLString },
         theme_settings: { type: GraphQLString },
         owner: {
@@ -85,6 +94,7 @@ const ErrorType = new GraphQLObjectType({
 
 module.exports = {
     RegisterType,
+    CreateClinicType,
     ClinicType,
     UserType,
     RoleType

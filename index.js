@@ -17,15 +17,7 @@ app.use(cors())
 // // graphql for handle requests
 app.use('/graphql', graphqlHTTP({
     schema,
-    graphiql: true,
-    customFormatErrorFn(err) {
-        // console.log('koooo',err)
-        // return {
-        //     message: err.message,
-        //     path: err.path,
-        //     customField: err.customField,
-        // };
-    },
+    graphiql: true
 }))
 
 
