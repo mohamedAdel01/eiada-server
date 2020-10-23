@@ -2,6 +2,10 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const Subscription = new Schema({
+    branches_num: {
+        type: Number,
+        required: true
+    },
     doctors_num: {
         type: Number,
         required: true

@@ -4,8 +4,13 @@ const Schema = mongoose.Schema
 const Role = new Schema({
     name: {
         type: String,
-        required: true
-    }
+        required: true,
+        unique: true
+    },
+    create: [String],
+    read: [String],
+    update: [String],
+    delete: [String]
 })
 
 module.exports = mongoose.model('Role', Role)

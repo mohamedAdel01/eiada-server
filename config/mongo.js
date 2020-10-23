@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-mongoose.connect(process.env.MONGO_URI + process.env.DB_NAME, {
+mongoose.connect('mongodb://localhost:27017/eiada', {
     useUnifiedTopology: true,
     useNewUrlParser: true,
     useCreateIndex: true
