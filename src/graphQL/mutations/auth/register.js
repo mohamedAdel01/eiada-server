@@ -19,14 +19,12 @@ const RegisterMutation = {
 
         let validationErrors = validate(args)
 
-        if(validationErrors.length) {
-            return {
+        if(validationErrors.length) return {
                 token: null,
                 user: null,
                 errors: validationErrors
             }
-        }
-
+        
         return await service(args)
 
     }
