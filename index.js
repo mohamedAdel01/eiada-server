@@ -22,6 +22,7 @@ app.use('/graphql', graphqlHTTP({
 }))
 
 // require('./config/dummy')
+// require('./config/nodemail')
 
 // listen to PORT
 app.listen(process.env.PORT || 4000, () => {

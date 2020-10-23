@@ -30,6 +30,10 @@ const User = new Schema({
         type: String,
         // required: true
     },
+    email_verified: {
+        type: Boolean,
+        default: false
+    },
     activated: {
         type: Boolean,
         default: false
