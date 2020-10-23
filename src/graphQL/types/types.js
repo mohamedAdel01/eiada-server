@@ -12,7 +12,7 @@ const RegisterType = new GraphQLObjectType({
     name: 'Register',
     fields: () => ({
         user: {type: UserType},
-        errors: { type: new GraphQLNonNull(new GraphQLList(ValidateType)) }
+        errors: { type: new GraphQLNonNull(new GraphQLList(ErrorType)) }
     })
 })
 
@@ -74,8 +74,8 @@ const SpecializationType = new GraphQLObjectType({
     })
 })
 
-const ValidateType = new GraphQLObjectType({
-    name: 'Validate',
+const ErrorType = new GraphQLObjectType({
+    name: 'Error',
     fields: () => ({
         key: {type: GraphQLString},
         message: {type: GraphQLString}
