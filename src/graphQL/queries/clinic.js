@@ -8,7 +8,7 @@ const { ClinicType } = require('../types/types')
 const ClinicModel = require('../../models/clinic')
 
 const ClinicQueries = {
-    clinics: {
+    Clinics: {
         type: new GraphQLList(ClinicType),
         resolve() {
             return ClinicModel.find({})
