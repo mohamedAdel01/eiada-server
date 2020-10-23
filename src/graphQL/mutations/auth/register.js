@@ -21,6 +21,7 @@ const RegisterMutation = {
 
         if(validationErrors.length) {
             return {
+                token: null,
                 user: null,
                 errors: validationErrors
             }

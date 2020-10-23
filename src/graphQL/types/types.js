@@ -11,6 +11,7 @@ const specialization = require('../../models/specialization')
 const RegisterType = new GraphQLObjectType({
     name: 'Register',
     fields: () => ({
+        token: {type: GraphQLString},
         user: {type: UserType},
         errors: { type: new GraphQLNonNull(new GraphQLList(ErrorType)) }
     })

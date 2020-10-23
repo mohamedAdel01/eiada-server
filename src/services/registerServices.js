@@ -1,4 +1,6 @@
 // MONGODB MODELS
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const User = require('../models/user')
 
 const service = async (args) => {
@@ -16,20 +18,27 @@ const service = async (args) => {
         }
     }
 
+    const hash = bcrypt.hashSync(args.password, 10);
+
     let userObj = new User({
         fullname: args.fullname,
         email: args.email,
         phone: args.phone,
-        password: args.password,
+        password: hash,
         role_id: "1"
     })
 
     
-    let newUser = await userObj.save()
+    let NewUser = await userObj.save()
+
+    const Token = jwt.sign({
+        data: NewUser
+      }, 'secret', { expiresIn: '1h' });
 
     return {
+        token: Token,
+        user: NewUser,
         errors: [],
-        user: newUser
     }
      
 }
