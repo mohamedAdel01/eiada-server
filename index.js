@@ -1,30 +1,32 @@
 // requirements
-const express = require('express')
-const graphqlHTTP = require('express-graphql')
-const cors = require('cors')
-require('dotenv').config()
-const schema = require('./src/graphQL/schema')
+const express = require("express");
+const graphqlHTTP = require("express-graphql");
+const cors = require("cors");
+require("dotenv").config();
+const schema = require("./src/graphQL/schema");
 
 // import database config
-require('./config/mongo')
+require("./config/mongo");
 
 // run app
-const app = express()
+const app = express();
 
 // to access from another server
-app.use(cors())
-
+app.use(cors());
 
 // // graphql for handle requests
-app.use('/graphql', graphqlHTTP({
+app.use(
+  "/graphql",
+  graphqlHTTP({
     schema,
-    graphiql: true
-}))
+    graphiql: true,
+  })
+);
 
 // require('./config/dummy')
 // require('./config/nodemail')
 
 // listen to PORT
 app.listen(process.env.PORT || 4000, () => {
-    console.log('welcome again nodejs')
-})
+  console.log("welcome again nodejs");
+});

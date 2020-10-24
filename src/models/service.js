@@ -1,13 +1,13 @@
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
 const Service = new Schema({
-    service_details_id: {
-        type: String,
-        required: true
-    },
-    opened_at: String,
-    closed_at: String
-})
+  service_details_id: {
+    type: String,
+    required: true,
+  },
+  opened_at: String,
+  closed_at: String,
+});
 
-module.exports = mongoose.model('Service', Service)
+module.exports = mongoose.model("Service", Service);

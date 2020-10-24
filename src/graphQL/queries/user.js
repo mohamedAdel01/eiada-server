@@ -1,19 +1,19 @@
-const graphql = require('graphql')
-const { GraphQLID, GraphQLList } = graphql
+const graphql = require("graphql");
+const { GraphQLID, GraphQLList } = graphql;
 
 // GRAPHQL TYPES
-const { UserType } = require('../types/types')
+const { UserType } = require("../types/types");
 
 // MONGODB MODELS
-const userModel = require('../../models/user')
+const userModel = require("../../models/user");
 
 const UserQueries = {
-    Users: {
-        type: new GraphQLList(UserType),
-        resolve() {
-            return userModel.find({})
-        }
-    }
-}
+  Users: {
+    type: new GraphQLList(UserType),
+    resolve() {
+      return userModel.find({});
+    },
+  },
+};
 
-module.exports = UserQueries
+module.exports = UserQueries;

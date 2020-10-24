@@ -1,27 +1,27 @@
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
 const Subscription = new Schema({
-    branches_num: {
-        type: Number,
-        required: true
-    },
-    doctors_num: {
-        type: Number,
-        required: true
-    },
-    specializations_num: {
-        type: Number,
-        required: true
-    },
-    end_at: {
-        type: Date,
-        required: true
-    },
-    price: {
-        type: Number,
-        required: true
-    }
-})
+  branches_num: {
+    type: Number,
+    required: true,
+  },
+  doctors_num: {
+    type: Number,
+    required: true,
+  },
+  specializations_num: {
+    type: Number,
+    required: true,
+  },
+  end_at: {
+    type: Date,
+    required: true,
+  },
+  price: {
+    type: Number,
+    required: true,
+  },
+});
 
-module.exports = mongoose.model('Subscription', Subscription)
+module.exports = mongoose.model("Subscription", Subscription);
