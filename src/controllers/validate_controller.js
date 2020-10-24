@@ -1,7 +1,7 @@
 // MONGODB MODELS
 const User = require('../models/user')
 
-const service = async (user) => {
+const validate_controller = async (user) => {
 
     await User.findOneAndUpdate(user._id, {email_verified: true})
 
@@ -12,5 +12,5 @@ const service = async (user) => {
 }
 
 module.exports = {
-    service
+    validate_controller
 }

@@ -4,7 +4,7 @@ const { GraphQLString, GraphQLID } = graphql
 // GRAPHQL TYPES
 const { ClinicType_CRUD } = require('../../types/types')
 const { checkToken } = require('../../../policies')
-const { Clinic_Create } = require('../../../services/clinicServices')
+const { Clinic_Create } = require('../../../controllers/clinic_controller')
 
 const ClinicMutation = {
     type: ClinicType_CRUD,

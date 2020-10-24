@@ -4,7 +4,7 @@ const { GraphQLString } = graphql
 // GRAPHQL TYPES
 const { RegisterType } = require('../../types/types')
 const {validate} = require('../../../validations/registerValidation')
-const {service} = require('../../../services/loginServices')
+const {login_controller} = require('../../../controllers/login_controller')
 
 const LoginMutation = {
     type: RegisterType,
@@ -21,7 +21,7 @@ const LoginMutation = {
                 errors: validationErrors
             }
         
-        return await service(args)
+        return await login_controller(args)
 
     }
 }

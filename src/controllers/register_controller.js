@@ -6,7 +6,7 @@ const {
     mail
 } = require('../../config/nodemail')
 
-const service = async (args) => {
+const register_controller = async (args) => {
     let errors = []
     let exUser = await User.findOne({
         email: args.email
@@ -41,9 +41,10 @@ const service = async (args) => {
         expiresIn: 60 * 10
     });
 
-    mail(NewUser.email, 'Email verification', `Press here to Verify your email and this code is available for 10min: ${Token}`)
+    // mail(NewUser.email, 'Email verification', `Press here to Verify your email and this code is available for 10min: ${Token}`)
 
     return {
+        token: Token,
         message: "Please check your mail to verify mail",
         user: NewUser,
         errors: []
@@ -52,5 +53,5 @@ const service = async (args) => {
 }
 
 module.exports = {
-    service
+    register_controller
 }

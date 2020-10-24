@@ -1,5 +1,5 @@
 const { MessageType } = require('../../types/types')
-const {service} = require('../../../services/validateServices')
+const { validate_controller } = require('../../../controllers/validate_controller')
 const { checkToken } = require('../../../policies')
 
 const VerifyMailMutation = {
@@ -9,7 +9,7 @@ const VerifyMailMutation = {
         let decoded = checkToken(root.headers.authorization)
         if (decoded.errors.length) return decoded
 
-        return await service(decoded.user)
+        return await validate_controller(decoded.user)
 
     }
 }
