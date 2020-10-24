@@ -4,15 +4,23 @@ const Email_Verification = require("../models/email_verify");
 const { mail } = require("../../config/nodemail");
 const jwt = require("jsonwebtoken");
 
-const validate_email = async (user) => {
+const validate_email = async (verification) => {
   let errors = [];
-  let checkCode = await Email_Verification.findById(user.user_id).$where(
-    this.code == user.code
-  );
 
-  console.log(checkCode);
+  let exUser = await User.findById(verification.user_id);
 
-  if (!checkCode) {
+  if (exUser.email_verified) {
+    return {
+      message: "Email already verified",
+      errors: [],
+    };
+  }
+
+  let exVerification = await Email_Verification.findOne({
+    user_id: verification.user_id,
+  });
+
+  if (exVerification.code != verification.code) {
     errors.push({
       key: "DB",
       message: "Wrong code",
@@ -22,7 +30,7 @@ const validate_email = async (user) => {
     };
   }
 
-  await User.findOneAndUpdate(user._id, { email_verified: true });
+  await User.findOneAndUpdate(verification._id, { email_verified: true });
 
   return {
     message: "Email verified successfully",
@@ -49,7 +57,7 @@ const send_mail = async (user) => {
   );
 
   mail(
-    NewUser.email,
+    user.email,
     "Email verification",
     `Press here to Verify your email and this code is available for 10min: ${verification_code}`
   );

@@ -13,7 +13,7 @@ const ClinicMutation = {
   },
 
   async resolve(parent, args, root) {
-    let decoded = decodeToken(root.headers.authorization);
+    let decoded = decodeToken(root.headers.authorization, false);
     if (decoded.errors.length) return decoded;
     return await Clinic_Create({ name: args.name, owner_id: decoded.user._id });
   },

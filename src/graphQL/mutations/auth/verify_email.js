@@ -13,10 +13,13 @@ const VerifyMailMutation = {
     }
   },
   async resolve(parent, args, root) {
-    let decoded = decodeToken(root.headers.authorization);
-    if (decoded.errors.length) return decoded;
+    let decodedToken = decodeToken(root.headers.authorization, false);
+    if (decodedToken.errors.length) return decodedToken;
+    
+    let decoded_verification_code = decodeToken(args.verification_code, true);
+    if (decoded_verification_code.errors.length) return decoded_verification_code;
 
-    return await validate_email(decoded.user);
+    return await validate_email(decoded_verification_code.user);
   },
 };
 

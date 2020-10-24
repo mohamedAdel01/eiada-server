@@ -1,12 +1,12 @@
 const jwt = require("jsonwebtoken");
 
-const decodeToken = (token) => {
+const decodeToken = (token, codeType) => {
   if (!token)
     return {
       errors: [
         {
-          key: "Unautherized",
-          message: "Please login First",
+          key: codeType ? "Verification" : "Unautherized",
+          message: codeType ? "Code not exist" : "Please login First",
         },
       ],
     };
@@ -15,8 +15,8 @@ const decodeToken = (token) => {
       return {
         errors: [
           {
-            key: "Unautherized",
-            message: "Your session is expired, Please login again",
+            key: codeType ? "Verification" : "Unautherized",
+            message: codeType ? "Your Code is expired" : "Your session is expired",
           },
         ],
       };
