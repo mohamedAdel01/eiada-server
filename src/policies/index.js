@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 
-const checkToken = (token) => {
+const decodeToken = (token) => {
   if (!token)
     return {
       errors: [
@@ -29,5 +29,5 @@ const checkToken = (token) => {
 };
 
 module.exports = {
-  checkToken,
+  decodeToken,
 };
