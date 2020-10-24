@@ -38,7 +38,7 @@ const register_controller = async (args) => {
     },
     "secret",
     {
-      expiresIn: 60 * 10,
+      expiresIn: 60 * 1000,
     }
   );
 

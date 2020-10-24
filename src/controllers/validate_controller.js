@@ -3,6 +3,7 @@ const User = require("../models/user");
 const Email_Verification = require("../models/email_verify");
 const { mail } = require("../../config/nodemail");
 const jwt = require("jsonwebtoken");
+const ObjectId = require('mongodb').ObjectID
 
 const validate_email = async (verification) => {
   let errors = [];
@@ -30,7 +31,8 @@ const validate_email = async (verification) => {
     };
   }
 
-  await User.findOneAndUpdate(verification._id, { email_verified: true });
+  await User.findOneAndUpdate({_id: ObjectId(verification.user_id)}, { email_verified: true });
+  await Email_Verification.findOneAndDelete({user_id: verification.user_id});
 
   return {
     message: "Email verified successfully",
@@ -52,7 +54,7 @@ const send_mail = async (user) => {
     },
     "secret",
     {
-      expiresIn: 60 * 10,
+      expiresIn: 60 * 1000,
     }
   );
 
