@@ -1,7 +1,7 @@
-// MONGODB MODELS
+
 const Clinic = require('../models/clinic')
 
-const Add_Clinic = async (args) => {
+const Clinic_Create = async (args) => {
 
     let clinicObj = new Clinic({
         name: args.name,
@@ -11,6 +11,7 @@ const Add_Clinic = async (args) => {
     let NewClinic = await clinicObj.save()
 
     return {
+        message: "Clinic created successfully",
         clinic: NewClinic,
         errors: []
     }
@@ -18,5 +19,5 @@ const Add_Clinic = async (args) => {
 }
 
 module.exports = {
-    Add_Clinic
+    Clinic_Create
 }

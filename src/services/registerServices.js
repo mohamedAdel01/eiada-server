@@ -41,12 +41,12 @@ const service = async (args) => {
         expiresIn: 60 * 10
     });
 
-    mail(NewUser.email, 'Email verification', `Press here to Verify your email and this code is available for 10min: https:/verify-email/${Token}`)
+    mail(NewUser.email, 'Email verification', `Press here to Verify your email and this code is available for 10min: ${Token}`)
 
     return {
-        token: "Please check your mail to verify mail",
+        message: "Please check your mail to verify mail",
         user: NewUser,
-        errors: [],
+        errors: []
     }
 
 }

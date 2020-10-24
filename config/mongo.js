@@ -4,7 +4,8 @@ const mongoose = require('mongoose')
 mongoose.connect(`${process.env.MONGO_URI}/${process.env.DB_NAME}`, {
     useUnifiedTopology: true,
     useNewUrlParser: true,
-    useCreateIndex: true
+    useCreateIndex: true,
+    useFindAndModify: false
 })
 
 // require('./dummy')

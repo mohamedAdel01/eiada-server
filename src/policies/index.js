@@ -1,6 +1,12 @@
 const jwt = require('jsonwebtoken');
 
 const checkToken = token => {
+    if(!token) return {
+        errors: [{
+            key: 'Unautherized',
+            message: 'Please login First'
+        }]
+    }
     return jwt.verify(token, 'secret', (err, decoded) => {
         if(err) 
             return {

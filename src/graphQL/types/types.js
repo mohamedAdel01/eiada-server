@@ -7,19 +7,29 @@ const user = require('../../models/user')
 const role = require('../../models/role')
 const specialization = require('../../models/specialization')
 
+const MessageType = new GraphQLObjectType({
+    name: 'Validation',
+    fields: () => ({
+        message: {type: GraphQLString},
+        errors: { type: new GraphQLNonNull(new GraphQLList(ErrorType)) }
+    })
+})
+
 const RegisterType = new GraphQLObjectType({
     name: 'Register',
     fields: () => ({
         token: {type: GraphQLString},
+        message: {type: GraphQLString},
         user: {type: UserType},
         errors: { type: new GraphQLNonNull(new GraphQLList(ErrorType)) }
     })
 })
 
-const CreateClinicType = new GraphQLObjectType({
+const ClinicType_CRUD = new GraphQLObjectType({
     name: 'CraeteClinic',
     fields: () => ({
         clinic: {type: ClinicType},
+        message: {type: GraphQLString},
         errors: { type: new GraphQLNonNull(new GraphQLList(ErrorType)) }
     })
 })
@@ -88,7 +98,8 @@ const ErrorType = new GraphQLObjectType({
 
 module.exports = {
     RegisterType,
-    CreateClinicType,
+    ClinicType_CRUD,
+    MessageType,
     
     ClinicType,
     UserType,
