@@ -2,7 +2,7 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
-const { mail } = require("../../config/nodemail");
+const { send_mail } = require("./validate_controller");
 
 const register_controller = async (args) => {
   let errors = [];
@@ -16,7 +16,7 @@ const register_controller = async (args) => {
       message: "User is already exist",
     });
     return {
-      errors: errors,
+      errors
     };
   }
 
@@ -42,7 +42,7 @@ const register_controller = async (args) => {
     }
   );
 
-  // mail(NewUser.email, 'Email verification', `Press here to Verify your email and this code is available for 10min: ${Token}`)
+  send_mail(NewUser);
 
   return {
     token: Token,
