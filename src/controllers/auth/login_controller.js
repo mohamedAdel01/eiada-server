@@ -1,7 +1,7 @@
 // MONGODB MODELS
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const User = require("../models/user");
+const User = require("../../models/user");
 
 const login_controller = async (args) => {
   let errors = [];

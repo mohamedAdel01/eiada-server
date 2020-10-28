@@ -1,7 +1,7 @@
 // MONGODB MODELS
-const User = require("../models/user");
-const Email_Verification = require("../models/email_verify");
-const { mail } = require("../../config/nodemail");
+const User = require("../../models/user");
+const Email_Verification = require("../../models/email_verify");
+const { mail } = require("../../../config/nodemail");
 const jwt = require("jsonwebtoken");
 const ObjectId = require("mongodb").ObjectID;
 

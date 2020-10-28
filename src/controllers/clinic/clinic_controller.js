@@ -1,4 +1,4 @@
-const Clinic = require("../models/clinic");
+const Clinic = require("../../models/clinic");
 
 const Clinic_Create = async (args) => {
   let clinicObj = new Clinic({

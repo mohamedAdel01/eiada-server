@@ -3,7 +3,7 @@ const { GraphQLString } = graphql;
 
 const { decodeToken } = require("../../../policies");
 const { MessageType } = require("../../types/types");
-const { validate_email } = require("../../../controllers/validate_controller");
+const { validate_email } = require("../../../controllers/auth/validate_controller");
 
 const VerifyMailMutation = {
   type: MessageType,

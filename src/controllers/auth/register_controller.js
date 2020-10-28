@@ -1,7 +1,7 @@
 // MONGODB MODELS
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const User = require("../models/user");
+const User = require("../../models/user");
 const { send_verification_email } = require("./validate_controller");
 
 const register_controller = async (args) => {

@@ -6,7 +6,7 @@ const { RegisterType } = require("../../types/types");
 const { validate } = require("../../../validations/register_validation");
 const {
   register_controller,
-} = require("../../../controllers/register_controller");
+} = require("../../../controllers/auth/register_controller");
 
 const RegisterMutation = {
   type: RegisterType,

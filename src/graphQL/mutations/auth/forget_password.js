@@ -5,15 +5,15 @@ const {
   send_verification_email,
 } = require("../../../controllers/auth/validate_controller");
 
-const resendVerificationEmailMutation = {
+const forgetPasswordRequestMutation = {
   type: MessageType,
 
   async resolve(parent, args, root) {
-    let decoded = decodeToken(root.headers.authorization, false);
-    if (decoded.errors.length) return decoded;
 
-    return await send_verification_email(decoded.user);
+    return await changePasswordRequest(args.email);
   },
 };
 
-module.exports = resendVerificationEmailMutation;
+module.exports = {
+    forgetPasswordRequestMutation
+};
