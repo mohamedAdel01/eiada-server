@@ -3,7 +3,7 @@ const User = require("../models/user");
 const Email_Verification = require("../models/email_verify");
 const { mail } = require("../../config/nodemail");
 const jwt = require("jsonwebtoken");
-const ObjectId = require('mongodb').ObjectID
+const ObjectId = require("mongodb").ObjectID;
 
 const validate_email = async (verification) => {
   let errors = [];
@@ -11,9 +11,12 @@ const validate_email = async (verification) => {
   let exUser = await User.findById(verification.user_id);
 
   if (exUser.email_verified) {
-    return {
+    errors.push({
+      key: "Validation",
       message: "Email already verified",
-      errors: [],
+    });
+    return {
+      errors,
     };
   }
 
@@ -21,18 +24,24 @@ const validate_email = async (verification) => {
     user_id: verification.user_id,
   });
 
-  if (exVerification.code != verification.code) {
+  if (!exVerification || exVerification.code != verification.code) {
     errors.push({
-      key: "DB",
-      message: "Wrong code",
+      key: "Validation",
+      message: "Expired code, We will resend you another one",
     });
+
+    await send_verification_email(exUser);
+
     return {
       errors,
     };
   }
 
-  await User.findOneAndUpdate({_id: ObjectId(verification.user_id)}, { email_verified: true });
-  await Email_Verification.findOneAndDelete({user_id: verification.user_id});
+  await User.findOneAndUpdate(
+    { _id: ObjectId(verification.user_id) },
+    { email_verified: true }
+  );
+  await Email_Verification.findOneAndDelete({ user_id: verification.user_id });
 
   return {
     message: "Email verified successfully",
@@ -41,6 +50,17 @@ const validate_email = async (verification) => {
 };
 
 const send_verification_email = async (user) => {
+  let exUser = await User.findById(user._id);
+
+  if (exUser.email_verified) {
+    return {
+      message: "Email already verified",
+      errors: [],
+    };
+  }
+
+  await Email_Verification.findOneAndDelete({ user_id: user._id });
+
   let verificationObj = new Email_Verification({
     user_id: user._id,
     code: Math.floor(Math.random() * 60),
@@ -63,6 +83,11 @@ const send_verification_email = async (user) => {
     "Email verification",
     `Press here to Verify your email and this code is available for 10min: ${verification_code}`
   );
+
+  return {
+    message: "Please check your mail to verify mail",
+    errors: [],
+  };
 };
 
 module.exports = {
