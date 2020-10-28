@@ -3,7 +3,7 @@ const { GraphQLString } = graphql;
 
 // GRAPHQL TYPES
 const { RegisterType } = require("../../types/types");
-const { validate } = require("../../../validations/register_validation");
+const { validate } = require("../../../validations");
 const {
   register_controller,
 } = require("../../../controllers/auth/register_controller");
