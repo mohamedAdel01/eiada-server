@@ -2,7 +2,7 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
-const { send_mail } = require("./validate_controller");
+const { send_verification_email } = require("./validate_controller");
 
 const register_controller = async (args) => {
   let errors = [];
@@ -42,7 +42,7 @@ const register_controller = async (args) => {
     }
   );
 
-  send_mail(NewUser);
+  send_verification_email(NewUser);
 
   return {
     token: Token,

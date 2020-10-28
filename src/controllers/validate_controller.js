@@ -40,7 +40,7 @@ const validate_email = async (verification) => {
   };
 };
 
-const send_mail = async (user) => {
+const send_verification_email = async (user) => {
   let verificationObj = new Email_Verification({
     user_id: user._id,
     code: Math.floor(Math.random() * 60),
@@ -67,5 +67,5 @@ const send_mail = async (user) => {
 
 module.exports = {
   validate_email,
-  send_mail,
+  send_verification_email,
 };

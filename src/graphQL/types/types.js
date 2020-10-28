@@ -25,9 +25,9 @@ const MessageType = new GraphQLObjectType({
 const RegisterType = new GraphQLObjectType({
   name: "Register",
   fields: () => ({
+    user: { type: UserType },
     token: { type: GraphQLString },
     message: { type: GraphQLString },
-    user: { type: UserType },
     errors: { type: new GraphQLNonNull(new GraphQLList(ErrorType)) },
   }),
 });
