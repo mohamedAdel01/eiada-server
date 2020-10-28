@@ -17,7 +17,7 @@ const login_controller = async (args) => {
     };
   }
 
-  const check_password = bcrypt.compare(args.password, exUser.password);
+  const check_password = await bcrypt.compare(args.password, exUser.password);
 
   if (!check_password) {
     errors.push({
