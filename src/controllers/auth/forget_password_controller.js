@@ -1,4 +1,4 @@
-const User = require("../../../models/user");
+const User = require("../../models/user");
 const { send_verification_email } = require("./validate_controller");
 
 const changePasswordRequest = async (email) => {

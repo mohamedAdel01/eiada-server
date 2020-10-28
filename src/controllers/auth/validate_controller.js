@@ -10,13 +10,13 @@ const verificationEmails = {
     title: "Email verification",
     message:
       "Press here to Verify your email and this code is available for 10min",
-    resMSG: "Please check your mail to verify mail",
+    resMSG: "Please check your Email to verify mail",
   },
   password: {
     title: "Reset password",
     message:
       "Press here to reset your password and this code is available for 10min",
-    resMSG: "Please check your mail to continue",
+    resMSG: "Please check your Email to continue",
   },
 };
 
