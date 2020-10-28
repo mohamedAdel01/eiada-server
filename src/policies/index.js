@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const User = require("../models/user");
 
 const decodeToken = (token, codeType) => {
   if (!token)
@@ -16,7 +17,9 @@ const decodeToken = (token, codeType) => {
         errors: [
           {
             key: codeType ? "Verification" : "Unautherized",
-            message: codeType ? "Your Code is expired" : "Your session is expired",
+            message: codeType
+              ? "Your Code is expired"
+              : "Your session is expired",
           },
         ],
       };
@@ -28,6 +31,32 @@ const decodeToken = (token, codeType) => {
   });
 };
 
+const checkUserExistance = async (email, required) => {
+  let errors = [];
+  let exUser = await User.findOne({ email: email });
+
+  if (required && !exUser) {
+    errors.push({
+      key: "DB",
+      message: "User isn't exist",
+    });
+    return {
+      errors: errors,
+    };
+  } else if (!required && exUser) {
+    errors.push({
+      key: "DB",
+      message: "User is already exist",
+    });
+    return {
+      errors: errors,
+    };
+  } else {
+    return { errors: [] };
+  }
+};
+
 module.exports = {
   decodeToken,
+  checkUserExistance,
 };

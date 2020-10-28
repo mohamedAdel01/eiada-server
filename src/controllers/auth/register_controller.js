@@ -3,22 +3,12 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../../models/user");
 const { send_verification_email } = require("./validate_controller");
+const { checkUserExistance } = require("../../policies");
 
 const register_controller = async (args) => {
-  let errors = [];
-  let exUser = await User.findOne({
-    email: args.email,
-  });
 
-  if (exUser) {
-    errors.push({
-      key: "DB",
-      message: "User is already exist",
-    });
-    return {
-      errors
-    };
-  }
+  let check = await checkUserExistance(args.email, false)
+  if(check.errors.length) return check
 
   const hash = bcrypt.hashSync(args.password, 10);
 
@@ -42,7 +32,7 @@ const register_controller = async (args) => {
     }
   );
 
-  send_verification_email(NewUser, 'email');
+  send_verification_email(NewUser, "email");
 
   return {
     token: Token,
