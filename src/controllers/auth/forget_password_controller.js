@@ -1,4 +1,5 @@
 const User = require("../../../models/user");
+const { send_verification_email } = require("./validate_controller");
 
 const changePasswordRequest = async (email) => {
   let errors = [];
@@ -14,10 +15,7 @@ const changePasswordRequest = async (email) => {
     };
   }
 
-  return {
-    message: "Please check your email to continue",
-    errors: [],
-  };
+  return await send_verification_email(exUser, 'password')
 };
 
 module.exports = {

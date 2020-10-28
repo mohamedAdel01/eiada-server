@@ -5,6 +5,21 @@ const { mail } = require("../../../config/nodemail");
 const jwt = require("jsonwebtoken");
 const ObjectId = require("mongodb").ObjectID;
 
+const verificationEmails = {
+  email: {
+    title: "Email verification",
+    message:
+      "Press here to Verify your email and this code is available for 10min",
+    resMSG: "Please check your mail to verify mail",
+  },
+  password: {
+    title: "Reset password",
+    message:
+      "Press here to reset your password and this code is available for 10min",
+    resMSG: "Please check your mail to continue",
+  },
+};
+
 const validate_email = async (verification) => {
   let errors = [];
 
@@ -30,7 +45,7 @@ const validate_email = async (verification) => {
       message: "Expired code, We will resend you another one",
     });
 
-    await send_verification_email(exUser);
+    await send_verification_email(exUser, "email");
 
     return {
       errors,
@@ -49,10 +64,10 @@ const validate_email = async (verification) => {
   };
 };
 
-const send_verification_email = async (user) => {
+const send_verification_email = async (user, emailType) => {
   let exUser = await User.findById(user._id);
 
-  if (exUser.email_verified) {
+  if (emailType == "email" && exUser.email_verified) {
     return {
       message: "Email already verified",
       errors: [],
@@ -80,12 +95,12 @@ const send_verification_email = async (user) => {
 
   mail(
     user.email,
-    "Email verification",
-    `Press here to Verify your email and this code is available for 10min: ${verification_code}`
+    verificationEmails[emailType].title,
+    `${verificationEmails[emailType].message}: ${verification_code}`
   );
 
   return {
-    message: "Please check your mail to verify mail",
+    message: verificationEmails[emailType].resMSG,
     errors: [],
   };
 };

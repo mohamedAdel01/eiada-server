@@ -42,7 +42,7 @@ const register_controller = async (args) => {
     }
   );
 
-  send_verification_email(NewUser);
+  send_verification_email(NewUser, 'email');
 
   return {
     token: Token,

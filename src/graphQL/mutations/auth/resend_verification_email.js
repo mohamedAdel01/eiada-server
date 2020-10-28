@@ -12,7 +12,7 @@ const resendVerificationEmailMutation = {
     let decoded = decodeToken(root.headers.authorization, false);
     if (decoded.errors.length) return decoded;
 
-    return await send_verification_email(decoded.user);
+    return await send_verification_email(decoded.user, 'email');
   },
 };
 
