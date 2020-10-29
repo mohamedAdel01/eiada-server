@@ -1,33 +1,13 @@
 // MONGODB MODELS
-const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const User = require("../../models/user");
+const { checkUserExistance, checkPassword } = require("../../policies");
 
 const login_controller = async (args) => {
-  let errors = [];
-  let exUser = await User.findOne({ email: args.email });
+  let { exUser, userErrors } = await checkUserExistance(args.email, true);
+  if (userErrors.length) return { errors: userErrors };
 
-  if (!exUser) {
-    errors.push({
-      key: "DB",
-      message: "User isn't exist",
-    });
-    return {
-      errors: errors,
-    };
-  }
-
-  const check_password = await bcrypt.compare(args.password, exUser.password);
-
-  if (!check_password) {
-    errors.push({
-      key: "DB",
-      message: "wrong password",
-    });
-    return {
-      errors: errors,
-    };
-  }
+  let { passwordErrors } = await checkPassword(args.password, exUser.password);
+  if (passwordErrors.length) return { errors: passwordErrors };
 
   const Token = jwt.sign(
     {

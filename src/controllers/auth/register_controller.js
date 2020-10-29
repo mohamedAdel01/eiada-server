@@ -6,9 +6,8 @@ const { send_verification_email } = require("./validate_controller");
 const { checkUserExistance } = require("../../policies");
 
 const register_controller = async (args) => {
-
-  let check = await checkUserExistance(args.email, false)
-  if(check.errors.length) return check
+  let { errors } = await checkUserExistance(args.email, false);
+  if (errors.length) return { errors };
 
   const hash = bcrypt.hashSync(args.password, 10);
 

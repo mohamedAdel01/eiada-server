@@ -4,6 +4,7 @@ const Email_Verification = require("../../models/email_verify");
 const { mail } = require("../../../config/nodemail");
 const jwt = require("jsonwebtoken");
 const ObjectId = require("mongodb").ObjectID;
+const { checkEmailVerified } = require("../../policies");
 
 const verificationEmails = {
   email: {
@@ -22,6 +23,9 @@ const verificationEmails = {
 
 const validate_email = async (verification) => {
   let errors = [];
+
+  let { userErrors } = await checkEmailVerified(verification.user_id);
+  if (userErrors.length) return { userErrors };
 
   let exUser = await User.findById(verification.user_id);
 
