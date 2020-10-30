@@ -1,12 +1,12 @@
+const User = require("../models/user");
 const Email_Verification = require("../models/email_verify");
 const { mail } = require("../../config/nodemail");
+const ObjectId = require("mongodb").ObjectID;
 const {
   checkEmailVerification,
   checkVerificationCode,
   generateToken,
 } = require("../policies");
-
-const { Update_Email_Verify } = require("../controllers/user");
 
 const verificationEmails = {
   email: {
@@ -30,10 +30,15 @@ const send_verification_email = async (user, emailType, newUser) => {
       if (p_emailErrors.length) return { errors: p_emailErrors };
     }
 
-    await Delete_Verification(user._id);
+    await Email_Verification.findOneAndDelete({ user_id: user._id });
   }
 
-  const verification = await Create_Verification(user._id);
+  let verificationObj = new Email_Verification({
+    user_id: user._id,
+    code: Math.floor(Math.random() * Math.pow(10, 6)),
+  });
+
+  let verification = await verificationObj.save();
 
   const verification_code = generateToken(verification);
 
@@ -56,9 +61,11 @@ const validate_email = async (verification) => {
   let { p_codeErrors } = await checkVerificationCode(verification);
   if (p_codeErrors.length) return { errors: p_codeErrors };
 
-  await Update_Email_Verify(verification.user_id);
-
-  await Delete_Verification(verification.user_id);
+  await User.findOneAndUpdate(
+    { _id: ObjectId(verification.user_id) },
+    { email_verified: true }
+  );
+  await Email_Verification.findOneAndDelete({ user_id: verification.user_id });
 
   return {
     message: "Email verified successfully",
@@ -66,21 +73,7 @@ const validate_email = async (verification) => {
   };
 };
 
-const Delete_Verification = async (user_id) => {
-  return await Email_Verification.findOneAndDelete({ user_id: user_id });
-};
-
-const Create_Verification = async (user_id) => {
-  let verificationObj = new Email_Verification({
-    user_id: user_id,
-    code: Math.floor(Math.random() * Math.pow(10, 6)),
-  });
-
-  return await verificationObj.save();
-};
-
 module.exports = {
   send_verification_email,
   validate_email,
-  Delete_Verification,
 };

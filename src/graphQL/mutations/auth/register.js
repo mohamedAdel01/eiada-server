@@ -1,11 +1,13 @@
 const graphql = require("graphql");
 const { GraphQLString } = graphql;
 
+const { Create_User } = require("../../../controllers/user");
+const { send_verification_email } = require("../../../controllers/emails");
+
 const { RegisterType } = require("../../types/types");
 const { validate } = require("../../../validations");
 const { checkUserExistance, generateToken } = require("../../../policies");
-const { Create_User } = require("../../../controllers/user");
-const { send_verification_email } = require("../../../controllers/emails");
+
 
 const RegisterMutation = {
   type: RegisterType,
