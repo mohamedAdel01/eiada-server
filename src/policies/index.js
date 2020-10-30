@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
+const Email_Verification = require("../models/email_verify");
 
 const generateToken = (payload) => {
   return jwt.sign(
@@ -38,7 +39,7 @@ const decodeToken = (token, codeType) => {
       };
 
     return {
-      user: decoded.data,
+      decoded: decoded.data,
       errors: [],
     };
   });
@@ -97,7 +98,24 @@ const checkEmailVerification = async (userID) => {
     };
   }
 
-  return { userErrors };
+  return { p_emailErrors };
+};
+
+const checkVerificationCode = async (verification) => {
+  let p_codeErrors = [];
+
+  let exVerification = await Email_Verification.findOne({
+    user_id: verification.user_id,
+  });
+
+  if (!exVerification || exVerification.code != verification.code) {
+    p_codeErrors.push({
+      key: "Validation",
+      message: "Expired code, We will resend you another one",
+    });
+  }
+
+  return { p_codeErrors };
 };
 
 module.exports = {
@@ -106,4 +124,5 @@ module.exports = {
   checkUserExistance,
   checkPassword,
   checkEmailVerification,
+  checkVerificationCode,
 };
