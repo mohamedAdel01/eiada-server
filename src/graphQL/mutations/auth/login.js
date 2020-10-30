@@ -1,10 +1,7 @@
 const graphql = require("graphql");
 const { GraphQLString } = graphql;
-
-// GRAPHQL TYPES
 const { RegisterType } = require("../../types/types");
 const { validate } = require("../../../validations");
-const { login_controller } = require("../../../controllers/auth/login_controller");
 const { checkUserExistance, checkPassword, generateToken } = require("../../../policies");
 
 const LoginMutation = {

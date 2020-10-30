@@ -1,8 +1,6 @@
-// MONGODB MODELS
 const User = require("../models/user");
 const Email_Verification = require("../models/email_verify");
 const { mail } = require("../../config/nodemail");
-const jwt = require("jsonwebtoken");
 const ObjectId = require("mongodb").ObjectID;
 const {
   checkEmailVerification,
@@ -28,12 +26,10 @@ const verificationEmails = {
 const send_verification_email = async (user, emailType, newUser) => {
   if (!newUser) {
     if (emailType == "email") {
-      let { p_emailErrors } = await checkEmailVerification(
-        user._id
-      );
+      let { p_emailErrors } = await checkEmailVerification(user._id);
       if (p_emailErrors.length) return { errors: p_emailErrors };
     }
-    
+
     await Email_Verification.findOneAndDelete({ user_id: user._id });
   }
 
