@@ -69,20 +69,16 @@ const validate_email = async (verification) => {
 };
 
 const send_verification_email = async (user, emailType) => {
-  let exUser = await User.findById(user._id);
-
-  if (emailType == "email" && exUser.email_verified) {
-    return {
-      message: "Email already verified",
-      errors: [],
-    };
+  if (emailType == "email") {
+    let { userErrors } = await checkEmailVerified(verification.user_id);
+    if (userErrors.length) return { userErrors };
   }
 
   await Email_Verification.findOneAndDelete({ user_id: user._id });
 
   let verificationObj = new Email_Verification({
     user_id: user._id,
-    code: Math.floor(Math.random() * 60),
+    code: Math.floor(Math.random() * Math.pow(10, 6)),
   });
 
   let verfication = await verificationObj.save();

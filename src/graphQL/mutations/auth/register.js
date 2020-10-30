@@ -25,13 +25,9 @@ const RegisterMutation = {
     },
   },
 
-  async resolve(parent, args) {
-    let validationErrors = validate(args);
-
-    if (validationErrors.length)
-      return {
-        errors: validationErrors,
-      };
+  async resolve(_, args) {
+    let errors = validate(args);
+    if (errors.length) return { errors };
 
     return await register_controller(args);
   },
