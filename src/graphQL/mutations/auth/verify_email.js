@@ -3,15 +3,16 @@ const { GraphQLString } = graphql;
 
 const { decodeToken } = require("../../../policies");
 const { MessageType } = require("../../types/types");
-const { validate_email } = require("../../../controllers/auth/validate_controller");
+const {
+  validate_email,
+} = require("../../../controllers/auth/validate_controller");
 
 const VerifyMailMutation = {
   type: MessageType,
   args: {
-    verification_code: {
-      type: GraphQLString,
-    },
+    verification_code: { type: GraphQLString },
   },
+
   async resolve(parent, args, root) {
     let decodedToken = decodeToken(root.headers.authorization, false);
     if (decodedToken.errors.length) return decodedToken;

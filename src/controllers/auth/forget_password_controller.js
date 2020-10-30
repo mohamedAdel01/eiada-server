@@ -1,7 +1,7 @@
 const { send_verification_email } = require("./validate_controller");
 const { checkUserExistance } = require("../../policies");
 
-const changePasswordRequest = async (email) => {
+const forgetPasswordRequest = async (email) => {
   let { exUser, userErrors } = await checkUserExistance(email, true);
   if (userErrors.length) return { errors: userErrors };
 
@@ -9,5 +9,5 @@ const changePasswordRequest = async (email) => {
 };
 
 module.exports = {
-  changePasswordRequest,
+  forgetPasswordRequest,
 };
