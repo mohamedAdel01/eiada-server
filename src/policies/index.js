@@ -102,7 +102,7 @@ const checkEmailVerification = async (userID) => {
   return { p_emailErrors };
 };
 
-const checkVerificationCode = async (decoded) => {
+const checkVerificationCode = async (decoded, exUser) => {
   let p_codeErrors = [];
 
   let exVerification = await Email_Verification.findOne({
@@ -114,9 +114,10 @@ const checkVerificationCode = async (decoded) => {
       key: "Validation",
       message: "Expired code, We will resend you another one",
     });
+
+    return { p_codeErrors };
   }
 
-  let exUser = await User.findById(decoded.user_id);
   await send_verification_email(exUser, "password");
 
   return { p_codeErrors };

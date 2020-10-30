@@ -36,7 +36,10 @@ const changePasswordMutation = {
     let { errors, decoded } = decodeToken(args.verification_code, true);
     if (errors.length) return { errors };
 
-    let { p_codeErrors } = await checkVerificationCode(decoded);
+    let { exUser,p_userErrors } = await checkUserExistance(args.email, true);
+    if (p_userErrors.length) return { errors: p_userErrors };
+    
+    let { p_codeErrors } = await checkVerificationCode(decoded, exUser);
     if (p_codeErrors.length) return { errors: p_codeErrors };
 
     await Update_Password(args.new_password, decoded.user_id)
