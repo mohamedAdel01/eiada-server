@@ -1,9 +1,9 @@
 const graphql = require("graphql");
 const { GraphQLString } = graphql;
 
-// GRAPHQL TYPES
 const { RegisterType } = require("../../types/types");
 const { validate } = require("../../../validations");
+const {} = require("../../../controllers/user")
 const {
   register_controller,
 } = require("../../../controllers/auth/register_controller");
@@ -26,8 +26,11 @@ const RegisterMutation = {
   },
 
   async resolve(_, args) {
+    // Validation
     let errors = validate(args);
     if (errors.length) return { errors };
+
+
 
     return await register_controller(args);
   },
