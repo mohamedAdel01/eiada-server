@@ -10,6 +10,10 @@ const Clinic = new Schema({
     type: String,
     required: true,
   },
+  activated: {
+    type: Boolean,
+    default: false,
+  },
   logo: String,
   theme_settings: String,
 });

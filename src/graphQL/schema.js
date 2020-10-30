@@ -1,8 +1,6 @@
 const graphql = require("graphql");
 const { GraphQLObjectType, GraphQLSchema } = graphql;
-
 const Queries = require("./queries");
-
 const Mutations = require("./mutations");
 
 const RootQuery = new GraphQLObjectType({
