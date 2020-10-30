@@ -26,11 +26,11 @@ const VerifyEmailMutation = {
 const resendVerificationEmailMutation = {
   type: MessageType,
 
-  async resolve(parent,args, root) {
-    let decoded = decodeToken(root.headers.authorization, false);
-    if (decoded.errors.length) return decoded;
+  async resolve(parent, args, root) {
+    let { decoded, errors } = decodeToken(root.headers.authorization, false);
+    if (errors.length) return decoded;
 
-    return await send_verification_email(decoded.user, 'email', false);
+    return await send_verification_email(decoded, "email", false);
   },
 };
 

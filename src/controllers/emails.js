@@ -29,11 +29,11 @@ const send_verification_email = async (user, emailType, newUser) => {
   if (!newUser) {
     if (emailType == "email") {
       let { p_emailErrors } = await checkEmailVerification(
-        verification.user_id
+        user._id
       );
       if (p_emailErrors.length) return { errors: p_emailErrors };
     }
-
+    
     await Email_Verification.findOneAndDelete({ user_id: user._id });
   }
 
