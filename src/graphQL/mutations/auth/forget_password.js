@@ -2,13 +2,10 @@ const graphql = require("graphql");
 const { GraphQLString } = graphql;
 const { MessageType } = require("../../types/types");
 const { validate } = require("../../../validations");
-const { checkUserExistance, decodeToken } = require("../../../policies");
-const { send_verification_email } = require("../../../controllers/emails");
+const { checkUserExistance, checkVerificationCode, decodeToken } = require("../../../policies");
+const { send_verification_email, Delete_Verification } = require("../../../controllers/emails");
+const { Update_Password } = require("../../../controllers/user");
 
-const bcrypt = require("bcrypt");
-const ObjectId = require("mongodb").ObjectID;
-const Email_Verification = require("../../../models/email_verify");
-const User = require("../../../models/user");
 
 const forgetPasswordRequestMutation = {
   type: MessageType,
@@ -27,53 +24,33 @@ const forgetPasswordRequestMutation = {
   },
 };
 
-// const changePasswordMutation = {
-//   type: MessageType,
-//   args: {
-//     verification_code: { type: GraphQLString },
-//     new_password: { type: GraphQLString },
-//   },
+const changePasswordMutation = {
+  type: MessageType,
+  args: {
+    verification_code: { type: GraphQLString },
+    new_password: { type: GraphQLString },
+  },
 
-//   async resolve(_, args) {
-//     let all_errors = [];
+  async resolve(_, args) {
 
-//     let { errors, user } = decodeToken(args.verification_code, true);
-//     if (errors.length) return { errors };
+    let { errors, decoded } = decodeToken(args.verification_code, true);
+    if (errors.length) return { errors };
 
-//     let exVerification = await Email_Verification.findOne({
-//       user_id: user.user_id,
-//     });
+    let { p_codeErrors } = await checkVerificationCode(decoded);
+    if (p_codeErrors.length) return { errors: p_codeErrors };
 
-//     if (!exVerification || exVerification.code != user.code) {
-//       all_errors.push({
-//         key: "Validation",
-//         message: "Expired code, We will resend you another one",
-//       });
+    await Update_Password(args.new_password, decoded.user_id)
 
-//       let exUser = await User.findById(user.user_id);
-//       await send_verification_email(exUser, "password");
+    await Delete_Verification(decoded.user_id)
 
-//       return {
-//         errors: all_errors,
-//       };
-//     }
-
-//     const new_password = bcrypt.hashSync(args.new_password, 10);
-
-//     await User.findOneAndUpdate(
-//       { _id: ObjectId(user.user_id) },
-//       { password: new_password }
-//     );
-//     await Email_Verification.findOneAndDelete({ user_id: user.user_id });
-
-//     return {
-//       message: "Password changed successfully successfully",
-//       errors: [],
-//     };
-//   },
-// };
+    return {
+      message: "Password changed successfully successfully",
+      errors: [],
+    };
+  },
+};
 
 module.exports = {
   forget_password_request: forgetPasswordRequestMutation,
-  // change_password: changePasswordMutation,
+  change_password: changePasswordMutation,
 };

@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 const Email_Verification = require("../models/email_verify");
+const { send_verification_email } = require("../controllers/emails");
 
 const generateToken = (payload) => {
   return jwt.sign(
@@ -101,19 +102,22 @@ const checkEmailVerification = async (userID) => {
   return { p_emailErrors };
 };
 
-const checkVerificationCode = async (verification) => {
+const checkVerificationCode = async (decoded) => {
   let p_codeErrors = [];
 
   let exVerification = await Email_Verification.findOne({
-    user_id: verification.user_id,
+    user_id: decoded.user_id,
   });
 
-  if (!exVerification || exVerification.code != verification.code) {
+  if (!exVerification || exVerification.code != decoded.code) {
     p_codeErrors.push({
       key: "Validation",
       message: "Expired code, We will resend you another one",
     });
   }
+
+  let exUser = await User.findById(decoded.user_id);
+  await send_verification_email(exUser, "password");
 
   return { p_codeErrors };
 };
