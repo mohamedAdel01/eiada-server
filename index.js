@@ -18,9 +18,6 @@ app.use(
   })
 );
 
-// require('./config/dummy')
-// require('./config/nodemail')
-
 app.listen(process.env.PORT || 4000, () => {
   console.log("welcome again nodejs");
 });
