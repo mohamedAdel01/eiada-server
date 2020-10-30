@@ -12,7 +12,7 @@ module.exports = {
   Verify_Email,
   resend_verification_email,
   Login,
-  // Create_Clinic,
   // forget_password_request,
   // change_password,
+  // Create_Clinic,
 };
