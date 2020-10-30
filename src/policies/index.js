@@ -1,6 +1,18 @@
+const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
-const bcrypt = require("bcrypt");
+
+const generateToken = (payload) => {
+  return jwt.sign(
+    {
+      data: payload,
+    },
+    "secret",
+    {
+      expiresIn: 60 * 10000, // will update later
+    }
+  );
+};
 
 const decodeToken = (token, codeType) => {
   if (!token)
@@ -33,27 +45,23 @@ const decodeToken = (token, codeType) => {
 };
 
 const checkUserExistance = async (email, required) => {
-  let userErrors = [];
+  let p_userErrors = [];
   let exUser = await User.findOne({ email: email });
 
   if (required && !exUser) {
-    userErrors.push({
+    p_userErrors.push({
       key: "DB",
       message: "User isn't exist",
     });
-    return {
-      userErrors,
-    };
+    return { p_userErrors };
   } else if (!required && exUser) {
-    userErrors.push({
+    p_userErrors.push({
       key: "DB",
       message: "User is already exist",
     });
-    return {
-      userErrors,
-    };
+    return { p_userErrors };
   } else {
-    return { exUser, userErrors };
+    return { exUser, p_userErrors };
   }
 };
 
@@ -74,18 +82,18 @@ const checkPassword = async (entered, exist) => {
   return { passwordErrors };
 };
 
-const checkEmailVerified = async (userID) => {
-  let userErrors = [];
+const checkEmailVerification = async (userID) => {
+  let p_emailErrors = [];
 
   let exUser = await User.findById(userID);
 
   if (exUser.email_verified) {
-    userErrors.push({
-      key: "Validation",
+    p_emailErrors.push({
+      key: "Verification",
       message: "Email already verified",
     });
     return {
-      userErrors,
+      p_emailErrors,
     };
   }
 
@@ -93,8 +101,9 @@ const checkEmailVerified = async (userID) => {
 };
 
 module.exports = {
+  generateToken,
   decodeToken,
   checkUserExistance,
   checkPassword,
-  checkEmailVerified,
+  checkEmailVerification,
 };
