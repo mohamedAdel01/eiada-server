@@ -106,7 +106,6 @@ module.exports = {
   RegisterType,
   ClinicType_CRUD,
   MessageType,
-
   ClinicType,
   UserType,
   RoleType,
