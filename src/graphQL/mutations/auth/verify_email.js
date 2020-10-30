@@ -4,6 +4,7 @@ const { GraphQLString } = graphql;
 const { MessageType } = require("../../types/types");
 const { decodeToken } = require("../../../policies");
 const { validate_email } = require("../../../controllers/emails");
+const { send_verification_email } = require("../../../controllers/emails");
 
 const VerifyEmailMutation = {
   type: MessageType,
@@ -22,6 +23,18 @@ const VerifyEmailMutation = {
   },
 };
 
+const resendVerificationEmailMutation = {
+  type: MessageType,
+
+  async resolve(parent,args, root) {
+    let decoded = decodeToken(root.headers.authorization, false);
+    if (decoded.errors.length) return decoded;
+
+    return await send_verification_email(decoded.user, 'email', false);
+  },
+};
+
 module.exports = {
   Verify_Email: VerifyEmailMutation,
+  resend_verification_email: resendVerificationEmailMutation,
 };

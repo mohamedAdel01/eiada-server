@@ -81,11 +81,11 @@ const send_verification_email = async (user, emailType) => {
     code: Math.floor(Math.random() * Math.pow(10, 6)),
   });
 
-  let verfication = await verificationObj.save();
+  let verification = await verificationObj.save();
 
   const verification_code = jwt.sign(
     {
-      data: verfication,
+      data: verification,
     },
     "secret",
     {
