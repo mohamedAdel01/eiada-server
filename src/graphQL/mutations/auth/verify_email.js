@@ -3,8 +3,7 @@ const { GraphQLString } = graphql;
 
 const { MessageType } = require("../../types/types");
 const { decodeToken } = require("../../../policies");
-const { validate_email } = require("../../../controllers/emails");
-const { send_verification_email } = require("../../../controllers/emails");
+const { validate_email, send_verification_email } = require("../../../controllers/emails");
 
 const VerifyEmailMutation = {
   type: MessageType,
@@ -13,8 +12,11 @@ const VerifyEmailMutation = {
   },
 
   async resolve(_, args, root) {
-    let decodedToken = decodeToken(root.headers.authorization, false);
-    if (decodedToken.errors.length) return decodedToken;
+    let { errors, decoded } = decodeToken(args.verification_code, true);
+    if (errors.length) return { errors };
+
+    let { p_userErrors } = await checkUserExistance(decoded.email, true);
+    if (p_userErrors.length) return { errors: p_userErrors };
 
     let decoded_VCode = decodeToken(args.verification_code, true);
     if (decoded_VCode.errors.length) return decoded_VCode;
