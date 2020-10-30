@@ -67,20 +67,20 @@ const checkUserExistance = async (email, required) => {
 };
 
 const checkPassword = async (entered, exist) => {
-  let passwordErrors = [];
+  let p_passwordErrors = [];
   const check = await bcrypt.compare(entered, exist);
 
   if (!check) {
-    passwordErrors.push({
+    p_passwordErrors.push({
       key: "DB",
       message: "wrong password",
     });
     return {
-      passwordErrors,
+      p_passwordErrors,
     };
   }
 
-  return { passwordErrors };
+  return { p_passwordErrors };
 };
 
 const checkEmailVerification = async (userID) => {
