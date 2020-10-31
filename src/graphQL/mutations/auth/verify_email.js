@@ -1,9 +1,10 @@
 const graphql = require("graphql");
 const { GraphQLString } = graphql;
 
-const { MessageType } = require("../../types/types");
-const { decodeToken } = require("../../../policies");
 const { validate_email, send_verification_email } = require("../../../controllers/emails");
+
+const { MessageType } = require("../../types/types");
+const { decodeToken, checkUserExistance } = require("../../../policies");
 
 const VerifyEmailMutation = {
   type: MessageType,
@@ -12,16 +13,16 @@ const VerifyEmailMutation = {
   },
 
   async resolve(_, args, root) {
-    let { errors, decoded } = decodeToken(args.verification_code, true);
+    let { errors, decoded } = decodeToken(root.headers.authorization, true);
     if (errors.length) return { errors };
 
-    let { p_userErrors } = await checkUserExistance(decoded.email, true);
+    let { exUser, p_userErrors } = await checkUserExistance(decoded.email, true);
     if (p_userErrors.length) return { errors: p_userErrors };
 
     let decoded_VCode = decodeToken(args.verification_code, true);
     if (decoded_VCode.errors.length) return decoded_VCode;
 
-    return await validate_email(decoded_VCode.decoded);
+    return await validate_email(decoded_VCode.decoded, exUser);
   },
 };
 

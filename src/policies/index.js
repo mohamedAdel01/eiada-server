@@ -89,6 +89,16 @@ const checkEmailVerification = async (userID) => {
 
   let exUser = await User.findById(userID);
 
+  if(!exUser) {
+    p_emailErrors.push({
+      key: "Verification",
+      message: "Expired or Wrong code",
+    });
+    return {
+      p_emailErrors,
+    };
+  }
+
   if (exUser.email_verified) {
     p_emailErrors.push({
       key: "Verification",
@@ -102,7 +112,7 @@ const checkEmailVerification = async (userID) => {
   return { p_emailErrors };
 };
 
-const checkVerificationCode = async (decoded, exUser) => {
+const checkVerificationCode = async (decoded) => {
   let p_codeErrors = [];
 
   let exVerification = await Email_Verification.findOne({
@@ -118,7 +128,6 @@ const checkVerificationCode = async (decoded, exUser) => {
     return { p_codeErrors };
   }
 
-  await send_verification_email(exUser, "password");
 
   return { p_codeErrors };
 };

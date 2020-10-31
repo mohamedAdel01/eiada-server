@@ -54,12 +54,16 @@ const send_verification_email = async (user, emailType, newUser) => {
   };
 };
 
-const validate_email = async (verification) => {
+const validate_email = async (verification, exUser) => {
   let { p_emailErrors } = await checkEmailVerification(verification.user_id);
   if (p_emailErrors.length) return { errors: p_emailErrors };
 
   let { p_codeErrors } = await checkVerificationCode(verification);
-  if (p_codeErrors.length) return { errors: p_codeErrors };
+
+  if (p_codeErrors.length) {
+    await send_verification_email(exUser, "password", false);
+    return { errors: p_codeErrors };
+  }
 
   await User.findOneAndUpdate(
     { _id: ObjectId(verification.user_id) },
