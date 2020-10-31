@@ -1,7 +1,6 @@
 const { Update_Email_Verify } = require("../controllers/user");
 const Email_Verification = require("../models/email_verify");
 const { mail } = require("../../config/nodemail");
-const ObjectId = require("mongodb").ObjectID;
 const {
   checkEmailVerification,
   checkVerificationCode,
