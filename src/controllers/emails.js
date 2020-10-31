@@ -1,4 +1,4 @@
-const User = require("../models/user");
+const { Update_Email_Verify } = require("../controllers/user");
 const Email_Verification = require("../models/email_verify");
 const { mail } = require("../../config/nodemail");
 const ObjectId = require("mongodb").ObjectID;
@@ -30,11 +30,10 @@ const send_verification_email = async (user, emailType, newUser) => {
       if (p_emailErrors.length) return { errors: p_emailErrors };
     }
 
-    await Delete_Verification(user._id)
-
+    await Delete_Verification(user._id);
   }
 
-  let verification = await Create_Verification(user._id)
+  let verification = await Create_Verification(user._id);
 
   const verification_code = generateToken(verification);
 
@@ -61,12 +60,9 @@ const validate_email = async (verification, exUser) => {
     return { errors: p_codeErrors };
   }
 
-  await User.findOneAndUpdate(
-    { _id: ObjectId(verification.user_id) },
-    { email_verified: true }
-  );
+  await Update_Email_Verify(verification.user_id);
 
-  await Delete_Verification(user._id)
+  await Delete_Verification(user._id);
 
   return {
     message: "Email verified successfully",
@@ -76,7 +72,7 @@ const validate_email = async (verification, exUser) => {
 
 const Delete_Verification = async (user_id) => {
   return await Email_Verification.findOneAndDelete({ user_id: user_id });
-}
+};
 
 const Create_Verification = async (user_id) => {
   let verificationObj = new Email_Verification({
@@ -85,10 +81,10 @@ const Create_Verification = async (user_id) => {
   });
 
   return await verificationObj.save();
-}
+};
 
 module.exports = {
   send_verification_email,
   validate_email,
-  Delete_Verification
+  Delete_Verification,
 };
