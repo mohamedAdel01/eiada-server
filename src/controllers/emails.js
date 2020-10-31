@@ -30,7 +30,8 @@ const send_verification_email = async (user, emailType, newUser) => {
       if (p_emailErrors.length) return { errors: p_emailErrors };
     }
 
-    await Email_Verification.findOneAndDelete({ user_id: user._id });
+    await Delete_Verification(user._id)
+
   }
 
   let verificationObj = new Email_Verification({
@@ -69,7 +70,8 @@ const validate_email = async (verification, exUser) => {
     { _id: ObjectId(verification.user_id) },
     { email_verified: true }
   );
-  await Email_Verification.findOneAndDelete({ user_id: verification.user_id });
+
+  await Delete_Verification(user._id)
 
   return {
     message: "Email verified successfully",
@@ -77,7 +79,12 @@ const validate_email = async (verification, exUser) => {
   };
 };
 
+const Delete_Verification = async (user_id) => {
+  return await Email_Verification.findOneAndDelete({ user_id: user_id });
+}
+
 module.exports = {
   send_verification_email,
   validate_email,
+  Delete_Verification
 };

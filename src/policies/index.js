@@ -67,6 +67,21 @@ const checkUserExistance = async (email, required) => {
   }
 };
 
+const checkUserExistanceByID = async (id) => {
+  let p_userErrors = [];
+  let exUser = await User.findById(id);
+
+  if (!exUser) {
+    p_userErrors.push({
+      key: "DB",
+      message: "User isn't exist",
+    });
+    return { p_userErrors };
+  } else {
+    return { exUser, p_userErrors };
+  }
+};
+
 const checkPassword = async (entered, exist) => {
   let p_passwordErrors = [];
   const check = await bcrypt.compare(entered, exist);
@@ -139,4 +154,5 @@ module.exports = {
   checkPassword,
   checkEmailVerification,
   checkVerificationCode,
+  checkUserExistanceByID
 };

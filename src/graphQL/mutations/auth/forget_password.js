@@ -1,10 +1,12 @@
 const graphql = require("graphql");
 const { GraphQLString } = graphql;
-const { MessageType } = require("../../types/types");
-const { validate } = require("../../../validations");
-const { checkUserExistance, checkVerificationCode, decodeToken } = require("../../../policies");
+
 const { send_verification_email, Delete_Verification } = require("../../../controllers/emails");
 const { Update_Password } = require("../../../controllers/user");
+
+const { MessageType } = require("../../types/types");
+const { validate } = require("../../../validations");
+const { checkUserExistance, checkVerificationCode, checkUserExistanceByID, decodeToken } = require("../../../policies");
 
 
 const forgetPasswordRequestMutation = {
@@ -36,7 +38,7 @@ const changePasswordMutation = {
     let { errors, decoded } = decodeToken(args.verification_code, true);
     if (errors.length) return { errors };
 
-    let { exUser,p_userErrors } = await checkUserExistance(args.email, true);
+    let { exUser,p_userErrors } = await checkUserExistanceByID(decoded.user_id);
     if (p_userErrors.length) return { errors: p_userErrors };
     
     let { p_codeErrors } = await checkVerificationCode(decoded, exUser);
@@ -47,7 +49,7 @@ const changePasswordMutation = {
     await Delete_Verification(decoded.user_id)
 
     return {
-      message: "Password changed successfully successfully",
+      message: "Password changed successfully",
       errors: [],
     };
   },
