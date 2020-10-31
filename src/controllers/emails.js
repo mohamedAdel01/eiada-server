@@ -34,12 +34,7 @@ const send_verification_email = async (user, emailType, newUser) => {
 
   }
 
-  let verificationObj = new Email_Verification({
-    user_id: user._id,
-    code: Math.floor(Math.random() * Math.pow(10, 6)),
-  });
-
-  let verification = await verificationObj.save();
+  let verification = await Create_Verification(user._id)
 
   const verification_code = generateToken(verification);
 
@@ -81,6 +76,15 @@ const validate_email = async (verification, exUser) => {
 
 const Delete_Verification = async (user_id) => {
   return await Email_Verification.findOneAndDelete({ user_id: user_id });
+}
+
+const Create_Verification = async (user_id) => {
+  let verificationObj = new Email_Verification({
+    user_id: user._id,
+    code: Math.floor(Math.random() * Math.pow(10, 6)),
+  });
+
+  return await verificationObj.save();
 }
 
 module.exports = {
