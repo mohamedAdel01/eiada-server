@@ -16,7 +16,7 @@ const VerifyEmailMutation = {
     let { errors, decoded } = decodeToken(root.headers.authorization, true);
     if (errors.length) return { errors };
 
-    let { exUser, p_userErrors } = await checkUserExistance(decoded.email, true);
+    let { exUser, p_userErrors } = await checkUserExistance(decoded._id, true);
     if (p_userErrors.length) return { errors: p_userErrors };
 
     let decoded_VCode = decodeToken(args.verification_code, true);
