@@ -1,6 +1,7 @@
 const { Update_Email_Verify } = require("../controllers/user");
 const Email_Verification = require("../models/email_verify");
 const { mail } = require("../../config/nodemail");
+const ObjectId = require("mongodb").ObjectID;
 const {
   checkEmailVerification,
   checkVerificationCode,
@@ -70,7 +71,7 @@ const validate_email = async (verification, exUser) => {
 };
 
 const Delete_Verification = async (user_id) => {
-  return await Email_Verification.findOneAndDelete({ user_id: user_id });
+  return await Email_Verification.findOneAndDelete({ user_id: ObjectId(user_id) });
 };
 
 const Create_Verification = async (user_id) => {
