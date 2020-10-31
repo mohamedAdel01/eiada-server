@@ -45,28 +45,22 @@ const decodeToken = (token, codeType) => {
   });
 };
 
-const checkUserExistance = async (email, required) => {
-  let p_userErrors = [];
+const checkEmailExistance = async (email) => {
+  let p_emailErrors = [];
   let exUser = await User.findOne({ email: email });
 
-  if (required && !exUser) {
-    p_userErrors.push({
-      key: "DB",
-      message: "User isn't exist",
-    });
-    return { p_userErrors };
-  } else if (!required && exUser) {
-    p_userErrors.push({
+  if (exUser) {
+    p_emailErrors.push({
       key: "DB",
       message: "User is already exist",
     });
-    return { p_userErrors };
+    return { p_emailErrors };
   } else {
-    return { exUser, p_userErrors };
+    return { p_emailErrors };
   }
 };
 
-const checkUserExistanceByID = async (id) => {
+const checkUserExistance = async (id) => {
   let p_userErrors = [];
   let exUser = await User.findById(id);
 
@@ -103,7 +97,7 @@ const checkEmailVerification = async (userID) => {
 
   let exUser = await User.findById(userID);
 
-  if(!exUser) {
+  if (!exUser) {
     p_emailErrors.push({
       key: "Verification",
       message: "Expired or Wrong code",
@@ -142,16 +136,15 @@ const checkVerificationCode = async (decoded) => {
     return { p_codeErrors };
   }
 
-
   return { p_codeErrors };
 };
 
 module.exports = {
   generateToken,
   decodeToken,
-  checkUserExistance,
+  checkEmailExistance,
   checkPassword,
   checkEmailVerification,
   checkVerificationCode,
-  checkUserExistanceByID
+  checkUserExistance,
 };

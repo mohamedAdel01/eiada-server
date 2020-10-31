@@ -6,7 +6,7 @@ const { Update_Password } = require("../../../controllers/user");
 
 const { MessageType } = require("../../types/types");
 const { validate } = require("../../../validations");
-const { checkUserExistance, checkVerificationCode, checkUserExistanceByID, decodeToken } = require("../../../policies");
+const { checkUserExistance, checkVerificationCode, decodeToken } = require("../../../policies");
 
 
 const forgetPasswordRequestMutation = {
@@ -19,7 +19,7 @@ const forgetPasswordRequestMutation = {
     let v_errors = validate(args);
     if (v_errors.length) return { errors: v_errors };
 
-    let { exUser, p_userErrors } = await checkUserExistance(args.email, true);
+    let { exUser, p_userErrors } = await checkUserExistance(args._id, true);
     if (p_userErrors.length) return { errors: p_userErrors };
 
     return await send_verification_email(exUser, "password");
@@ -38,7 +38,7 @@ const changePasswordMutation = {
     let { errors, decoded } = decodeToken(args.verification_code, true);
     if (errors.length) return { errors };
 
-    let { exUser,p_userErrors } = await checkUserExistanceByID(decoded.user_id);
+    let { exUser,p_userErrors } = await checkUserExistance(decoded.user_id);
     if (p_userErrors.length) return { errors: p_userErrors };
     
     let { p_codeErrors } = await checkVerificationCode(decoded, exUser);
