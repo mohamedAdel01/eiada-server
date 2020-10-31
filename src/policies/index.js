@@ -2,7 +2,6 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 const Email_Verification = require("../models/email_verify");
-const { send_verification_email } = require("../controllers/emails");
 
 const generateToken = (payload) => {
   return jwt.sign(

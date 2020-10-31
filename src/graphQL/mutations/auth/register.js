@@ -1,13 +1,12 @@
 const graphql = require("graphql");
 const { GraphQLString } = graphql;
 
-const { Create_User } = require("../../../controllers/user");
+const { Create_User, Update_Auth_State } = require("../../../controllers/user");
 const { send_verification_email } = require("../../../controllers/emails");
 
 const { RegisterType } = require("../../types/types");
 const { validate } = require("../../../validations");
 const { checkUserExistance, generateToken } = require("../../../policies");
-
 
 const RegisterMutation = {
   type: RegisterType,
@@ -29,12 +28,13 @@ const RegisterMutation = {
 
     let Token = generateToken(newUser);
 
-    await send_verification_email(newUser, "email", true);
+    let updatedUser = await Update_Auth_State(newUser._id, Token);
+
+    await send_verification_email(updatedUser, "email", true);
 
     return {
-      token: Token,
       message: "Please check your Email to verify email",
-      user: newUser,
+      user: updatedUser,
       errors: [],
     };
   },

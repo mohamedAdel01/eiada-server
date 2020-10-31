@@ -11,7 +11,6 @@ const {
 
 // MONGODB MODELS
 const user = require("../../models/user");
-const role = require("../../models/role");
 const specialization = require("../../models/specialization");
 
 const MessageType = new GraphQLObjectType({
@@ -26,7 +25,6 @@ const RegisterType = new GraphQLObjectType({
   name: "Register",
   fields: () => ({
     user: { type: UserType },
-    token: { type: GraphQLString },
     message: { type: GraphQLString },
     errors: { type: new GraphQLNonNull(new GraphQLList(ErrorType)) },
   }),
@@ -69,6 +67,7 @@ const UserType = new GraphQLObjectType({
     birthdate: { type: GraphQLString },
     password: { type: GraphQLString },
     role: { type: GraphQLString },
+    token: { type: GraphQLString },
     specialization: {
       type: SpecializationType,
       resolve(parent, args) {

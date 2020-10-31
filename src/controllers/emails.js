@@ -61,7 +61,7 @@ const validate_email = async (verification, exUser) => {
 
   await Update_Email_Verify(verification.user_id);
 
-  await Delete_Verification(user._id);
+  await Delete_Verification(exUser._id);
 
   return {
     message: "Email verified successfully",
@@ -75,7 +75,7 @@ const Delete_Verification = async (user_id) => {
 
 const Create_Verification = async (user_id) => {
   let verificationObj = new Email_Verification({
-    user_id: user._id,
+    user_id: user_id,
     code: Math.floor(Math.random() * Math.pow(10, 6)),
   });
 

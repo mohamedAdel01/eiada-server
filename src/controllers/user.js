@@ -11,6 +11,7 @@ const Create_User = async (args, role) => {
     phone: args.phone,
     password: securedPassword,
     role: role,
+    token: "",
   });
 
   return await userObj.save();
@@ -19,16 +20,25 @@ const Create_User = async (args, role) => {
 const Update_Password = async (new_password, user_id) => {
   const new_password_hashed = bcrypt.hashSync(new_password, 10);
 
-  await User.findOneAndUpdate(
+  return await User.findOneAndUpdate(
     { _id: ObjectId(user_id) },
     { password: new_password_hashed }
   );
 };
 
 const Update_Email_Verify = async (user_id) => {
-  await User.findOneAndUpdate(
+  return await User.findOneAndUpdate(
     { _id: ObjectId(user_id) },
-    { email_verified: true }
+    { email_verified: true },
+    { new: true }
+  );
+};
+
+const Update_Auth_State = async (user_id, Token) => {
+  return await User.findOneAndUpdate(
+    { _id: ObjectId(user_id) },
+    { token: Token },
+    { new: true }
   );
 };
 
@@ -36,4 +46,5 @@ module.exports = {
   Create_User,
   Update_Password,
   Update_Email_Verify,
+  Update_Auth_State,
 };

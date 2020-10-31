@@ -19,8 +19,6 @@ const User = new Schema({
     type: String,
     required: true
   },
-  image: String,
-  birthdate: Date,
   role: {
     type: String,
     required: true,
@@ -33,6 +31,11 @@ const User = new Schema({
     type: Boolean,
     default: false,
   },
+  token: {
+    type: String
+  },
+  image: String,
+  birthdate: Date,
   created_at: {
     type: Date,
     default: Date.now,
