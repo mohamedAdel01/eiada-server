@@ -1,5 +1,8 @@
 const graphql = require("graphql");
 const { GraphQLString } = graphql;
+
+const { Update_Auth_Token } = require("../../../controllers/user");
+
 const { RegisterType } = require("../../types/types");
 const { validate } = require("../../../validations");
 const { checkUserExistance, checkPassword, generateToken } = require("../../../policies");
@@ -21,11 +24,14 @@ const LoginMutation = {
     let { p_passwordErrors } = await checkPassword(args.password, exUser.password);
     if (p_passwordErrors.length) return { errors: p_passwordErrors };
 
+    exUser.token = ''
+
     const Token = generateToken(exUser)
 
+    updatedUser = await Update_Auth_Token(exUser._id, Token);
+
     return {
-      token: Token,
-      user: exUser,
+      user: updatedUser,
       errors: [],
     };
   },

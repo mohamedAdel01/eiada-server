@@ -30,7 +30,7 @@ const RegisterMutation = {
 
     let updatedUser = await Update_Auth_State(newUser._id, Token);
 
-    await send_verification_email(updatedUser, "email", true);
+    await send_verification_email(newUser, "email", true);
 
     return {
       message: "Please check your Email to verify email",

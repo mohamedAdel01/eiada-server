@@ -34,7 +34,7 @@ const Update_Email_Verify = async (user_id) => {
   );
 };
 
-const Update_Auth_State = async (user_id, Token) => {
+const Update_Auth_Token = async (user_id, Token) => {
   return await User.findOneAndUpdate(
     { _id: ObjectId(user_id) },
     { token: Token },
@@ -46,5 +46,5 @@ module.exports = {
   Create_User,
   Update_Password,
   Update_Email_Verify,
-  Update_Auth_State,
+  Update_Auth_Token,
 };
