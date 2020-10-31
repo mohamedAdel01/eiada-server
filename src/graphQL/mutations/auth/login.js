@@ -5,7 +5,7 @@ const { Update_Auth_Token } = require("../../../controllers/user");
 
 const { RegisterType } = require("../../types/types");
 const { validate } = require("../../../validations");
-const { checkUserExistance, checkPassword, generateToken } = require("../../../policies");
+const { checkEmailExistance, checkPassword, generateToken } = require("../../../policies");
 
 const LoginMutation = {
   type: RegisterType,
@@ -18,8 +18,8 @@ const LoginMutation = {
     let v_errors = validate(args);
     if (v_errors.length) return { errors: v_errors };
 
-    let { exUser, p_userErrors } = await checkUserExistance(args.email, true);
-    if (p_userErrors.length) return { errors: p_userErrors };
+    let { exUser, p_emailErrors } = await checkEmailExistance(args.email, true);
+    if (p_emailErrors.length) return { errors: p_emailErrors };
     
     let { p_passwordErrors } = await checkPassword(args.password, exUser.password);
     if (p_passwordErrors.length) return { errors: p_passwordErrors };

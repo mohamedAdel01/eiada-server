@@ -21,7 +21,7 @@ const RegisterMutation = {
     let v_errors = validate(args);
     if (v_errors.length) return { errors: v_errors };
 
-    let { p_emailErrors } = await checkEmailExistance(args.email);
+    let { p_emailErrors } = await checkEmailExistance(args.email, false);
     if (p_emailErrors.length) return { errors: p_emailErrors };
 
     let newUser = await Create_User(args, "admin");

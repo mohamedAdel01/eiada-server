@@ -45,18 +45,24 @@ const decodeToken = (token, codeType) => {
   });
 };
 
-const checkEmailExistance = async (email) => {
+const checkEmailExistance = async (email, required) => {
   let p_emailErrors = [];
   let exUser = await User.findOne({ email: email });
 
-  if (exUser) {
+  if (required && !exUser) {
+    p_emailErrors.push({
+      key: "DB",
+      message: "User isn't exist",
+    });
+    return { p_emailErrors };
+  } else if (!required && exUser) {
     p_emailErrors.push({
       key: "DB",
       message: "User is already exist",
     });
     return { p_emailErrors };
   } else {
-    return { p_emailErrors };
+    return { exUser, p_emailErrors };
   }
 };
 
