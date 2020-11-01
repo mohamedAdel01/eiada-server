@@ -160,5 +160,5 @@ module.exports = {
   checkPassword,
   checkEmailVerification,
   checkVerificationCode,
-  checkUserExistance,
+  checkUserExistance
 };
