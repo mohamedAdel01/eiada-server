@@ -16,6 +16,10 @@ const Clinic = new Schema({
   },
   logo: String,
   theme_settings: String,
+  created_at: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 module.exports = mongoose.model("Clinic", Clinic);
