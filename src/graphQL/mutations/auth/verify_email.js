@@ -13,7 +13,7 @@ const VerifyEmailMutation = {
   },
 
   async resolve(_, args, root) {
-    let { errors, decoded } = decodeToken(root.headers.authorization, true);
+    let { errors, decoded } = decodeToken(root.headers.authorization, false);
     if (errors.length) return { errors };
 
     let { exUser, p_userErrors } = await checkUserExistance(decoded._id, root.headers.authorization);
@@ -31,7 +31,7 @@ const resendVerificationEmailMutation = {
 
   async resolve(parent, args, root) {
     let { decoded, errors } = decodeToken(root.headers.authorization, false);
-    if (errors.length) return decoded;
+    if (errors.length) return { errors };
 
     return await send_verification_email(decoded, "email", false);
   },
