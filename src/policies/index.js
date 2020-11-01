@@ -160,7 +160,7 @@ const checkClinicExist = async (owner_id) => {
   if (clinic) {
     p_clinicErrors.push({
       key: "DB",
-      message: "You had create clinic before",
+      message: "A clinic has been established before",
     });
   }
 
