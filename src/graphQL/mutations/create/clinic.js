@@ -5,7 +5,7 @@ const { Create_Clinic } = require("../../../controllers/clinic");
 
 const { ClinicType_CRUD } = require("../../types/types");
 const { validate } = require("../../../validations")
-const { decodeToken } = require("../../../policies");
+const { decodeToken, checkClinicExist } = require("../../../policies");
 
 const ClinicMutation = {
   type: ClinicType_CRUD,
@@ -19,6 +19,9 @@ const ClinicMutation = {
 
     let {decoded, errors} = decodeToken(root.headers.authorization, false);
     if (errors.length) return { errors };
+
+    let { p_clinicErrors } = await checkClinicExist(decoded._id);
+    if (p_clinicErrors.length) return { errors: p_clinicErrors };
 
     return await Create_Clinic({ name: args.name, owner_id: decoded._id });
   },

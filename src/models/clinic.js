@@ -4,8 +4,7 @@ const Schema = mongoose.Schema;
 const Clinic = new Schema({
   name: {
     type: String,
-    required: true,
-    unique: true
+    required: true
   },
   owner_id: {
     type: String,

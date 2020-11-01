@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
+const Clinic = require("../models/clinic");
 const Email_Verification = require("../models/email_verify");
 
 const generateToken = (payload) => {
@@ -153,6 +154,19 @@ const checkVerificationCode = async (decoded) => {
   return { p_codeErrors };
 };
 
+const checkClinicExist = async (owner_id) => {
+  let p_clinicErrors = [];
+  let clinic = await Clinic.findOne({ owner_id: owner_id });
+  if (clinic) {
+    p_clinicErrors.push({
+      key: "DB",
+      message: "You had create clinic before",
+    });
+  }
+
+  return { p_clinicErrors };
+};
+
 module.exports = {
   generateToken,
   decodeToken,
@@ -160,5 +174,6 @@ module.exports = {
   checkPassword,
   checkEmailVerification,
   checkVerificationCode,
-  checkUserExistance
+  checkUserExistance,
+  checkClinicExist,
 };
