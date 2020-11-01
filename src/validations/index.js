@@ -17,6 +17,7 @@ const validate = (payload) => {
   for (key in payload) {
     switch (key) {
       case "fullname":
+      case "name":
         checkEmpty(key, payload);
         break;
 

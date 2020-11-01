@@ -5,6 +5,7 @@ const Clinic = new Schema({
   name: {
     type: String,
     required: true,
+    unique: true
   },
   owner_id: {
     type: String,

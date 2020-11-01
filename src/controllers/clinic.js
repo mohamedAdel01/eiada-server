@@ -1,9 +1,9 @@
-const Clinic = require("../../models/clinic");
+const Clinic = require("../models/clinic");
 
-const Clinic_Create = async (args) => {
+const Create_Clinic = async ({ name, owner_id }) => {
   let clinicObj = new Clinic({
-    name: args.name,
-    owner_id: args.owner_id,
+    name: name,
+    owner_id: owner_id,
   });
 
   let NewClinic = await clinicObj.save();
@@ -16,5 +16,5 @@ const Clinic_Create = async (args) => {
 };
 
 module.exports = {
-  Clinic_Create,
+  Create_Clinic,
 };
