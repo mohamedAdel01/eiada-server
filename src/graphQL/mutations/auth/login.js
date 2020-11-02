@@ -26,6 +26,8 @@ const LoginMutation = {
 
     exUser.token = ''
 
+    // Hint we will make check activate clinic or not here before generate new token and login
+
     const Token = generateToken(exUser)
 
     updatedUser = await Update_Auth_Token(exUser._id, Token);

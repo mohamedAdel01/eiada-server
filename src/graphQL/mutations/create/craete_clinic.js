@@ -4,8 +4,12 @@ const { GraphQLString } = graphql;
 const { Create_Clinic } = require("../../../controllers/clinic");
 
 const { ClinicType_CRUD } = require("../../types/types");
-const { validate } = require("../../../validations")
-const { decodeToken, checkClinicExist } = require("../../../policies");
+const { validate } = require("../../../validations");
+const {
+  decodeToken,
+  checkClinicExist,
+  checkEmailVerification,
+} = require("../../../policies");
 
 const ClinicMutation = {
   type: ClinicType_CRUD,
@@ -17,8 +21,11 @@ const ClinicMutation = {
     let v_errors = validate(args);
     if (v_errors.length) return { errors: v_errors };
 
-    let {decoded, errors} = decodeToken(root.headers.authorization, false);
+    let { decoded, errors } = decodeToken(root.headers.authorization, false);
     if (errors.length) return { errors };
+
+    let { p_emailErrors } = await checkEmailVerification(decoded._id, true);
+    if (p_emailErrors.length) return { errors: p_emailErrors };
 
     let { p_clinicErrors } = await checkClinicExist();
     if (p_clinicErrors.length) return { errors: p_clinicErrors };
@@ -28,5 +35,5 @@ const ClinicMutation = {
 };
 
 module.exports = {
-  Create_Clinic: ClinicMutation
+  Create_Clinic: ClinicMutation,
 };

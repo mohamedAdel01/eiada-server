@@ -31,9 +31,18 @@ const RegisterType = new GraphQLObjectType({
 });
 
 const ClinicType_CRUD = new GraphQLObjectType({
-  name: "CraeteClinic",
+  name: "clinic_crud",
   fields: () => ({
     clinic: { type: ClinicType },
+    message: { type: GraphQLString },
+    errors: { type: new GraphQLNonNull(new GraphQLList(ErrorType)) },
+  }),
+});
+
+const BranchType_CRUD = new GraphQLObjectType({
+  name: "branch_crud",
+  fields: () => ({
+    branch: { type: BranchType },
     message: { type: GraphQLString },
     errors: { type: new GraphQLNonNull(new GraphQLList(ErrorType)) },
   }),
@@ -55,6 +64,14 @@ const ClinicType = new GraphQLObjectType({
     },
   }),
 });
+
+const BranchType = new GraphQLObjectType({
+  name: "Branch",
+  fields: () => ({
+    id: { type: GraphQLID },
+    address: { type: GraphQLString },
+  })
+})
 
 const UserType = new GraphQLObjectType({
   name: "User",
@@ -108,4 +125,6 @@ module.exports = {
   ClinicType,
   UserType,
   RoleType,
+  BranchType,
+  BranchType_CRUD
 };

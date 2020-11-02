@@ -107,7 +107,7 @@ const checkPassword = async (entered, exist) => {
   return { p_passwordErrors };
 };
 
-const checkEmailVerification = async (userID) => {
+const checkEmailVerification = async (userID, required) => {
   let p_emailErrors = [];
 
   let exUser = await User.findById(userID);
@@ -122,10 +122,20 @@ const checkEmailVerification = async (userID) => {
     };
   }
 
-  if (exUser.email_verified) {
+  if (!required && exUser.email_verified) {
     p_emailErrors.push({
       key: "Verification",
       message: "Email already verified",
+    });
+    return {
+      p_emailErrors,
+    };
+  }
+
+  if (required && !exUser.email_verified) {
+    p_emailErrors.push({
+      key: "Verification",
+      message: "Please verify your email first",
     });
     return {
       p_emailErrors,
@@ -157,7 +167,6 @@ const checkVerificationCode = async (decoded) => {
 const checkClinicExist = async () => {
   let p_clinicErrors = [];
   let clinic = await Clinic.find();
-  console.log(clinic)
   if (clinic.length) {
     p_clinicErrors.push({
       key: "DB",
