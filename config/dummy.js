@@ -8,12 +8,41 @@
 // const Subscription = require('../src/models/subscription')
 // const User = require('../src/models/user')
 const Role = require('../src/models/role')
+const Specialization = require('../src/models/specialization')
 
 // dummy data -------------------------
-let roles = ['admin', 'doctor', 'secretary']
+let roles = [
+    {
+        name: 'admin',
+        create: [],
+        read: [],
+        update: [],
+        delete: [],
+    },
+    {
+        name: 'doctor',
+        create: [],
+        read: [],
+        update: [],
+        delete: [],
+    },
+    {
+        name: 'secretary',
+        create: [],
+        read: [],
+        update: [],
+        delete: [],
+    }
+]
+
+let specializations = ['Dentistry', 'Pediatrics' ]
+
 roles.forEach(role => {
-    let roleObj = new Role({
-        name: role
-    })
+    let roleObj = new Role(role)
     roleObj.save()
+})
+
+specializations.forEach(spec => {
+    let specObj = new Specialization({name: spec})
+    specObj.save()
 })
