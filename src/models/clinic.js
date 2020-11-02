@@ -6,10 +6,6 @@ const Clinic = new Schema({
     type: String,
     required: true
   },
-  owner_id: {
-    type: String,
-    required: true,
-  },
   activated: {
     type: Boolean,
     default: false,

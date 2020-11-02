@@ -154,10 +154,11 @@ const checkVerificationCode = async (decoded) => {
   return { p_codeErrors };
 };
 
-const checkClinicExist = async (owner_id) => {
+const checkClinicExist = async () => {
   let p_clinicErrors = [];
-  let clinic = await Clinic.findOne({ owner_id: owner_id });
-  if (clinic) {
+  let clinic = await Clinic.find();
+  console.log(clinic)
+  if (clinic.length) {
     p_clinicErrors.push({
       key: "DB",
       message: "A clinic has been established before",

@@ -1,9 +1,8 @@
 const Clinic = require("../models/clinic");
 
-const Create_Clinic = async ({ name, owner_id }) => {
+const Create_Clinic = async ({ name }) => {
   let clinicObj = new Clinic({
-    name: name,
-    owner_id: owner_id,
+    name: name
   });
 
   let NewClinic = await clinicObj.save();
