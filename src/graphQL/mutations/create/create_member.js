@@ -15,7 +15,6 @@ const createMemberMutation = {
     new_role: {type: RoleInputType},
     field: {type: GraphQLString},
     division: {type: GraphQLString}
-
   },
 
   async resolve(parent, args, root) {
