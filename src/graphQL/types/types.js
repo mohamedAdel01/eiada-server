@@ -6,6 +6,7 @@ const {
   GraphQLInt,
   GraphQLString,
   GraphQLID,
+  GraphQLInputObjectType
 } = graphql;
 // const ObjectId = require('mongodb').ObjectID
 
@@ -70,8 +71,8 @@ const BranchType = new GraphQLObjectType({
   fields: () => ({
     id: { type: GraphQLID },
     address: { type: GraphQLString },
-  })
-})
+  }),
+});
 
 const UserType = new GraphQLObjectType({
   name: "User",
@@ -85,12 +86,8 @@ const UserType = new GraphQLObjectType({
     password: { type: GraphQLString },
     role: { type: GraphQLString },
     token: { type: GraphQLString },
-    specialization: {
-      type: SpecializationType,
-      resolve(parent, args) {
-        return specialization.findById(parent.specialization_id);
-      },
-    },
+    field: { type: GraphQLString },
+    division: { type: GraphQLString },
   }),
 });
 
@@ -99,8 +96,23 @@ const RoleType = new GraphQLObjectType({
   fields: () => ({
     id: { type: GraphQLID },
     name: { type: GraphQLString },
+    create: { type: new GraphQLList(GraphQLString) },
+    read: { type: new GraphQLList(GraphQLString) },
+    update: { type: new GraphQLList(GraphQLString) },
+    delete: { type: new GraphQLList(GraphQLString) },
   }),
 });
+
+const RoleInputType = new GraphQLInputObjectType({
+  name: 'RoleInput',
+  fields: {
+    name: { type: GraphQLString },
+    create: { type: new GraphQLList(GraphQLString) },
+    read: { type: new GraphQLList(GraphQLString) },
+    update: { type: new GraphQLList(GraphQLString) },
+    delete: { type: new GraphQLList(GraphQLString) },
+  }
+})
 
 const SpecializationType = new GraphQLObjectType({
   name: "Specialization",
@@ -126,5 +138,6 @@ module.exports = {
   UserType,
   RoleType,
   BranchType,
-  BranchType_CRUD
+  BranchType_CRUD,
+  RoleInputType
 };

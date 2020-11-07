@@ -3,14 +3,19 @@ const { GraphQLString } = graphql;
 
 const { Create_Branch } = require("../../../controllers/branch");
 
-const { BranchType_CRUD } = require("../../types/types");
+const { MessageType, RoleInputType } = require("../../types/types");
 const { validate } = require("../../../validations");
 const { decodeToken } = require("../../../policies");
 
-const createBranchMutation = {
-  type: BranchType_CRUD,
+const createMemberMutation = {
+  type: MessageType,
   args: {
-    address: { type: GraphQLString },
+    user_email: { type: GraphQLString },
+    role_id: {type: GraphQLString},
+    new_role: {type: RoleInputType},
+    field: {type: GraphQLString},
+    division: {type: GraphQLString}
+
   },
 
   async resolve(parent, args, root) {
@@ -25,5 +30,5 @@ const createBranchMutation = {
 };
 
 module.exports = {
-  Create_Branch: createBranchMutation,
+  Create_Member: createMemberMutation,
 };

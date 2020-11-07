@@ -5,6 +5,7 @@ const Logout = require("./auth/logout");
 const { forget_password_request,change_password } = require("./auth/forget_password");
 const { Create_Clinic } = require("./create/craete_clinic");
 const { Create_Branch } = require("./create/create_branch");
+const { Create_Member } = require("./create/create_member");
 
 module.exports = {
   Register,
@@ -15,5 +16,6 @@ module.exports = {
   forget_password_request,
   change_password,
   Create_Clinic,
-  Create_Branch
+  Create_Branch,
+  Create_Member
 };

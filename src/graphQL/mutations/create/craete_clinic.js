@@ -11,7 +11,7 @@ const {
   checkEmailVerification,
 } = require("../../../policies");
 
-const ClinicMutation = {
+const createClinicMutation = {
   type: ClinicType_CRUD,
   args: {
     name: { type: GraphQLString },
@@ -35,5 +35,5 @@ const ClinicMutation = {
 };
 
 module.exports = {
-  Create_Clinic: ClinicMutation,
+  Create_Clinic: createClinicMutation,
 };
