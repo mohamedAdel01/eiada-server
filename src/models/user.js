@@ -17,23 +17,21 @@ const User = new Schema({
   },
   phone: {
     type: String,
-    required: true
+    required: true,
   },
   role: {
     type: String,
     required: true,
-  },
-  specialization_id: {
-    type: String,
-    // required: true
   },
   email_verified: {
     type: Boolean,
     default: false,
   },
   token: {
-    type: String
+    type: String,
   },
+  field: String,
+  division: String,
   image: String,
   birthdate: Date,
   created_at: {
