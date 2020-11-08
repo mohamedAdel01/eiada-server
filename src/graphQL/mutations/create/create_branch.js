@@ -20,7 +20,7 @@ const createBranchMutation = {
     let { decoded ,errors } = decodeToken(root.headers.authorization, false);
     if (errors.length) return { errors };
 
-    let { p_userErrors } = await checkUserExistance(decoded._id, root.headers.authorization);
+    let { p_userErrors } = await checkUserExistance(decoded._id, root.headers.authorization, false);
     if (p_userErrors.length) return { errors: p_userErrors };
 
     let { p_clinicErrors } = await checkClinicExist(true);

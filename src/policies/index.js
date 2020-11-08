@@ -68,7 +68,7 @@ const checkEmailExistance = async (email, required) => {
   }
 };
 
-const checkUserExistance = async (id, token) => {
+const checkUserExistance = async (id, token, skipEmail) => {
   let p_userErrors = [];
   let exUser = await User.findById(id);
 
@@ -88,7 +88,7 @@ const checkUserExistance = async (id, token) => {
     return { p_userErrors };
   }
 
-  if (token && !exUser.email_verified) {
+  if (token && !skipEmail && !exUser.email_verified ) {
     p_userErrors.push({
       key: "Verification",
       message: "Please verify your email first",

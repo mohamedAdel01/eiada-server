@@ -35,7 +35,8 @@ const createMemberMutation = {
 
     let { p_userErrors } = await checkUserExistance(
       decoded._id,
-      root.headers.authorization
+      root.headers.authorization,
+      false
     );
     if (p_userErrors.length) return { errors: p_userErrors };
 
