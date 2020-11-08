@@ -10,8 +10,20 @@ const Create_User = async (args, role) => {
     email: args.email,
     phone: args.phone,
     password: securedPassword,
-    role: role,
-    token: "",
+    role: role
+  });
+
+  return await userObj.save();
+};
+
+const Add_Member = async (args, role) => {
+
+  let userObj = new User({
+    fullname: "--",
+    email: args.email,
+    phone: "--",
+    password: "--",
+    role: role
   });
 
   return await userObj.save();
@@ -44,6 +56,7 @@ const Update_Auth_Token = async (user_id, Token) => {
 
 module.exports = {
   Create_User,
+  Add_Member,
   Update_Password,
   Update_Email_Verify,
   Update_Auth_Token,

@@ -1,7 +1,7 @@
 const graphql = require("graphql");
 const { GraphQLString } = graphql;
 
-const { Create_Branch } = require("../../../controllers/branch");
+const { Add_Member } = require("../../../controllers/user");
 
 const { MessageType, RoleInputType } = require("../../types/types");
 const { validate } = require("../../../validations");
@@ -10,7 +10,7 @@ const { decodeToken } = require("../../../policies");
 const createMemberMutation = {
   type: MessageType,
   args: {
-    user_email: { type: GraphQLString },
+    email: { type: GraphQLString },
     role_id: {type: GraphQLString},
     new_role: {type: RoleInputType},
     field: {type: GraphQLString},
@@ -24,7 +24,11 @@ const createMemberMutation = {
     let { errors } = decodeToken(root.headers.authorization, false);
     if (errors.length) return { errors };
 
-    return await Create_Branch({ address: args.address });
+    if(args.role_id) {
+        return await Add_Member({ email: args.email });
+    }
+
+     
   },
 };
 
