@@ -16,13 +16,14 @@ const Create_User = async (args, role) => {
   return await userObj.save();
 };
 
-const Add_Member = async ({email, role}) => {
+const Add_Member = async ({email, branch_id, role}) => {
   const securedPassword = bcrypt.hashSync('123456', 10);
 
   let userObj = new User({
     fullname: 'New User',
     email: email,
     phone: "--",
+    branch_id: branch_id,
     password: securedPassword,
     role: role
   });
