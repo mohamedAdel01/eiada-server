@@ -12,6 +12,7 @@ const {
   checkRoleExist,
   checkEmailExistance,
   checkUserExistance,
+  checkBranchExist
 } = require("../../../policies");
 
 const createMemberMutation = {
@@ -22,7 +23,7 @@ const createMemberMutation = {
     field: { type: GraphQLString },
     division: { type: GraphQLString },
     role_name: { type: new GraphQLNonNull(GraphQLString) },
-    new_role: { type: RoleInputType },
+    new_role: { type: new GraphQLNonNull(RoleInputType) },
   },
 
   async resolve(parent, args, root) {
@@ -41,8 +42,11 @@ const createMemberMutation = {
     let { p_emailErrors } = await checkEmailExistance(args.email, false);
     if (p_emailErrors.length) return { errors: p_emailErrors };
 
+    let { p_branchErrors } = await checkBranchExist(args.branch_id, false);
+    if (p_branchErrors.length) return { errors: p_branchErrors };
+
     if (args.role_name != "custom") {
-      let newMember =  await Add_Member({ email: args.email, role: args.role_name });
+      let newMember =  await Add_Member({ email: args.email,branch_id: branch_id, role: args.role_name });
 
       await send_verification_email(newMember, "email", true);
 
@@ -52,13 +56,6 @@ const createMemberMutation = {
       }
     }
 
-    if (!args.new_role) {
-      return {
-        key: key,
-        message: `new_role is Required!`,
-      };
-    }
-
     if (!args.new_role.custom) {
       let { p_roleErrors } = await checkRoleExist(args.new_role.name);
       if (p_roleErrors.length) return { errors: p_roleErrors };
@@ -66,7 +63,7 @@ const createMemberMutation = {
 
     let { role } = await Create_Role(args.new_role, args.email);
 
-    let newMember = await Add_Member({ email: args.email, role: role.name });
+    let newMember = await Add_Member({ email: args.email, branch_id: branch_id, role: role.name });
 
     await send_verification_email(newMember, "email", true);
 

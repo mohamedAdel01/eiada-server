@@ -197,14 +197,6 @@ const checkClinicExist = async (required) => {
 
 const checkRoleExist = async (name) => {
   let p_roleErrors = [];
-  if (!name) {
-    p_roleErrors.push({
-      key: "Validation",
-      message: "Please provide a role name for new role",
-    });
-
-    return { p_roleErrors };
-  }
 
   let role = await Role.find({ name: name });
   if (role.length) {
@@ -217,6 +209,20 @@ const checkRoleExist = async (name) => {
   return { p_roleErrors };
 };
 
+const checkBranchExist = async (branch_id) => {
+  let p_branchErrors = [];
+
+  let branch = await Role.findById(branch_id);
+  if (!branch) {
+    p_branchErrors.push({
+      key: "DB",
+      message: "Branch not exist",
+    });
+  }
+
+  return { p_branchErrors };
+};
+
 module.exports = {
   generateToken,
   decodeToken,
@@ -227,4 +233,5 @@ module.exports = {
   checkUserExistance,
   checkClinicExist,
   checkRoleExist,
+  checkBranchExist
 };
