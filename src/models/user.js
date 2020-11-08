@@ -30,6 +30,7 @@ const User = new Schema({
   token: {
     type: String,
   },
+  branch_id: String,
   field: String,
   division: String,
   image: String,

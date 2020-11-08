@@ -1,5 +1,5 @@
 const graphql = require("graphql");
-const { GraphQLString } = graphql;
+const { GraphQLString, GraphQLNonNull } = graphql;
 
 const { validate_email, send_verification_email } = require("../../../controllers/emails");
 
@@ -9,7 +9,7 @@ const { decodeToken, checkUserExistance } = require("../../../policies");
 const VerifyEmailMutation = {
   type: MessageType,
   args: {
-    verification_code: { type: GraphQLString },
+    verification_code: { type: new GraphQLNonNull(GraphQLString) },
   },
 
   async resolve(_, args, root) {

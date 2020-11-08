@@ -1,16 +1,16 @@
 const graphql = require("graphql");
-const { GraphQLString } = graphql;
+const { GraphQLString, GraphQLNonNull } = graphql;
 
 const { Create_Branch } = require("../../../controllers/branch");
 
 const { BranchType_CRUD } = require("../../types/types");
 const { validate } = require("../../../validations");
-const { decodeToken, checkUserExistance, checkEmailVerification } = require("../../../policies");
+const { decodeToken, checkUserExistance } = require("../../../policies");
 
 const createBranchMutation = {
   type: BranchType_CRUD,
   args: {
-    address: { type: GraphQLString },
+    address: { type: new GraphQLNonNull(GraphQLString) },
   },
 
   async resolve(parent, args, root) {

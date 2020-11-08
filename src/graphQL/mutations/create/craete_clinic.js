@@ -1,5 +1,5 @@
 const graphql = require("graphql");
-const { GraphQLString } = graphql;
+const { GraphQLString, GraphQLNonNull } = graphql;
 
 const { Create_Clinic } = require("../../../controllers/clinic");
 
@@ -8,14 +8,13 @@ const { validate } = require("../../../validations");
 const {
   decodeToken,
   checkClinicExist,
-  checkEmailVerification,
   checkUserExistance
 } = require("../../../policies");
 
 const createClinicMutation = {
   type: ClinicType_CRUD,
   args: {
-    name: { type: GraphQLString },
+    name: { type: new GraphQLNonNull(GraphQLString) },
   },
 
   async resolve(parent, args, root) {

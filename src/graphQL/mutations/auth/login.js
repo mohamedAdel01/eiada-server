@@ -1,5 +1,5 @@
 const graphql = require("graphql");
-const { GraphQLString } = graphql;
+const { GraphQLString, GraphQLNonNull } = graphql;
 
 const { Update_Auth_Token } = require("../../../controllers/user");
 
@@ -10,8 +10,8 @@ const { checkEmailExistance, checkPassword, generateToken } = require("../../../
 const LoginMutation = {
   type: RegisterType,
   args: {
-    email: { type: GraphQLString },
-    password: { type: GraphQLString },
+    email: { type: new GraphQLNonNull(GraphQLString) },
+    password: { type: new GraphQLNonNull(GraphQLString) },
   },
 
   async resolve(parent, args) {

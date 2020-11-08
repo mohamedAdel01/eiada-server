@@ -1,5 +1,5 @@
 const graphql = require("graphql");
-const { GraphQLString } = graphql;
+const { GraphQLString, GraphQLNonNull } = graphql;
 
 const { Create_User, Update_Auth_Token } = require("../../../controllers/user");
 const { send_verification_email } = require("../../../controllers/emails");
@@ -11,10 +11,10 @@ const { checkEmailExistance, generateToken } = require("../../../policies");
 const RegisterMutation = {
   type: RegisterType,
   args: {
-    fullname: { type: GraphQLString },
-    email: { type: GraphQLString },
-    phone: { type: GraphQLString },
-    password: { type: GraphQLString },
+    fullname: { type: new GraphQLNonNull(GraphQLString) },
+    email: { type: new GraphQLNonNull(GraphQLString) },
+    phone: { type: new GraphQLNonNull(GraphQLString) },
+    password: { type: new GraphQLNonNull(GraphQLString) },
   },
 
   async resolve(_, args) {

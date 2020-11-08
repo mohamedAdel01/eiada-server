@@ -1,5 +1,5 @@
 const graphql = require("graphql");
-const { GraphQLString } = graphql;
+const { GraphQLString, GraphQLNonNull } = graphql;
 
 const { send_verification_email, Delete_Verification } = require("../../../controllers/emails");
 const { Update_Password } = require("../../../controllers/user");
@@ -12,7 +12,7 @@ const { checkEmailExistance,checkUserExistance, checkVerificationCode, decodeTok
 const forgetPasswordRequestMutation = {
   type: MessageType,
   args: {
-    email: { type: GraphQLString },
+    email: { type: new GraphQLNonNull(GraphQLString) },
   },
 
   async resolve(parent, args) {
@@ -29,8 +29,8 @@ const forgetPasswordRequestMutation = {
 const changePasswordMutation = {
   type: MessageType,
   args: {
-    verification_code: { type: GraphQLString },
-    new_password: { type: GraphQLString },
+    verification_code: { type: new GraphQLNonNull(GraphQLString) },
+    new_password: { type: new GraphQLNonNull(GraphQLString) },
   },
 
   async resolve(_, args) {

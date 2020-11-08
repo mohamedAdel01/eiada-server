@@ -20,6 +20,7 @@ const validate = (payload) => {
       case "name":
       case "role_name":
       case "address":
+      case "branch_id":
         checkEmpty(key, payload);
         break;
 
