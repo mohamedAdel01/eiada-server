@@ -6,7 +6,8 @@ const {
   GraphQLInt,
   GraphQLString,
   GraphQLID,
-  GraphQLInputObjectType
+  GraphQLInputObjectType,
+  GraphQLBoolean
 } = graphql;
 // const ObjectId = require('mongodb').ObjectID
 
@@ -107,6 +108,7 @@ const RoleInputType = new GraphQLInputObjectType({
   name: 'RoleInput',
   fields: {
     name: { type: GraphQLString },
+    custom: { type: GraphQLBoolean },
     create: { type: new GraphQLList(GraphQLString) },
     read: { type: new GraphQLList(GraphQLString) },
     update: { type: new GraphQLList(GraphQLString) },

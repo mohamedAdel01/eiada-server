@@ -9,6 +9,7 @@ const {
   decodeToken,
   checkClinicExist,
   checkEmailVerification,
+  checkUserExistance
 } = require("../../../policies");
 
 const createClinicMutation = {
@@ -23,6 +24,9 @@ const createClinicMutation = {
 
     let { decoded, errors } = decodeToken(root.headers.authorization, false);
     if (errors.length) return { errors };
+
+    let { p_userErrors } = await checkUserExistance(decoded._id, root.headers.authorization);
+    if (p_userErrors.length) return { errors: p_userErrors };
 
     let { p_emailErrors } = await checkEmailVerification(decoded._id, true);
     if (p_emailErrors.length) return { errors: p_emailErrors };

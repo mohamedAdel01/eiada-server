@@ -16,11 +16,11 @@ const Create_User = async (args, role) => {
   return await userObj.save();
 };
 
-const Add_Member = async (args, role) => {
+const Add_Member = async ({email, role}) => {
 
   let userObj = new User({
     fullname: "--",
-    email: args.email,
+    email: email,
     phone: "--",
     password: "--",
     role: role

@@ -7,10 +7,26 @@ const Role = new Schema({
     required: true,
     unique: true,
   },
-  create: [String],
-  read: [String],
-  update: [String],
-  delete: [String],
+  custom: {
+    type: Boolean,
+    default: false
+  },
+  create: {
+    type: [String],
+    default: []
+  },
+  read: {
+    type: [String],
+    default: []
+  },
+  update: {
+    type: [String],
+    default: []
+  },
+  delete: {
+    type: [String],
+    default: []
+  },
 });
 
 module.exports = mongoose.model("Role", Role);

@@ -18,6 +18,8 @@ const validate = (payload) => {
     switch (key) {
       case "fullname":
       case "name":
+      case "role_name":
+      case "address":
         checkEmpty(key, payload);
         break;
 
@@ -55,6 +57,7 @@ const validate = (payload) => {
           });
         }
         break;
+
     }
   }
 

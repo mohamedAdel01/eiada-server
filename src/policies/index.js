@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 const Clinic = require("../models/clinic");
+const Role = require("../models/role");
 const Email_Verification = require("../models/email_verify");
 
 const generateToken = (payload) => {
@@ -53,13 +54,13 @@ const checkEmailExistance = async (email, required) => {
   if (required && !exUser) {
     p_emailErrors.push({
       key: "DB",
-      message: "User isn't exist",
+      message: "Email isn't exist",
     });
     return { p_emailErrors };
   } else if (!required && exUser) {
     p_emailErrors.push({
       key: "DB",
-      message: "User is already exist",
+      message: "Email is already exist",
     });
     return { p_emailErrors };
   } else {
@@ -177,6 +178,28 @@ const checkClinicExist = async () => {
   return { p_clinicErrors };
 };
 
+const checkRoleExist = async (name) => {
+  let p_roleErrors = [];
+  if (!name) {
+    p_roleErrors.push({
+      key: "Validation",
+      message: "Please provide a role name for new role",
+    });
+
+    return { p_roleErrors };
+  }
+
+  let role = await Role.find({ name: name });
+  if (role.length) {
+    p_roleErrors.push({
+      key: "DB",
+      message: "A role name has been taken before",
+    });
+  }
+
+  return { p_roleErrors };
+};
+
 module.exports = {
   generateToken,
   decodeToken,
@@ -186,4 +209,5 @@ module.exports = {
   checkVerificationCode,
   checkUserExistance,
   checkClinicExist,
+  checkRoleExist,
 };
