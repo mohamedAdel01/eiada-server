@@ -17,12 +17,13 @@ const Create_User = async (args, role) => {
 };
 
 const Add_Member = async ({email, role}) => {
+  const securedPassword = bcrypt.hashSync('123456', 10);
 
   let userObj = new User({
-    fullname: "--",
+    fullname: 'New User',
     email: email,
     phone: "--",
-    password: "--",
+    password: securedPassword,
     role: role
   });
 

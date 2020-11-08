@@ -88,6 +88,16 @@ const checkUserExistance = async (id, token) => {
     return { p_userErrors };
   }
 
+  if (token && !exUser.email_verified) {
+    p_userErrors.push({
+      key: "Verification",
+      message: "Please verify your email first",
+    });
+    return {
+      p_userErrors,
+    };
+  }
+
   return { exUser, p_userErrors };
 };
 
@@ -116,7 +126,7 @@ const checkEmailVerification = async (userID, required) => {
   if (!exUser) {
     p_emailErrors.push({
       key: "Verification",
-      message: "Expired or Wrong code",
+      message: "can't find User",
     });
     return {
       p_emailErrors,
@@ -165,13 +175,20 @@ const checkVerificationCode = async (decoded) => {
   return { p_codeErrors };
 };
 
-const checkClinicExist = async () => {
+const checkClinicExist = async (required) => {
   let p_clinicErrors = [];
   let clinic = await Clinic.find();
-  if (clinic.length) {
+  if (!required && clinic.length) {
     p_clinicErrors.push({
       key: "DB",
       message: "A clinic has been established before",
+    });
+  }
+
+  if (required && !clinic.length) {
+    p_clinicErrors.push({
+      key: "DB",
+      message: "Please add Clinic first",
     });
   }
 

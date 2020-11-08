@@ -28,10 +28,7 @@ const createClinicMutation = {
     let { p_userErrors } = await checkUserExistance(decoded._id, root.headers.authorization);
     if (p_userErrors.length) return { errors: p_userErrors };
 
-    let { p_emailErrors } = await checkEmailVerification(decoded._id, true);
-    if (p_emailErrors.length) return { errors: p_emailErrors };
-
-    let { p_clinicErrors } = await checkClinicExist();
+    let { p_clinicErrors } = await checkClinicExist(false);
     if (p_clinicErrors.length) return { errors: p_clinicErrors };
 
     return await Create_Clinic({ name: args.name });

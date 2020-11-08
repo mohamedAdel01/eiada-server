@@ -3,6 +3,7 @@ const { GraphQLString } = graphql;
 
 const { Add_Member } = require("../../../controllers/user");
 const { Create_Role } = require("../../../controllers/role");
+const { send_verification_email } = require("../../../controllers/emails");
 
 const { MessageType, RoleInputType } = require("../../types/types");
 const { validate } = require("../../../validations");
@@ -41,6 +42,9 @@ const createMemberMutation = {
 
     if (args.role_name != "custom") {
       let newMember =  await Add_Member({ email: args.email, role: args.role_name });
+
+      await send_verification_email(newMember, "email", true);
+
       return {
         message: 'New member has been added successfully', 
         errors: []
@@ -62,6 +66,8 @@ const createMemberMutation = {
     let { role } = await Create_Role(args.new_role, args.email);
 
     let newMember = await Add_Member({ email: args.email, role: role.name });
+
+    await send_verification_email(newMember, "email", true);
 
     return {
       message: 'New member has been added successfully', 
