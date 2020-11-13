@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 const Clinic = require("../models/clinic");
 const Role = require("../models/role");
+const Branch = require("../models/branch");
 const Email_Verification = require("../models/email_verify");
 
 const generateToken = (payload) => {
@@ -212,7 +213,7 @@ const checkRoleExist = async (name) => {
 const checkBranchExist = async (branch_id) => {
   let p_branchErrors = [];
 
-  let branch = await Role.findById(branch_id);
+  let branch = await Branch.findById(branch_id);
   if (!branch) {
     p_branchErrors.push({
       key: "DB",

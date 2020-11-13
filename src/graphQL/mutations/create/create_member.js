@@ -47,7 +47,7 @@ const createMemberMutation = {
     if (p_branchErrors.length) return { errors: p_branchErrors };
 
     if (args.role_name != "custom") {
-      let newMember =  await Add_Member({ email: args.email,branch_id: branch_id, role: args.role_name });
+      let newMember =  await Add_Member({ email: args.email,branch_id: args.branch_id, role: args.role_name });
 
       await send_verification_email(newMember, "email", true);
 

@@ -12,15 +12,12 @@ const VerifyEmailMutation = {
     verification_code: { type: new GraphQLNonNull(GraphQLString) },
   },
 
-  async resolve(_, args, root) {
-    let { errors, decoded } = decodeToken(root.headers.authorization, false);
-    if (errors.length) return { errors };
-
-    let { exUser, p_userErrors } = await checkUserExistance(decoded._id, root.headers.authorization, true);
-    if (p_userErrors.length) return { errors: p_userErrors };
-
+  async resolve(_, args) {
     let decoded_VCode = decodeToken(args.verification_code, true);
     if (decoded_VCode.errors.length) return decoded_VCode;
+
+    let { exUser, p_userErrors } = await checkUserExistance(decoded_VCode.user_id);
+    if (p_userErrors.length) return { errors: p_userErrors };
 
     return await validate_email(decoded_VCode.decoded, exUser);
   },

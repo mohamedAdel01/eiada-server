@@ -5,7 +5,7 @@ const { Create_Branch } = require("../../../controllers/branch");
 
 const { BranchType_CRUD } = require("../../types/types");
 const { validate } = require("../../../validations");
-const { decodeToken, checkUserExistance } = require("../../../policies");
+const { decodeToken, checkUserExistance, checkClinicExist } = require("../../../policies");
 
 const createBranchMutation = {
   type: BranchType_CRUD,
