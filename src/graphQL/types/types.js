@@ -61,7 +61,7 @@ const ClinicType = new GraphQLObjectType({
     owner: {
       type: UserType,
       resolve(parent, args) {
-        return user.findById(parent.owner_id);
+        return user.findOne({role: 'admin'});
       },
     },
   }),

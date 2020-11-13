@@ -64,7 +64,7 @@ const createMemberMutation = {
 
     let { role } = await Create_Role(args.new_role, args.email);
 
-    let newMember = await Add_Member({ email: args.email, branch_id: branch_id, role: role.name });
+    let newMember = await Add_Member({ email: args.email, branch_id: args.branch_id, role: role.name });
 
     await send_verification_email(newMember, "email", true);
 
