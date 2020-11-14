@@ -6,8 +6,8 @@ const Session = new Schema({
     type: Schema.Types.ObjectId,
     required: true,
   },
-  patient_id: {
-    type: Schema.Types.ObjectId,
+  patient_phone: {
+    type: String,
     required: true,
   },
   creator_id: {
