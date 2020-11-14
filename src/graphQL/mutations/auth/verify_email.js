@@ -23,7 +23,7 @@ const VerifyEmailMutation = {
   },
 };
 
-const resendVerificationEmailMutation = {
+const ResendVerificationEmailMutation = {
   type: MessageType,
 
   async resolve(parent, args, root) {
@@ -36,5 +36,5 @@ const resendVerificationEmailMutation = {
 
 module.exports = {
   Verify_Email: VerifyEmailMutation,
-  resend_verification_email: resendVerificationEmailMutation,
+  Resend_Verification_Email: ResendVerificationEmailMutation,
 };

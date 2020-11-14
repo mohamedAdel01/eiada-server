@@ -6,10 +6,9 @@ const { Update_Password } = require("../../../controllers/user");
 
 const { MessageType } = require("../../types/types");
 const { validate } = require("../../../validations");
-const { checkEmailExistance,checkUserExistance, checkVerificationCode, decodeToken } = require("../../../policies");
+const { checkEmailExistance,checkUserExistance, checkVerificationCode, decodeToken, checkPassword } = require("../../../policies");
 
-
-const forgetPasswordRequestMutation = {
+const ForgetPasswordRequestMutation = {
   type: MessageType,
   args: {
     email: { type: new GraphQLNonNull(GraphQLString) },
@@ -26,21 +25,21 @@ const forgetPasswordRequestMutation = {
   },
 };
 
-const changePasswordMutation = {
+const ChangePasswordMutation = {
   type: MessageType,
   args: {
     verification_code: { type: new GraphQLNonNull(GraphQLString) },
     new_password: { type: new GraphQLNonNull(GraphQLString) },
   },
 
-  async resolve(_, args) {
+  async resolve(parent, args, root) {
 
     let { errors, decoded } = decodeToken(args.verification_code, true);
     if (errors.length) return { errors };
 
     let { exUser,p_userErrors } = await checkUserExistance(decoded.user_id);
     if (p_userErrors.length) return { errors: p_userErrors };
-    
+
     let { p_codeErrors } = await checkVerificationCode(decoded, exUser);
     if (p_codeErrors.length) return { errors: p_codeErrors };
 
@@ -55,7 +54,35 @@ const changePasswordMutation = {
   },
 };
 
+const UpdatePasswordMutation = {
+  type: MessageType,
+  args: {
+    old_password: { type: new GraphQLNonNull(GraphQLString) },
+    new_password: { type: new GraphQLNonNull(GraphQLString) },
+  },
+
+  async resolve(parent, args, root) {
+
+    let { decoded, errors } = decodeToken(root.headers.authorization, false);
+    if (errors.length) return { errors };
+
+    let { exUser,p_userErrors } = await checkUserExistance(decoded._id);
+    if (p_userErrors.length) return { errors: p_userErrors };
+    
+    let { p_passwordErrors } = await checkPassword(args.old_password, exUser.password);
+    if (p_passwordErrors.length) return { errors: p_passwordErrors };
+
+    await Update_Password(args.new_password, exUser._id)
+
+    return {
+      message: "Password changed successfully",
+      errors: [],
+    };
+  },
+};
+
 module.exports = {
-  forget_password_request: forgetPasswordRequestMutation,
-  change_password: changePasswordMutation,
+  Forget_Password_Request: ForgetPasswordRequestMutation,
+  Change_Password: ChangePasswordMutation,
+  Update_Password: UpdatePasswordMutation,
 };
