@@ -3,15 +3,15 @@ const Schema = mongoose.Schema;
 
 const Session = new Schema({
   doctor_id: {
-    type: String,
+    type: Schema.Types.ObjectId,
     required: true,
   },
   patient_id: {
-    type: String,
+    type: Schema.Types.ObjectId,
     required: true,
   },
   creator_id: {
-    type: String,
+    type: Schema.Types.ObjectId,
     required: true
   },
   booking_date: {
@@ -42,13 +42,9 @@ const Session = new Schema({
     description: String,
     price: Number,
   }],
-  created_at: {
-    type: Date,
-    default: Date.now
-  },
   paid: Number,
   due_amount: Number
-});
+}, {timestamps: true});
 
 Session.pre('update', function(next) {
   console.log(this)

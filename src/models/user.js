@@ -18,6 +18,7 @@ const User = new Schema({
   phone: {
     type: String,
     required: true,
+    trim: true,
   },
   role: {
     type: String,
@@ -34,11 +35,7 @@ const User = new Schema({
   field: String,
   division: String,
   image: String,
-  birthdate: Date,
-  created_at: {
-    type: Date,
-    default: Date.now,
-  },
-});
+  birthdate: Date
+}, {timestamps: true});
 
 module.exports = mongoose.model("User", User);

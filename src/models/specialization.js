@@ -8,6 +8,6 @@ const Specialization = new Schema({
     required: true,
   },
   diviisions: [String]
-});
+}, {timestamps: true});
 
 module.exports = mongoose.model("Specialization", Specialization);

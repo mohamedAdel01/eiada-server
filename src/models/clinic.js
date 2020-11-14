@@ -11,11 +11,7 @@ const Clinic = new Schema({
     default: false,
   },
   logo: String,
-  theme_settings: String,
-  created_at: {
-    type: Date,
-    default: Date.now,
-  },
-});
+  theme_settings: String
+}, {timestamps: true});
 
 module.exports = mongoose.model("Clinic", Clinic);

@@ -7,6 +7,6 @@ const Branch = new Schema({
     required: true,
   },
   specializations_ids: [String],
-});
+}, {timestamps: true});
 
 module.exports = mongoose.model("Branch", Branch);

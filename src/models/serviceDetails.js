@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const ServiceDetails = new Schema({
   specialization_id: {
-    type: String,
+    type: Schema.Types.ObjectId,
     required: true,
   },
   name: {
@@ -15,6 +15,6 @@ const ServiceDetails = new Schema({
     type: Number,
     required: true,
   },
-});
+}, {timestamps: true});
 
 module.exports = mongoose.model("ServiceDetails", ServiceDetails);
