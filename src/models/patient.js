@@ -20,9 +20,8 @@ const Patient = new Schema({
   },
   image: String,
   birthdate: Date,
-  chief_complaint: String,
-  past_history: String,
-  medical_history: String,
+  past_history: [String],
+  medical_history: [String],
   created_at: {
     type: Date,
     default: Date.now,

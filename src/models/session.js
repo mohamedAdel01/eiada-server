@@ -10,26 +10,61 @@ const Session = new Schema({
     type: String,
     required: true,
   },
-  date: {
-    type: Date,
-    required: true,
-    default: Date.now,
-  },
-  time: {
-    type: Date,
-    required: true,
-  },
-  services_ids: [String],
-  state: {
+  creator_id: {
     type: String,
-    enum: ["Opened", "Closed"],
+    required: true
   },
-  partial: {
+  booking_date: {
+    type: Date,
+    required: true
+  },
+  status: {
+    type: String,
+    enum: ["Checkup" , "Consultation"],
+  },
+  chief_complaint: String,
+  session_summary: String,
+  services: [{
+    service_description: String,
+    price: Number,
+    status: {
+      type: String,
+      enum: ["Open" , "Closed"],
+    },
+    opened_at: {
+      type: Date
+    },
+    closed_at: {
+      type: Date
+    }
+  }],
+  partial: [{
     description: String,
     price: Number,
+  }],
+  created_at: {
+    type: Date,
+    default: Date.now
   },
   paid: Number,
-  total: Number,
+  due_amount: Number
+});
+
+Session.pre('update', function(next) {
+  console.log(this)
+  next()
+
+  // const modifiedField = this.getUpdate().$set.field;
+  // if (!modifiedField) {
+  //     return next();
+  // }
+  // try {
+  //     const newFiedValue = // do whatever...
+  //     this.getUpdate().$set.field = newFieldValue;
+  //     next();
+  // } catch (error) {
+  //     return next(error);
+  // }
 });
 
 module.exports = mongoose.model("Session", Session);
