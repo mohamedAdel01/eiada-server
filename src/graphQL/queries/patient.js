@@ -32,8 +32,9 @@ const PatientsQueries = {
         false
       );
       if (p_userErrors.length) return { errors: p_userErrors };
+
       let patient = await Patient.findOne({
-        patient_phone: args.patient_phone,
+        patient_phone: { "$regex": args.patient_phone, "$options": "i" },
       });
       return {
         patient: patient,
