@@ -1,7 +1,7 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const endOfDay = require('date-fns/endOfDay')
-const startOfDay = require('date-fns/startOfDay')
+const endOfDay = require("date-fns/endOfDay");
+const startOfDay = require("date-fns/startOfDay");
 const User = require("../models/user");
 const Clinic = require("../models/clinic");
 const Role = require("../models/role");
@@ -93,7 +93,7 @@ const checkUserExistance = async (id, token, skipEmail) => {
     return { p_userErrors };
   }
 
-  if (token && !skipEmail && !exUser.email_verified ) {
+  if (token && !skipEmail && !exUser.email_verified) {
     p_userErrors.push({
       key: "Verification",
       message: "Please verify your email first",
@@ -231,7 +231,7 @@ const checkBranchExist = async (branch_id) => {
 const checkPatientPhoneExistance = async (patient_phone) => {
   let p_patientPhoneErrors = [];
 
-  let patient = await Patient.findOne({patient_phone: patient_phone});
+  let patient = await Patient.findOne({ patient_phone: patient_phone });
   if (patient) {
     p_patientPhoneErrors.push({
       key: "DB",
@@ -243,26 +243,34 @@ const checkPatientPhoneExistance = async (patient_phone) => {
 };
 
 const checkBookingDate = async (args) => {
-
-  let exDate = await Booking.find({
+  let exDate = await Booking.findOne({
     booking_date: {
       $gte: startOfDay(new Date(args.booking_date)),
-      $lte: endOfDay(new Date(args.booking_date))
-    }
-  })
+      $lte: endOfDay(new Date(args.booking_date)),
+    },
+  });
 
-  if (!exDate) return {status: 1, exDate: null} // date not exist
+  if (!exDate) return { status: 1, exDate: null }; // date not exist
 
-  let exDoctorBookings = exDate.day_bookings.filter(booking => booking.doctor_id == args.doctor_id)
+  let exDoctorBookings = exDate.day_bookings.filter(
+    (booking) => booking.doctor_id == args.doctor_id
+  );
 
-  if (!exDoctorBookings) return {status: 2, exDate: exDate} // date exist but doctor not exist
+  if (!exDoctorBookings.length) return { status: 2, exDate: exDate }; // date exist but doctor not exist
 
-  let checkTimeTaken = exDoctorBookings.filter(booking => (booking.start_time <= args.start_time && booking.end_time >= args.start_time))
+  let checkTimeTaken = exDoctorBookings[0].doctor_bookings.filter(
+    (booking) =>
+      (args.start_time >= booking.start_time  &&
+        args.start_time <= booking.end_time )
+      ||
+      (args.end_time >= booking.start_time  &&
+        args.end_time <= booking.end_time )
+  );
 
-  if(!checkTimeTaken) return {status: 3, exDate: exDate} // doctor exist but time is available
+  if (!checkTimeTaken.length) return { status: 3, exDate: exDate }; // doctor exist but time is available
 
-  return {status: 4, exDate: null} // time is taken before
-}
+  return { status: 4, exDate: null }; // time is taken before
+};
 
 module.exports = {
   generateToken,
@@ -276,5 +284,5 @@ module.exports = {
   checkRoleExist,
   checkBranchExist,
   checkPatientPhoneExistance,
-  checkBookingDate
+  checkBookingDate,
 };

@@ -1,7 +1,7 @@
 const graphql = require("graphql");
 const { GraphQLString, GraphQLNonNull, GraphQLID, GraphQLFloat } = graphql;
 
-const { Create_Booking } = require("../../../controllers/booking");
+const { Create_Booking, Update_Booking } = require("../../../controllers/booking");
 
 const { MessageType } = require("../../types/types");
 const { validate } = require("../../../validations");
