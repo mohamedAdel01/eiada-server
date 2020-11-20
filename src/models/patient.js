@@ -6,11 +6,11 @@ const Patient = new Schema({
     type: String,
     required: true,
   },
-  email: {
+  patient_email: {
     type: String,
     unique: true,
   },
-  phone: {
+  patient_phone: {
     type: String,
     maxlength: 11,
     minlength: 11,

@@ -1,7 +1,7 @@
 const graphql = require("graphql");
 const { GraphQLString, GraphQLNonNull } = graphql;
 
-const { Add_Patient } = require("../../../controllers/patient");
+const { Create_Patient } = require("../../../controllers/patient");
 
 const { MessageType } = require("../../types/types");
 const { validate } = require("../../../validations");
@@ -37,7 +37,7 @@ const createPatientMutation = {
     let { p_patientPhoneErrors } = await checkPatientPhoneExistance(args.patient_phone);
     if (p_patientPhoneErrors.length) return { errors: p_patientPhoneErrors };
 
-    await Add_Patient(args);
+    await Create_Patient(args);
 
     return {
       message: 'New Patient has been added successfully', 

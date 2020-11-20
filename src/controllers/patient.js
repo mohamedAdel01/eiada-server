@@ -1,6 +1,6 @@
 const Patient = require("../models/patient");
 
-const Add_Patient = async (args) => {
+const Create_Patient = async (args) => {
 
   let patientObj = new Patient({
     patient_name: args.patient_name,
@@ -13,5 +13,5 @@ const Add_Patient = async (args) => {
 };
 
 module.exports = {
-  Add_Patient
+  Create_Patient
 };
