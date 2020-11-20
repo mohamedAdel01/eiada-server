@@ -59,6 +59,15 @@ const PatientType_CRUD = new GraphQLObjectType({
   }),
 });
 
+const BookingType_CRUD = new GraphQLObjectType({
+  name: "Booking_CRUD",
+  fields: () => ({
+    booking: { type: BookingType },
+    message: { type: GraphQLString },
+    errors: { type: new GraphQLNonNull(new GraphQLList(ErrorType)) },
+  }),
+});
+
 const ClinicType = new GraphQLObjectType({
   name: "Clinic",
   fields: () => ({
@@ -216,4 +225,5 @@ module.exports = {
   PatientType,
   PatientType_CRUD,
   BookingType,
+  BookingType_CRUD
 };

@@ -1,10 +1,13 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const endOfDay = require('date-fns/endOfDay')
+const startOfDay = require('date-fns/startOfDay')
 const User = require("../models/user");
 const Clinic = require("../models/clinic");
 const Role = require("../models/role");
 const Branch = require("../models/branch");
 const Patient = require("../models/patient");
+const Booking = require("../models/booking");
 const Email_Verification = require("../models/email_verify");
 
 const generateToken = (payload) => {
@@ -239,6 +242,28 @@ const checkPatientPhoneExistance = async (patient_phone) => {
   return { p_patientPhoneErrors };
 };
 
+const checkBookingDate = async (args) => {
+
+  let exDate = await Booking.find({
+    booking_date: {
+      $gte: startOfDay(new Date(args.booking_date)),
+      $lte: endOfDay(new Date(args.booking_date))
+    }
+  })
+
+  if (!exDate) return {status: 1, exDate: null} // date not exist
+
+  let exDoctorBookings = exDate.day_bookings.filter(booking => booking.doctor_id == args.doctor_id)
+
+  if (!exDoctorBookings) return {status: 2, exDate: exDate} // date exist but doctor not exist
+
+  let checkTimeTaken = exDoctorBookings.filter(booking => (booking.start_time <= args.start_time && booking.end_time >= args.start_time))
+
+  if(!checkTimeTaken) return {status: 3, exDate: exDate} // doctor exist but time is available
+
+  return {status: 4, exDate: null} // time is taken before
+}
+
 module.exports = {
   generateToken,
   decodeToken,
@@ -250,5 +275,6 @@ module.exports = {
   checkClinicExist,
   checkRoleExist,
   checkBranchExist,
-  checkPatientPhoneExistance
+  checkPatientPhoneExistance,
+  checkBookingDate
 };

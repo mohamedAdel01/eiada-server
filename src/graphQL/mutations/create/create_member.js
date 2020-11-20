@@ -1,5 +1,5 @@
 const graphql = require("graphql");
-const { GraphQLString, GraphQLNonNull } = graphql;
+const { GraphQLString, GraphQLNonNull, GraphQLID } = graphql;
 
 const { Add_Member } = require("../../../controllers/user");
 const { Create_Role } = require("../../../controllers/role");
@@ -19,7 +19,7 @@ const createMemberMutation = {
   type: MessageType,
   args: {
     email: { type: new GraphQLNonNull(GraphQLString) },
-    branch_id: {type: new GraphQLNonNull(GraphQLString)},
+    branch_id: {type: new GraphQLNonNull(GraphQLID)},
     field: { type: GraphQLString },
     division: { type: GraphQLString },
     role_name: { type: new GraphQLNonNull(GraphQLString) },
