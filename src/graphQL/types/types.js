@@ -50,6 +50,15 @@ const BranchType_CRUD = new GraphQLObjectType({
   }),
 });
 
+const PatientType_CRUD = new GraphQLObjectType({
+  name: "patient_crud",
+  fields: () => ({
+    patient: { type: PatientType },
+    message: { type: GraphQLString },
+    errors: { type: new GraphQLNonNull(new GraphQLList(ErrorType)) },
+  }),
+});
+
 const ClinicType = new GraphQLObjectType({
   name: "Clinic",
   fields: () => ({
@@ -167,4 +176,5 @@ module.exports = {
   BranchType_CRUD,
   RoleInputType,
   PatientType,
+  PatientType_CRUD
 };

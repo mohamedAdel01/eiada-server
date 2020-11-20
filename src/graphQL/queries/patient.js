@@ -1,11 +1,10 @@
 const graphql = require("graphql");
 const { GraphQLList, GraphQLString } = graphql;
-
-// GRAPHQL TYPES
-const { PatientType } = require("../types/types");
-
-// MONGODB MODELS
+const { PatientType_CRUD, PatientType } = require("../types/types");
 const Patient = require("../../models/patient");
+
+const { validate } = require("../../validations");
+const { decodeToken, checkUserExistance } = require("../../policies");
 
 const PatientsQueries = {
   Patients: {
@@ -16,12 +15,30 @@ const PatientsQueries = {
   },
 
   Patient: {
-    type: PatientType,
+    type: PatientType_CRUD,
     args: {
-        patient_phone: {type: GraphQLString}
+      patient_phone: { type: GraphQLString },
     },
-    resolve() {
-      return Patient.find({});
+    async resolve(parent, args, root) {
+      let v_errors = validate(args);
+      if (v_errors.length) return { errors: v_errors };
+
+      let { decoded, errors } = decodeToken(root.headers.authorization, false);
+      if (errors.length) return { errors };
+
+      let { p_userErrors } = await checkUserExistance(
+        decoded._id,
+        root.headers.authorization,
+        false
+      );
+      if (p_userErrors.length) return { errors: p_userErrors };
+      let patient = await Patient.findOne({
+        patient_phone: args.patient_phone,
+      });
+      return {
+        patient: patient,
+        errors: [],
+      };
     },
   },
 };
