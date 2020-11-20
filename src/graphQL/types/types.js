@@ -7,7 +7,7 @@ const {
   GraphQLString,
   GraphQLID,
   GraphQLInputObjectType,
-  GraphQLBoolean
+  GraphQLBoolean,
 } = graphql;
 // const ObjectId = require('mongodb').ObjectID
 
@@ -61,7 +61,7 @@ const ClinicType = new GraphQLObjectType({
     owner: {
       type: UserType,
       resolve(parent, args) {
-        return user.findOne({role: 'admin'});
+        return user.findOne({ role: "admin" });
       },
     },
   }),
@@ -92,6 +92,30 @@ const UserType = new GraphQLObjectType({
   }),
 });
 
+const PatientType = new GraphQLObjectType({
+  name: "Patient",
+  fields: () => ({
+    id: { type: GraphQLID },
+    patient_name: { type: GraphQLString },
+    patient_email: { type: GraphQLString },
+    patient_phone: { type: GraphQLString },
+    imageURL: { type: GraphQLString },
+    birthdate: { type: GraphQLString },
+    past_history: { type: new GraphQLList(GraphQLString) },
+    sessions_history: {
+      type: new GraphQLList(
+        new GraphQLObjectType({
+          name: "sessions_history",
+          fields: () => ({
+            doctor_id: { type: GraphQLID },
+            note: { type: GraphQLString },
+          }),
+        })
+      ),
+    },
+  }),
+});
+
 const RoleType = new GraphQLObjectType({
   name: "Role",
   fields: () => ({
@@ -105,7 +129,7 @@ const RoleType = new GraphQLObjectType({
 });
 
 const RoleInputType = new GraphQLInputObjectType({
-  name: 'RoleInput',
+  name: "RoleInput",
   fields: {
     name: { type: GraphQLString },
     custom: { type: GraphQLBoolean },
@@ -113,8 +137,8 @@ const RoleInputType = new GraphQLInputObjectType({
     read: { type: new GraphQLList(GraphQLString) },
     update: { type: new GraphQLList(GraphQLString) },
     delete: { type: new GraphQLList(GraphQLString) },
-  }
-})
+  },
+});
 
 const SpecializationType = new GraphQLObjectType({
   name: "Specialization",
@@ -141,5 +165,6 @@ module.exports = {
   RoleType,
   BranchType,
   BranchType_CRUD,
-  RoleInputType
+  RoleInputType,
+  PatientType,
 };
