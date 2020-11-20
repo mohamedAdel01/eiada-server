@@ -21,6 +21,8 @@ const validate = (payload) => {
       case "role_name":
       case "address":
       case "branch_id":
+      case "patient_name":
+      case "patient_phone":
         checkEmpty(key, payload);
         break;
 
@@ -30,12 +32,13 @@ const validate = (payload) => {
         if (!check) {
           v_errors.push({
             key: key,
-            message: `Please provide a valid ${key}!`,
+            message: `Please provide a valid Email!`,
           });
         }
         break;
 
       case "phone":
+      case "patient_phone":
         checkEmpty(key, payload);
         check = validator.isMobilePhone(payload[key], ["ar-EG"], {
           strictMode: true,
@@ -43,7 +46,7 @@ const validate = (payload) => {
         if (!check) {
           v_errors.push({
             key: key,
-            message: `Please provide a valid ${key}!`,
+            message: `Please provide a valid Phone!`,
           });
         }
         break;
@@ -54,7 +57,7 @@ const validate = (payload) => {
         if (!check) {
           v_errors.push({
             key: key,
-            message: `${key} must be between 6 and 16 letters`,
+            message: `Password must be between 6 and 16 letters`,
           });
         }
         break;

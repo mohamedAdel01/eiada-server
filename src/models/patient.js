@@ -18,7 +18,7 @@ const Patient = new Schema({
     required: true,
     unique: true,
   },
-  image: String,
+  imageURL: String,
   birthdate: Date,
   past_history: [String],
   sessions_history: [{

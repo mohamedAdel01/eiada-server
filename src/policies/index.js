@@ -4,6 +4,7 @@ const User = require("../models/user");
 const Clinic = require("../models/clinic");
 const Role = require("../models/role");
 const Branch = require("../models/branch");
+const Patient = require("../models/patient");
 const Email_Verification = require("../models/email_verify");
 
 const generateToken = (payload) => {
@@ -224,6 +225,20 @@ const checkBranchExist = async (branch_id) => {
   return { p_branchErrors };
 };
 
+const checkPatientPhoneExistance = async (patient_phone) => {
+  let p_patientPhoneErrors = [];
+
+  let patient = await Patient.findOne({patient_phone: patient_phone});
+  if (patient) {
+    p_patientPhoneErrors.push({
+      key: "DB",
+      message: "Patient is already exist",
+    });
+  }
+
+  return { p_patientPhoneErrors };
+};
+
 module.exports = {
   generateToken,
   decodeToken,
@@ -234,5 +249,6 @@ module.exports = {
   checkUserExistance,
   checkClinicExist,
   checkRoleExist,
-  checkBranchExist
+  checkBranchExist,
+  checkPatientPhoneExistance
 };
