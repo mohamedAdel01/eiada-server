@@ -21,7 +21,10 @@ const Patient = new Schema({
   image: String,
   birthdate: Date,
   past_history: [String],
-  medical_history: [String]
+  sessions_history: [{
+    doctor_id: String,
+    note: String
+  }]
 },{timestamps: true});
 
 module.exports = mongoose.model("Patient", Patient);
