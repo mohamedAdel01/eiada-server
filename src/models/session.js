@@ -18,9 +18,9 @@ const Session = new Schema({
     type: Schema.Types.ObjectId,
     required: true
   },
-  booking_date: {
-    type: Date,
-    required: true
+  booking_id: {
+    type: Schema.Types.ObjectId,
+    required: true,
   },
   status: {
     type: String,
@@ -30,7 +30,14 @@ const Session = new Schema({
   session_summary: String,
   services: [{
     description: String,
-    cost: Number
+    continued: {
+      type: Boolean,
+      default: false
+    },
+    cost: {
+      type: Number,
+      default: 0
+    }
   }],
   partial: [{
     description: String,
