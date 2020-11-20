@@ -6,22 +6,26 @@ const Booking = new Schema({
         type:Date,
         required:true
     },
-    startTime: {
-        type:Number,
-        required:true
-    },
-    endTime: {
-        type:Number,
-        required:true
-    },
-    doctor_id: {
-        type:String,
-        required:true
-    },
-    patient_phone: {
-        type:String,
-        required:true
-    }
+    day_bookings: [{
+        doctor_id: {
+            type:String,
+            required:true
+        },
+        doctor_bookings: [{
+            patient_phone: {
+                type:String,
+                required:true
+            },
+            start_time: {
+                type:Number,
+                required:true
+            },
+            end_time: {
+                type:Number,
+                required:true
+            },
+        }]
+    }]
 }, {timestamps: true});
 
 module.exports = mongoose.model("Booking", Booking);

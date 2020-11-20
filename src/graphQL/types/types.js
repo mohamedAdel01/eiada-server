@@ -12,8 +12,8 @@ const {
 // const ObjectId = require('mongodb').ObjectID
 
 // MONGODB MODELS
-const user = require("../../models/user");
-const specialization = require("../../models/specialization");
+const User = require("../../models/user");
+const Patient = require("../../models/patient");
 
 const MessageType = new GraphQLObjectType({
   name: "Validation",
@@ -69,8 +69,8 @@ const ClinicType = new GraphQLObjectType({
     theme_settings: { type: GraphQLString },
     owner: {
       type: UserType,
-      resolve(parent, args) {
-        return user.findOne({ role: "admin" });
+      resolve() {
+        return User.findOne({ role: "admin" });
       },
     },
   }),
@@ -114,10 +114,48 @@ const PatientType = new GraphQLObjectType({
     sessions_history: {
       type: new GraphQLList(
         new GraphQLObjectType({
-          name: "sessions_history",
+          name: "Sessions_History",
           fields: () => ({
             doctor_id: { type: GraphQLID },
             note: { type: GraphQLString },
+          }),
+        })
+      ),
+    },
+  }),
+});
+
+const BookingType = new GraphQLObjectType({
+  name: "Booking",
+  fields: () => ({
+    id: { type: GraphQLID },
+    booking_date: { type: GraphQLString },
+    day_bookings: {
+      type: new GraphQLList(
+        new GraphQLObjectType({
+          name: "Day_Bookings",
+          fields: () => ({
+            doctor_id: { type: GraphQLID },
+            doctor_bookings: {
+              type: new GraphQLList(
+                new GraphQLObjectType({
+                  name: "Doctor_Bookings",
+                  fields: () => ({
+                    patient_phone: { type: GraphQLString },
+                    start_time: { type: GraphQLString },
+                    end_time: { type: GraphQLString },
+                    patient: {
+                      type: UserType,
+                      resolve(parent) {
+                        return Patient.findOne({
+                          patient_phone: parent.patient_phone,
+                        });
+                      },
+                    },
+                  }),
+                })
+              ),
+            },
           }),
         })
       ),
@@ -176,5 +214,6 @@ module.exports = {
   BranchType_CRUD,
   RoleInputType,
   PatientType,
-  PatientType_CRUD
+  PatientType_CRUD,
+  BookingType,
 };
