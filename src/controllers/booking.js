@@ -39,10 +39,9 @@ const Update_Booking = async (args, checkDate) => {
         {
           $push: { day_bookings: day_bookings },
         },
-        function (error) {
-          if (error) {
-            console.log(error);
-          }
+        {
+          upsert: true,
+          new: true,
         }
       );
       break;
@@ -58,18 +57,15 @@ const Update_Booking = async (args, checkDate) => {
           $push: { "day_bookings.$[outer].doctor_bookings": doctor_booking },
         },
         {
-            "arrayFilters": [{"outer.doctor_id": ObjectId(args.doctor_id)}]
-        },
-        function (error) {
-          if (error) {
-            console.log(error);
-          }
+          arrayFilters: [{ "outer.doctor_id": args.doctor_id }],
+          upsert: true,
+          new: true,
         }
       );
       break;
   }
 
-  return true
+  return true;
 };
 
 module.exports = {
