@@ -1,28 +1,26 @@
 const Booking = require("../models/booking");
 const ObjectId = require("mongodb").ObjectID;
 
-const Create_Booking = async (args) => {
-  let BookingObj = new Booking({
-    booking_date: new Date(args.booking_date),
-    day_bookings: [
-      {
-        doctor_id: args.doctor_id,
-        doctor_bookings: [
+const Create_Booking = async (args, checkDate) => {
+  switch (checkDate.status) {
+    case 1:
+      let BookingObj = new Booking({
+        booking_date: new Date(args.booking_date),
+        day_bookings: [
           {
-            patient_phone: args.patient_phone,
-            start_time: args.start_time,
-            end_time: args.end_time,
+            doctor_id: args.doctor_id,
+            doctor_bookings: [
+              {
+                patient_phone: args.patient_phone,
+                start_time: args.start_time,
+                end_time: args.end_time,
+              },
+            ],
           },
         ],
-      },
-    ],
-  });
-
-  return await BookingObj.save();
-};
-
-const Update_Booking = async (args, checkDate) => {
-  switch (checkDate.status) {
+      });
+      await BookingObj.save();
+      break;
     case 2:
       let day_bookings = {
         doctor_id: args.doctor_id,
@@ -69,6 +67,5 @@ const Update_Booking = async (args, checkDate) => {
 };
 
 module.exports = {
-  Create_Booking,
-  Update_Booking,
+  Create_Booking
 };

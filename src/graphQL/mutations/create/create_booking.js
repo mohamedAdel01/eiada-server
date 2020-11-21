@@ -1,7 +1,7 @@
 const graphql = require("graphql");
 const { GraphQLString, GraphQLNonNull, GraphQLID, GraphQLFloat } = graphql;
 
-const { Create_Booking, Update_Booking } = require("../../../controllers/booking");
+const { Create_Booking } = require("../../../controllers/booking");
 
 const { MessageType } = require("../../types/types");
 const { validate } = require("../../../validations");
@@ -35,11 +35,9 @@ const createBookingMutation = {
 
     switch (checkDate.status) {
         case 1:
-            await Create_Booking(args)
-            break;
         case 2:
         case 3:
-            await Update_Booking(args, checkDate)
+            await Create_Booking(args, checkDate)
             break;
         case 4:
             break;    
