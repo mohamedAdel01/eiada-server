@@ -3,11 +3,11 @@ const Schema = mongoose.Schema;
 
 const Session = new Schema({
   specialization_id: {
-    type: Schema.Types.ObjectId,
+    type: String, // Schema.Types.ObjectId
     required: true,
   },
   doctor_id: {
-    type: Schema.Types.ObjectId,
+    type: String,
     required: true,
   },
   patient_phone: {
@@ -15,12 +15,13 @@ const Session = new Schema({
     required: true
   },
   creator_id: {
-    type: Schema.Types.ObjectId,
+    type: String,
     required: true
   },
   status: {
     type: String,
     enum: ["Checkup" , "Consultation"],
+    required: true
   },
   chief_complaint: String,
   session_summary: String,
