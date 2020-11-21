@@ -33,16 +33,6 @@ const createBookingMutation = {
 
     let checkDate = await checkBookingDate(args)
 
-    switch (checkDate.status) {
-        case 1:
-        case 2:
-        case 3:
-            await Create_Booking(args, checkDate)
-            break;
-        case 4:
-            break;    
-    }
-
     if (checkDate.status == 4) return {
         message: "",
         errors: [{
@@ -50,6 +40,8 @@ const createBookingMutation = {
             message: "Time is not available"
         }]
     }
+
+    await Create_Booking(args, checkDate)
 
     return {
         message: "Booking reserved",
