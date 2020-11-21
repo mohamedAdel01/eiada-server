@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const endOfDay = require("date-fns/endOfDay");
 const startOfDay = require("date-fns/startOfDay");
+const parseISO = require('date-fns/parseISO')
 const User = require("../models/user");
 const Clinic = require("../models/clinic");
 const Role = require("../models/role");
@@ -245,8 +246,8 @@ const checkPatientPhoneExistance = async (patient_phone) => {
 const checkBookingDate = async (args) => {
   let exDate = await Booking.findOne({
     booking_date: {
-      $gte: startOfDay(new Date(args.booking_date)),
-      $lte: endOfDay(new Date(args.booking_date)),
+      $gte: startOfDay(parseISO(args.booking_date)),
+      $lte: endOfDay(parseISO(args.booking_date)),
     },
   });
 

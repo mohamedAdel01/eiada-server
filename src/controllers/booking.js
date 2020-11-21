@@ -3,7 +3,7 @@ const ObjectId = require("mongodb").ObjectID;
 
 const Create_Booking = async (args) => {
   let BookingObj = new Booking({
-    booking_date: args.booking_date,
+    booking_date: new Date(args.booking_date),
     day_bookings: [
       {
         doctor_id: args.doctor_id,
