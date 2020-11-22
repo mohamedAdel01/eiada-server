@@ -22,7 +22,7 @@ app.use(
 );
 
 app.get('/', function (req, res) {
-  res.send('hello world')
+  res.send('test deploy')
 })
 
 app.listen(process.env.PORT || 4000, () => {
