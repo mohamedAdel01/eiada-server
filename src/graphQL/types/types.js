@@ -8,6 +8,7 @@ const {
   GraphQLID,
   GraphQLInputObjectType,
   GraphQLBoolean,
+  GraphQLFloat
 } = graphql;
 // const ObjectId = require('mongodb').ObjectID
 
@@ -196,6 +197,23 @@ const RoleInputType = new GraphQLInputObjectType({
   },
 });
 
+const ServiceInputType = new GraphQLInputObjectType({
+  name: "ServiceInput",
+  fields: {
+    description: { type: GraphQLString },
+    continued: { type: GraphQLBoolean },
+    cost: { type: GraphQLFloat }
+  }
+})
+
+const PartialInputType = new GraphQLInputObjectType({
+  name: "PartialInput",
+  fields: {
+    description: { type: GraphQLString },
+    cost: { type: GraphQLFloat }
+  }
+})
+
 const SpecializationType = new GraphQLObjectType({
   name: "Specialization",
   fields: () => ({
@@ -225,5 +243,7 @@ module.exports = {
   PatientType,
   PatientType_CRUD,
   BookingType,
-  BookingType_CRUD
+  BookingType_CRUD,
+  ServiceInputType,
+  PartialInputType
 };

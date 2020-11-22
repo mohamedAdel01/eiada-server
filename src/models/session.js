@@ -36,7 +36,7 @@ const Session = new Schema({
       default: 0
     }
   }],
-  partial: [{
+  partials: [{
     description: String,
     cost: Number
   }],

@@ -9,6 +9,7 @@ const Role = require("../models/role");
 const Branch = require("../models/branch");
 const Patient = require("../models/patient");
 const Booking = require("../models/booking");
+const Session = require("../models/session");
 const Email_Verification = require("../models/email_verify");
 
 const generateToken = (payload) => {
@@ -273,6 +274,20 @@ const checkBookingDate = async (args) => {
   return { status: 4, exDate: null }; // time is taken before
 };
 
+const checkSessionExist = async (session_id) => {
+  let p_sessionErrors = [];
+
+  let session = await Session.findById(session_id);
+  if (!session) {
+    p_sessionErrors.push({
+      key: "DB",
+      message: "session isn't exist",
+    });
+  }
+
+  return { p_sessionErrors };
+};
+
 module.exports = {
   generateToken,
   decodeToken,
@@ -286,4 +301,5 @@ module.exports = {
   checkBranchExist,
   checkPatientPhoneExistance,
   checkBookingDate,
+  checkSessionExist
 };
