@@ -1,7 +1,6 @@
 require('dotenv').config()
 const mongoose = require('mongoose')
 
-// mongoose.connect(`mongodb://eiada29:eiada29@ds145223.mlab.com:45223/eiada`, {
 mongoose.connect(process.env.MONGO_URI, {
     useUnifiedTopology: true,
     useNewUrlParser: true,
