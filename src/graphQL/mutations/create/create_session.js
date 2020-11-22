@@ -1,7 +1,7 @@
 const graphql = require("graphql");
 const { GraphQLString, GraphQLNonNull, GraphQLID } = graphql;
 
-const { Create_Session } = require("../../../controllers/sessions");
+const { Create_Session } = require("../../../controllers/session");
 
 const { MessageType } = require("../../types/types");
 

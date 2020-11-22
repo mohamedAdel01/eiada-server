@@ -20,6 +20,13 @@ const Create_Session = async (args, creator_id) => {
 };
 
 const Update_During_Session = async (args) => {
+  let servicesAndPartials = args.services.concat(args.partials)
+
+  let due_amount = servicesAndPartials.reduce((acc,curr) => {
+    acc += curr.cost
+    return acc
+  }, 0)
+
   let updatedSession = await Session.findOneAndUpdate(
     { _id: ObjectId(args.session_id) },
     {
@@ -27,6 +34,7 @@ const Update_During_Session = async (args) => {
       session_summary: args.session_summary,
       services: args.services,
       partials: args.partials,
+      due_amount: due_amount.toFixed(2)
     },
     { new: true }
   );

@@ -1,7 +1,7 @@
 const graphql = require("graphql");
 const { GraphQLString, GraphQLNonNull, GraphQLID, GraphQLList } = graphql;
 
-const { Update_During_Session } = require("../../../controllers/sessions");
+const { Update_During_Session } = require("../../../controllers/session");
 
 const { MessageType, ServiceInputType, PartialInputType } = require("../../types/types");
 
