@@ -5,11 +5,12 @@ const { Update_During_Session } = require("../../../controllers/sessions");
 
 const { MessageType, ServiceInputType, PartialInputType } = require("../../types/types");
 
-const { decodeToken, checkUserExistance } = require("../../../policies");
+const { decodeToken, checkUserExistance, checkSessionExist } = require("../../../policies");
 
 const createSessionMutation = {
   type: MessageType,
-  args: {
+  args: { 
+    session_id: { type: new GraphQLNonNull(GraphQLID) },
     chief_complaint: { type: new GraphQLNonNull(GraphQLString) },
     session_summary: { type: new GraphQLNonNull(GraphQLString) },
     services: { type: new GraphQLList(ServiceInputType) },
@@ -26,12 +27,11 @@ const createSessionMutation = {
       false
     );
     if (p_userErrors.length) return { errors: p_userErrors };
+    
+    let { p_sessionErrors } = await checkSessionExist(args.session_id)
+    if (p_sessionErrors.length) return { errors: p_sessionErrors };
 
-    // session must be to check if booking 
-    // is still open or closed before create
-
-    return await Create_Session(args, decoded._id);
-
+    return await Update_During_Session(args);
   },
 };
 

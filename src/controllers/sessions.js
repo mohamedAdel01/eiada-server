@@ -1,4 +1,5 @@
 const Session = require("../models/session");
+const ObjectId = require("mongodb").ObjectID;
 
 const Create_Session = async (args, creator_id) => {
   let sessionObj = new Session({
@@ -18,6 +19,26 @@ const Create_Session = async (args, creator_id) => {
   };
 };
 
+const Update_During_Session = async (args) => {
+  let updatedSession = await Session.findOneAndUpdate(
+    { _id: ObjectId(args.session_id) },
+    {
+      chief_complaint: args.chief_complaint,
+      session_summary: args.session_summary,
+      services: args.services,
+      partials: args.partials,
+    },
+    { new: true }
+  );
+
+  return {
+    session: updatedSession,
+    message: "Session updated successfully",
+    errors: [],
+  };
+};
+
 module.exports = {
   Create_Session,
+  Update_During_Session,
 };
