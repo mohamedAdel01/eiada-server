@@ -7,7 +7,7 @@ const { MessageType, ServiceInputType, PartialInputType } = require("../../types
 
 const { decodeToken, checkUserExistance, checkSessionExist } = require("../../../policies");
 
-const createSessionMutation = {
+const updateDuringSessionMutation = {
   type: MessageType,
   args: { 
     session_id: { type: new GraphQLNonNull(GraphQLID) },
@@ -36,5 +36,5 @@ const createSessionMutation = {
 };
 
 module.exports = {
-  Create_Session: createSessionMutation,
+  Update_During_Session: updateDuringSessionMutation,
 };

@@ -9,6 +9,7 @@ const { Create_Member } = require("./create/create_member");
 const { Create_Patient } = require("./create/create_patient");
 const { Create_Booking } = require("./create/create_booking");
 const { Create_Session } = require("./create/create_session");
+const { Update_During_Session } = require("./update/update_during_session");
 
 module.exports = {
   Register,
@@ -24,5 +25,6 @@ module.exports = {
   Create_Member,
   Create_Patient,
   Create_Booking,
-  Create_Session
+  Create_Session,
+  Update_During_Session
 };
