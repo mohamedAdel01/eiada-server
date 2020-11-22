@@ -6,7 +6,8 @@ mongoose.connect(`mongodb://eiada29:eiada29@ds145223.mlab.com:45223/eiada`, {
     useUnifiedTopology: true,
     useNewUrlParser: true,
     useCreateIndex: true,
-    useFindAndModify: false
+    useFindAndModify: false,
+    retryWrites:false
 })
 
 // require('./dummy')
