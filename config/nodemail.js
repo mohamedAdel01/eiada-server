@@ -2,14 +2,20 @@
 const nodemailer = require("nodemailer");
 
 const transporter = nodemailer.createTransport({
-  service: "gmail",
+  // service: "gmail",
+  // auth: {
+  //   user: "mohamed7adel96@gmail.com",
+  //   pass: "GMAmohade18",
+  // },
+  // tls: {
+  //   rejectUnauthorized: false,
+  // },
+  host: "smtp.mailtrap.io",
+  port: 2525,
   auth: {
-    user: "mohamed7adel96@gmail.com",
-    pass: "GMAmohade18",
-  },
-  tls: {
-    rejectUnauthorized: false,
-  },
+    user: "f2d2aa803e210c",
+    pass: "c1b679cc60b0ce"
+  }
 });
 
 let mail = (to, subject, text) => {
