@@ -57,7 +57,7 @@ const Session = new Schema(
       type: Number,
       default: 0,
     },
-    closed: {
+    archived: {
       type: Boolean,
       default: false,
     },

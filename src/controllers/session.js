@@ -61,9 +61,10 @@ const Update_After_Session = async (args, exSession) => {
   let updatedSession = await Session.findOneAndUpdate(
     { _id: ObjectId(args.session_id) },
     {
-      paid: args.paid.toFixed(2),
-      due_amount: total_amount.toFixed(2) - args.paid.toFixed(2),
-      closed: total_amount.toFixed(2) - args.paid.toFixed(2) < 1 ? true : false,
+      paid_amount: args.paid_amount.toFixed(2),
+      due_amount: (total_amount - args.paid_amount).toFixed(2),
+      partials: args.partials.concat(exSession.partials),
+      archived: total_amount - args.paid_amount < 1 ? true : false,
     },
     { new: true }
   );

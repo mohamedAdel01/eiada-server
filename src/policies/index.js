@@ -274,7 +274,7 @@ const checkBookingDate = async (args) => {
   return { status: 4, exDate: null }; // time is taken before
 };
 
-const checkSessionExist = async (session_id, checkClosed) => {
+const checkSessionExist = async (session_id, checkArchived) => {
   let p_sessionErrors = [];
 
   let exSession = await Session.findById(session_id);
@@ -285,10 +285,10 @@ const checkSessionExist = async (session_id, checkClosed) => {
     });
   }
 
-  if (exSession && exSession.closed && checkClosed) {
+  if (exSession && exSession.archived && checkArchived) {
     p_sessionErrors.push({
       key: "DB",
-      message: "session is closed you can't update it now",
+      message: "session is archived, you can't update it now",
     });
   }
 

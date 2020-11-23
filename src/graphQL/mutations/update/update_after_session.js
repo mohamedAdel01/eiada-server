@@ -16,7 +16,7 @@ const updateAfterSessionMutation = {
   args: {
     session_id: { type: new GraphQLNonNull(GraphQLID) },
     partials: { type: new GraphQLList(PartialInputType) },
-    paid: { type: new GraphQLNonNull(GraphQLFloat) }
+    paid_amount: { type: new GraphQLNonNull(GraphQLFloat) }
   },
 
   async resolve(parent, args, root) {
