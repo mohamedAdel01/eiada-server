@@ -274,18 +274,25 @@ const checkBookingDate = async (args) => {
   return { status: 4, exDate: null }; // time is taken before
 };
 
-const checkSessionExist = async (session_id) => {
+const checkSessionExist = async (session_id, checkClosed) => {
   let p_sessionErrors = [];
 
-  let session = await Session.findById(session_id);
-  if (!session) {
+  let exSession = await Session.findById(session_id);
+  if (!exSession) {
     p_sessionErrors.push({
       key: "DB",
       message: "session isn't exist",
     });
   }
 
-  return { p_sessionErrors };
+  if (exSession && exSession.closed && checkClosed) {
+    p_sessionErrors.push({
+      key: "DB",
+      message: "session is closed you can't update it now",
+    });
+  }
+
+  return { p_sessionErrors, exSession };
 };
 
 module.exports = {

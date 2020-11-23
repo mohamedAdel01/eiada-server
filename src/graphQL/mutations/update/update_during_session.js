@@ -28,7 +28,7 @@ const updateDuringSessionMutation = {
     );
     if (p_userErrors.length) return { errors: p_userErrors };
     
-    let { p_sessionErrors } = await checkSessionExist(args.session_id)
+    let { p_sessionErrors } = await checkSessionExist(args.session_id, true)
     if (p_sessionErrors.length) return { errors: p_sessionErrors };
 
     return await Update_During_Session(args);

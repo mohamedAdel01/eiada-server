@@ -20,12 +20,12 @@ const Create_Session = async (args, creator_id) => {
 };
 
 const Update_During_Session = async (args) => {
-  let servicesAndPartials = args.services.concat(args.partials)
+  let servicesAndPartials = args.services.concat(args.partials);
 
-  let due_amount = servicesAndPartials.reduce((acc,curr) => {
-    acc += curr.cost
-    return acc
-  }, 0)
+  let total_amount = servicesAndPartials.reduce((acc, curr) => {
+    acc += curr.cost;
+    return acc;
+  }, 0);
 
   let updatedSession = await Session.findOneAndUpdate(
     { _id: ObjectId(args.session_id) },
@@ -34,7 +34,36 @@ const Update_During_Session = async (args) => {
       session_summary: args.session_summary,
       services: args.services,
       partials: args.partials,
-      due_amount: due_amount.toFixed(2)
+      due_amount: total_amount.toFixed(2),
+      total_amount: total_amount.toFixed(2),
+    },
+    { new: true }
+  );
+
+  return {
+    session: updatedSession,
+    message: "Session updated successfully",
+    errors: [],
+  };
+};
+
+const Update_After_Session = async (args, exSession) => {
+  let servicesAndPartials = exSession.services.concat(
+    args.partials,
+    exSession.partials
+  );
+
+  let total_amount = servicesAndPartials.reduce((acc, curr) => {
+    acc += curr.cost;
+    return acc;
+  }, 0);
+
+  let updatedSession = await Session.findOneAndUpdate(
+    { _id: ObjectId(args.session_id) },
+    {
+      paid: args.paid.toFixed(2),
+      due_amount: total_amount.toFixed(2) - args.paid.toFixed(2),
+      closed: total_amount.toFixed(2) - args.paid.toFixed(2) < 1 ? true : false,
     },
     { new: true }
   );
@@ -49,4 +78,5 @@ const Update_During_Session = async (args) => {
 module.exports = {
   Create_Session,
   Update_During_Session,
+  Update_After_Session,
 };
