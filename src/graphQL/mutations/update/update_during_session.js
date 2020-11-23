@@ -28,10 +28,10 @@ const updateDuringSessionMutation = {
     );
     if (p_userErrors.length) return { errors: p_userErrors };
     
-    let { p_sessionErrors } = await checkSessionExist(args.session_id, true)
+    let { p_sessionErrors, exSession } = await checkSessionExist(args.session_id, false)
     if (p_sessionErrors.length) return { errors: p_sessionErrors };
 
-    return await Update_During_Session(args);
+    return await Update_During_Session(args, exSession);
   },
 };
 
