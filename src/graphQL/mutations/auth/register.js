@@ -24,7 +24,7 @@ const RegisterMutation = {
     let { p_emailErrors } = await checkEmailExistance(args.email, false);
     if (p_emailErrors.length) return { errors: p_emailErrors };
 
-    let newUser = await Create_User(args, "admin");
+    let newUser = await Create_User(args);
 
     let Token = generateToken(newUser);
 

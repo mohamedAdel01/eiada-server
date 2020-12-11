@@ -2,7 +2,7 @@ const bcrypt = require("bcrypt");
 const User = require("../models/user");
 const ObjectId = require("mongodb").ObjectID;
 
-const Create_User = async (args, role) => {
+const Create_User = async (args) => {
   const securedPassword = bcrypt.hashSync(args.password, 10);
 
   let userObj = new User({
@@ -10,7 +10,7 @@ const Create_User = async (args, role) => {
     email: args.email,
     phone: args.phone,
     password: securedPassword,
-    role: role
+    role: 'admin'
   });
 
   return await userObj.save();

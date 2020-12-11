@@ -60,13 +60,13 @@ const checkEmailExistance = async (email, required) => {
 
   if (required && !exUser) {
     p_emailErrors.push({
-      key: "DB",
+      key: "email",
       message: "Email isn't exist",
     });
     return { p_emailErrors };
   } else if (!required && exUser) {
     p_emailErrors.push({
-      key: "DB",
+      key: "email",
       message: "Email is already exist",
     });
     return { p_emailErrors };
