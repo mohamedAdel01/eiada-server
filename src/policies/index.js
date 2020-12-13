@@ -114,7 +114,7 @@ const checkPassword = async (entered, exist) => {
 
   if (!check) {
     p_passwordErrors.push({
-      key: "DB",
+      key: "password",
       message: "wrong password",
     });
     return {

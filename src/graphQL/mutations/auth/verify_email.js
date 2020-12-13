@@ -35,6 +35,6 @@ const ResendVerificationEmailMutation = {
 };
 
 module.exports = {
-  Verify_Email: VerifyEmailMutation,
-  Resend_Verification_Email: ResendVerificationEmailMutation,
+  VERIFY_EMAIL: VerifyEmailMutation,
+  RESEND_VERIFICATION_EMAIL: ResendVerificationEmailMutation,
 };

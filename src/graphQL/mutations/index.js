@@ -1,8 +1,8 @@
-const Register = require("./auth/register");
-const { Verify_Email, Resend_Verification_Email } = require("./auth/verify_email");
-const Login = require("./auth/login");
+const REGISTER = require("./auth/register");
+const { VERIFY_EMAIL, RESEND_VERIFICATION_EMAIL } = require("./auth/verify_email");
+const LOGIN = require("./auth/login");
 const Logout = require("./auth/logout");
-const { Forget_Password_Request,Change_Password, Update_Password } = require("./auth/forget_password");
+const { FORGET_PASSWORD_REQUREST,Change_Password, Update_Password } = require("./auth/forget_password");
 const { Create_Clinic } = require("./create/craete_clinic");
 const { Create_Branch } = require("./create/create_branch");
 const { Create_Member } = require("./create/create_member");
@@ -13,12 +13,12 @@ const { Update_During_Session } = require("./update/update_during_session");
 const { Update_After_Session } = require("./update/update_after_session");
 
 module.exports = {
-  Register,
-  Verify_Email,
-  Resend_Verification_Email,
-  Login,
+  REGISTER,
+  VERIFY_EMAIL,
+  RESEND_VERIFICATION_EMAIL,
+  LOGIN,
   Logout,
-  Forget_Password_Request,
+  FORGET_PASSWORD_REQUREST,
   Change_Password,
   Update_Password,
   Create_Clinic,

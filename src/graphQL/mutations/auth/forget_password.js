@@ -82,7 +82,7 @@ const UpdatePasswordMutation = {
 };
 
 module.exports = {
-  Forget_Password_Request: ForgetPasswordRequestMutation,
+  FORGET_PASSWORD_REQUREST: ForgetPasswordRequestMutation,
   Change_Password: ChangePasswordMutation,
   Update_Password: UpdatePasswordMutation,
 };
