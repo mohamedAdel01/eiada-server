@@ -32,7 +32,7 @@ const ChangePasswordMutation = {
     new_password: { type: new GraphQLNonNull(GraphQLString) },
   },
 
-  async resolve(parent, args, root) {
+  async resolve(parent, args) {
 
     let { errors, decoded } = decodeToken(args.verification_code, true);
     if (errors.length) return { errors };
@@ -83,6 +83,6 @@ const UpdatePasswordMutation = {
 
 module.exports = {
   FORGET_PASSWORD_REQUREST: ForgetPasswordRequestMutation,
-  Change_Password: ChangePasswordMutation,
+  CHANGE_PASSWORD: ChangePasswordMutation,
   Update_Password: UpdatePasswordMutation,
 };

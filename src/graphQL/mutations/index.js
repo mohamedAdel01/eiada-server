@@ -2,7 +2,7 @@ const REGISTER = require("./auth/register");
 const { VERIFY_EMAIL, RESEND_VERIFICATION_EMAIL } = require("./auth/verify_email");
 const LOGIN = require("./auth/login");
 const Logout = require("./auth/logout");
-const { FORGET_PASSWORD_REQUREST,Change_Password, Update_Password } = require("./auth/forget_password");
+const { FORGET_PASSWORD_REQUREST,CHANGE_PASSWORD, Update_Password } = require("./auth/forget_password");
 const { Create_Clinic } = require("./create/craete_clinic");
 const { Create_Branch } = require("./create/create_branch");
 const { Create_Member } = require("./create/create_member");
@@ -19,7 +19,7 @@ module.exports = {
   LOGIN,
   Logout,
   FORGET_PASSWORD_REQUREST,
-  Change_Password,
+  CHANGE_PASSWORD,
   Update_Password,
   Create_Clinic,
   Create_Branch,

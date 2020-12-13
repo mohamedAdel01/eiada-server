@@ -29,7 +29,7 @@ const decodeToken = (token, codeType) => {
     return {
       errors: [
         {
-          key: codeType ? "Verification" : "Unautherized",
+          key: codeType ? "code" : "Unautherized",
           message: codeType ? "Code not exist" : "Please login First",
         },
       ],
@@ -39,7 +39,7 @@ const decodeToken = (token, codeType) => {
       return {
         errors: [
           {
-            key: codeType ? "Verification" : "Unautherized",
+            key: codeType ? "code" : "Unautherized",
             message: codeType
               ? "Your Code is expired"
               : "Your session is expired",
