@@ -1,4 +1,5 @@
 "use strict";
+require("dotenv").config();
 const nodemailer = require("nodemailer");
 
 const transporter = nodemailer.createTransport({
@@ -14,8 +15,8 @@ const transporter = nodemailer.createTransport({
   port: 2525,
   auth: {
     user: "f2d2aa803e210c",
-    pass: "c1b679cc60b0ce"
-  }
+    pass: "c1b679cc60b0ce",
+  },
 });
 
 let mail = (to, subject, text) => {
