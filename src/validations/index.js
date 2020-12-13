@@ -52,6 +52,7 @@ const validate = (payload) => {
         break;
         
       case "password":
+      case "new_password":
         checkEmpty(key, payload);
         check = validator.isLength(payload[key], { min: 6, max: 16 });
         if (!check) {

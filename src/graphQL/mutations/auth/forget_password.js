@@ -1,12 +1,21 @@
 const graphql = require("graphql");
 const { GraphQLString, GraphQLNonNull } = graphql;
 
-const { send_verification_email, Delete_Verification } = require("../../../controllers/emails");
+const {
+  send_verification_email,
+  Delete_Verification,
+} = require("../../../controllers/emails");
 const { Update_Password } = require("../../../controllers/user");
 
 const { MessageType } = require("../../types/types");
 const { validate } = require("../../../validations");
-const { checkEmailExistance,checkUserExistance, checkVerificationCode, decodeToken, checkPassword } = require("../../../policies");
+const {
+  checkEmailExistance,
+  checkUserExistance,
+  checkVerificationCode,
+  decodeToken,
+  checkPassword,
+} = require("../../../policies");
 
 const ForgetPasswordRequestMutation = {
   type: MessageType,
@@ -33,19 +42,21 @@ const ChangePasswordMutation = {
   },
 
   async resolve(parent, args) {
+    let v_errors = validate(args);
+    if (v_errors.length) return { errors: v_errors };
 
     let { errors, decoded } = decodeToken(args.verification_code, true);
     if (errors.length) return { errors };
 
-    let { exUser,p_userErrors } = await checkUserExistance(decoded.user_id);
+    let { exUser, p_userErrors } = await checkUserExistance(decoded.user_id);
     if (p_userErrors.length) return { errors: p_userErrors };
 
     let { p_codeErrors } = await checkVerificationCode(decoded, exUser);
     if (p_codeErrors.length) return { errors: p_codeErrors };
 
-    await Update_Password(args.new_password, decoded.user_id)
+    await Update_Password(args.new_password, decoded.user_id);
 
-    await Delete_Verification(decoded.user_id)
+    await Delete_Verification(decoded.user_id);
 
     return {
       message: "Password changed successfully",
@@ -62,17 +73,19 @@ const UpdatePasswordMutation = {
   },
 
   async resolve(parent, args, root) {
-
     let { decoded, errors } = decodeToken(root.headers.authorization, false);
     if (errors.length) return { errors };
 
-    let { exUser,p_userErrors } = await checkUserExistance(decoded._id);
+    let { exUser, p_userErrors } = await checkUserExistance(decoded._id);
     if (p_userErrors.length) return { errors: p_userErrors };
-    
-    let { p_passwordErrors } = await checkPassword(args.old_password, exUser.password);
+
+    let { p_passwordErrors } = await checkPassword(
+      args.old_password,
+      exUser.password
+    );
     if (p_passwordErrors.length) return { errors: p_passwordErrors };
 
-    await Update_Password(args.new_password, exUser._id)
+    await Update_Password(args.new_password, exUser._id);
 
     return {
       message: "Password changed successfully",

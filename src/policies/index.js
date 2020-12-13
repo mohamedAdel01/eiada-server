@@ -172,7 +172,7 @@ const checkVerificationCode = async (decoded) => {
 
   if (!exVerification || exVerification.code != decoded.code) {
     p_codeErrors.push({
-      key: "Validation",
+      key: "code",
       message: "Expired code, We will resend you another one",
     });
 
