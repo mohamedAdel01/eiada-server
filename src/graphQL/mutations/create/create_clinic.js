@@ -35,5 +35,5 @@ const createClinicMutation = {
 };
 
 module.exports = {
-  Create_Clinic: createClinicMutation,
+  CREATE_CLINIC: createClinicMutation,
 };

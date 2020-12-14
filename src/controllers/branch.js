@@ -14,6 +14,11 @@ const Create_Branch = async ({ address }) => {
   };
 };
 
+const Read_Branchs = async () => {
+  return await Branch.find({});
+};
+
 module.exports = {
   Create_Branch,
+  Read_Branchs
 };

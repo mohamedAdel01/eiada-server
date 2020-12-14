@@ -8,7 +8,7 @@ const {
   GraphQLID,
   GraphQLInputObjectType,
   GraphQLBoolean,
-  GraphQLFloat
+  GraphQLFloat,
 } = graphql;
 // const ObjectId = require('mongodb').ObjectID
 
@@ -28,6 +28,8 @@ const RegisterType = new GraphQLObjectType({
   name: "Register",
   fields: () => ({
     user: { type: UserType },
+    clinic: { type: new GraphQLList(ClinicType) },
+    branchs: { type: new GraphQLList(BranchType) },
     message: { type: GraphQLString },
     errors: { type: new GraphQLNonNull(new GraphQLList(ErrorType)) },
   }),
@@ -203,17 +205,17 @@ const ServiceInputType = new GraphQLInputObjectType({
   fields: {
     description: { type: GraphQLString },
     continued: { type: GraphQLBoolean },
-    cost: { type: GraphQLFloat }
-  }
-})
+    cost: { type: GraphQLFloat },
+  },
+});
 
 const PartialInputType = new GraphQLInputObjectType({
   name: "PartialInput",
   fields: {
     description: { type: GraphQLString },
-    cost: { type: GraphQLFloat }
-  }
-})
+    cost: { type: GraphQLFloat },
+  },
+});
 
 const SpecializationType = new GraphQLObjectType({
   name: "Specialization",
@@ -246,5 +248,5 @@ module.exports = {
   BookingType,
   BookingType_CRUD,
   ServiceInputType,
-  PartialInputType
+  PartialInputType,
 };

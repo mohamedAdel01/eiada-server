@@ -14,6 +14,11 @@ const Create_Clinic = async ({ name }) => {
   };
 };
 
+const Read_Clinic = async () => {
+  return await Clinic.find({});
+};
+
 module.exports = {
   Create_Clinic,
+  Read_Clinic,
 };
