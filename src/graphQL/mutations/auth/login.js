@@ -3,7 +3,7 @@ const { GraphQLString, GraphQLNonNull } = graphql;
 
 const { Update_Auth_Token } = require("../../../controllers/user");
 const { Read_Clinic } = require("../../../controllers/clinic");
-const { Read_Branchs } = require("../../../controllers/branch");
+const { Read_Branches } = require("../../../controllers/branch");
 
 const { RegisterType } = require("../../types/types");
 const { validate } = require("../../../validations");
@@ -42,12 +42,12 @@ const LoginMutation = {
     updatedUser = await Update_Auth_Token(exUser._id, Token);
 
     let exClinic = await Read_Clinic();
-    let exBranchs = await Read_Branchs();
+    let exBranches = await Read_Branches();
 
     return {
       user: updatedUser,
       clinic: exClinic,
-      branchs: exBranchs,
+      branches: exBranches,
       errors: [],
     };
   },

@@ -36,7 +36,7 @@ const RegisterMutation = {
       message: "Please check your Email to verify email",
       user: updatedUser,
       clinic: [],
-      branchs: [],
+      branches: [],
       errors: [],
     };
   },

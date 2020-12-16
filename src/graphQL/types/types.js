@@ -29,7 +29,7 @@ const RegisterType = new GraphQLObjectType({
   fields: () => ({
     user: { type: UserType },
     clinic: { type: new GraphQLList(ClinicType) },
-    branchs: { type: new GraphQLList(BranchType) },
+    branches: { type: new GraphQLList(BranchType) },
     message: { type: GraphQLString },
     errors: { type: new GraphQLNonNull(new GraphQLList(ErrorType)) },
   }),
@@ -47,7 +47,7 @@ const ClinicType_CRUD = new GraphQLObjectType({
 const BranchType_CRUD = new GraphQLObjectType({
   name: "branch_crud",
   fields: () => ({
-    branch: { type: BranchType },
+    branches: { type: new GraphQLList(BranchType) },
     message: { type: GraphQLString },
     errors: { type: new GraphQLNonNull(new GraphQLList(ErrorType)) },
   }),
@@ -94,6 +94,13 @@ const BranchType = new GraphQLObjectType({
     id: { type: GraphQLID },
     address: { type: GraphQLString },
   }),
+});
+
+const BranchInputType = new GraphQLInputObjectType({
+  name: "BranchInput",
+  fields: {
+    address: { type: GraphQLString },
+  },
 });
 
 const UserType = new GraphQLObjectType({
@@ -241,6 +248,7 @@ module.exports = {
   UserType,
   RoleType,
   BranchType,
+  BranchInputType,
   BranchType_CRUD,
   RoleInputType,
   PatientType,

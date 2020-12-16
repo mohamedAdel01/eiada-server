@@ -1,22 +1,18 @@
 const graphql = require("graphql");
-const { GraphQLString, GraphQLNonNull } = graphql;
+const { GraphQLList } = graphql;
 
-const { Create_Branch } = require("../../../controllers/branch");
+const { Create_Branches } = require("../../../controllers/branch");
 
-const { BranchType_CRUD } = require("../../types/types");
-const { validate } = require("../../../validations");
+const { BranchType_CRUD, BranchInputType } = require("../../types/types");
 const { decodeToken, checkUserExistance, checkClinicExist } = require("../../../policies");
 
-const createBranchMutation = {
+const createBranchesMutation = {
   type: BranchType_CRUD,
   args: {
-    address: { type: new GraphQLNonNull(GraphQLString) },
+    addresses: { type: new GraphQLList(BranchInputType) },
   },
 
   async resolve(parent, args, root) {
-    let v_errors = validate(args);
-    if (v_errors.length) return { errors: v_errors };
-
     let { decoded ,errors } = decodeToken(root.headers.authorization, false);
     if (errors.length) return { errors };
 
@@ -26,10 +22,10 @@ const createBranchMutation = {
     let { p_clinicErrors } = await checkClinicExist(true);
     if (p_clinicErrors.length) return { errors: p_clinicErrors };
 
-    return await Create_Branch({ address: args.address });
+    return await Create_Branches({ addresses: args.addresses });
   },
 };
 
 module.exports = {
-  Create_Branch: createBranchMutation,
+  CREATE_BRANCHES: createBranchesMutation,
 };

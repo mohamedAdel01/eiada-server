@@ -1,24 +1,20 @@
 const Branch = require("../models/branch");
 
-const Create_Branch = async ({ address }) => {
-  let branchObj = new Branch({
-    address: address,
-  });
-
-  let NewBranch = await branchObj.save();
+const Create_Branches = async ({ addresses }) => {
+  let NewBranches = await Branch.insertMany(addresses);
 
   return {
-    branch: NewBranch,
-    message: "Branch created successfully",
+    branches: NewBranches,
+    message: "Branches created successfully",
     errors: [],
   };
 };
 
-const Read_Branchs = async () => {
+const Read_Branches = async () => {
   return await Branch.find({});
 };
 
 module.exports = {
-  Create_Branch,
-  Read_Branchs
+  Create_Branches,
+  Read_Branches,
 };
