@@ -16,7 +16,7 @@ const Create_User = async (args) => {
   return await userObj.save();
 };
 
-const Add_Member = async ({email, branch_id, role}) => {
+const Add_User = async ({email, branch_id, role}) => {
   const securedPassword = bcrypt.hashSync('123456', 10);
 
   let userObj = new User({
@@ -58,7 +58,7 @@ const Update_Auth_Token = async (user_id, Token) => {
 
 module.exports = {
   Create_User,
-  Add_Member,
+  Add_User,
   Update_Password,
   Update_Email_Verify,
   Update_Auth_Token,

@@ -1,7 +1,7 @@
 const graphql = require("graphql");
 const { GraphQLString, GraphQLNonNull, GraphQLID } = graphql;
 
-const { Add_Member } = require("../../../controllers/user");
+const { Add_User } = require("../../../controllers/user");
 const { Create_Role } = require("../../../controllers/role");
 const { send_verification_email } = require("../../../controllers/emails");
 
@@ -15,7 +15,7 @@ const {
   checkBranchExist
 } = require("../../../policies");
 
-const createMemberMutation = {
+const createUserMutation = {
   type: MessageType,
   args: {
     email: { type: new GraphQLNonNull(GraphQLString) },
@@ -47,12 +47,12 @@ const createMemberMutation = {
     if (p_branchErrors.length) return { errors: p_branchErrors };
 
     if (args.role_name != "custom") {
-      let newMember =  await Add_Member({ email: args.email,branch_id: args.branch_id, role: args.role_name });
+      let newUser =  await Add_User({ email: args.email,branch_id: args.branch_id, role: args.role_name });
 
-      await send_verification_email(newMember, "email", true);
+      await send_verification_email(newUser, "email", true);
 
       return {
-        message: 'New member has been added successfully', 
+        message: 'New user has been added successfully', 
         errors: []
       }
     }
@@ -64,17 +64,17 @@ const createMemberMutation = {
 
     let { role } = await Create_Role(args.new_role, args.email);
 
-    let newMember = await Add_Member({ email: args.email, branch_id: args.branch_id, role: role.name });
+    let newUser = await Add_User({ email: args.email, branch_id: args.branch_id, role: role.name });
 
-    await send_verification_email(newMember, "email", true);
+    await send_verification_email(newUser, "email", true);
 
     return {
-      message: 'New member has been added successfully', 
+      message: 'New user has been added successfully', 
       errors: []
     }
   },
 };
 
 module.exports = {
-  Create_Member: createMemberMutation,
+  Create_User: createUserMutation,
 };
