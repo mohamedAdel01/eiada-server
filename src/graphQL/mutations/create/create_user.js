@@ -20,8 +20,7 @@ const createUserMutation = {
   args: {
     email: { type: new GraphQLNonNull(GraphQLString) },
     branch_id: {type: new GraphQLNonNull(GraphQLID)},
-    field: { type: GraphQLString },
-    division: { type: GraphQLString },
+    jop_title: { type: GraphQLString },
     role_name: { type: new GraphQLNonNull(GraphQLString) },
     new_role: { type: new GraphQLNonNull(RoleInputType) },
   },
@@ -76,5 +75,5 @@ const createUserMutation = {
 };
 
 module.exports = {
-  Create_User: createUserMutation,
+  CREATE_USER: createUserMutation,
 };
