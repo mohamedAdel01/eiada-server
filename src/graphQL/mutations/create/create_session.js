@@ -5,7 +5,7 @@ const { Create_Session } = require("../../../controllers/session");
 
 const { MessageType } = require("../../types/types");
 
-const { decodeToken, checkUserExistance } = require("../../../policies");
+const { decodeToken } = require("../../../policies");
 
 const createSessionMutation = {
   type: MessageType,
@@ -20,18 +20,10 @@ const createSessionMutation = {
     let { decoded, errors } = decodeToken(root.headers.authorization, false);
     if (errors.length) return { errors };
 
-    let { p_userErrors } = await checkUserExistance(
-      decoded._id,
-      root.headers.authorization,
-      false
-    );
-    if (p_userErrors.length) return { errors: p_userErrors };
-
-    // session must be to check if booking 
+    // session must be to check if booking
     // is still open or closed before create
 
     return await Create_Session(args, decoded._id);
-
   },
 };
 

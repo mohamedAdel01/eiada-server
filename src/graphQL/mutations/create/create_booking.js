@@ -6,8 +6,6 @@ const { Create_Booking } = require("../../../controllers/booking");
 const { MessageType } = require("../../types/types");
 const { validate } = require("../../../validations");
 const {
-  decodeToken,
-  checkUserExistance,
   checkBookingDate
 } = require("../../../policies");
 

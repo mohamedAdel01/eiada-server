@@ -8,10 +8,8 @@ const { send_verification_email } = require("../../../controllers/emails");
 const { MessageType, RoleInputType } = require("../../types/types");
 const { validate } = require("../../../validations");
 const {
-  decodeToken,
   checkRoleExist,
   checkEmailExistance,
-  checkUserExistance,
   checkBranchExist
 } = require("../../../policies");
 
@@ -28,16 +26,6 @@ const createUserMutation = {
   async resolve(parent, args, root) {
     let v_errors = validate(args);
     if (v_errors.length) return { errors: v_errors };
-
-    let { decoded, errors } = decodeToken(root.headers.authorization, false);
-    if (errors.length) return { errors };
-
-    let { p_userErrors } = await checkUserExistance(
-      decoded._id,
-      root.headers.authorization,
-      false
-    );
-    if (p_userErrors.length) return { errors: p_userErrors };
 
     let { p_emailErrors } = await checkEmailExistance(args.email, false);
     if (p_emailErrors.length) return { errors: p_emailErrors };

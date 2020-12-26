@@ -1,7 +1,15 @@
 const { parse } = require("graphql");
 const { decodeToken, checkUserExistance } = require("../src/policies");
 
-let unAutherized = ["LOGIN", "REGISTER"];
+let unAutherized = [
+  "LOGIN",
+  "REGISTER",
+  "CHANGE_PASSWORD",
+  "FORGET_PASSWORD_REQUREST",
+  "RESEND_VERIFICATION_EMAIL",
+  "Update_Password",
+  "VERIFY_EMAIL",
+];
 
 const auth_check = async (req, res, next) => {
   let operation_name = parse(req.body.query).definitions[0].selectionSet
