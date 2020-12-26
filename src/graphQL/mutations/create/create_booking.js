@@ -25,12 +25,6 @@ const createBookingMutation = {
     let v_errors = validate(args);
     if (v_errors.length) return { errors: v_errors };
 
-    let { decoded, errors } = decodeToken(root.headers.authorization, false);
-    if (errors.length) return { errors };
-
-    let { p_userErrors } = await checkUserExistance(decoded._id, root.headers.authorization, false);
-    if (p_userErrors.length) return { errors: p_userErrors };
-
     let checkDate = await checkBookingDate(args)
 
     if (checkDate.status == 4) return {
