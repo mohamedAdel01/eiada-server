@@ -27,7 +27,7 @@ const auth_check = async (req, res, next) => {
     if (p_userErrors.length)
       return res.status(400).json({ errors: p_userErrors });
   }
-
+  
   next();
 };
 
