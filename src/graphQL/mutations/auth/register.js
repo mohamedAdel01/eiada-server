@@ -8,7 +8,7 @@ const { RegisterType } = require("../../types/types");
 const { validate } = require("../../../validations");
 const { checkEmailExistance, generateToken } = require("../../../policies");
 
-const RegisterMutation = {
+const REGISTER = {
   type: RegisterType,
   args: {
     fullname: { type: new GraphQLNonNull(GraphQLString) },
@@ -42,4 +42,4 @@ const RegisterMutation = {
   },
 };
 
-module.exports = RegisterMutation;
+module.exports = { REGISTER };

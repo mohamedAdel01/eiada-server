@@ -1,8 +1,15 @@
-const REGISTER = require("./auth/register");
-const { VERIFY_EMAIL, RESEND_VERIFICATION_EMAIL } = require("./auth/verify_email");
+const { REGISTER } = require("./auth/register");
+const {
+  VERIFY_EMAIL,
+  RESEND_VERIFICATION_EMAIL,
+} = require("./auth/verify_email");
 const LOGIN = require("./auth/login");
 const Logout = require("./auth/logout");
-const { FORGET_PASSWORD_REQUREST,CHANGE_PASSWORD, Update_Password } = require("./auth/forget_password");
+const {
+  FORGET_PASSWORD_REQUREST,
+  CHANGE_PASSWORD,
+  Update_Password,
+} = require("./auth/forget_password");
 const { CREATE_CLINIC } = require("./create/create_clinic");
 const { CREATE_BRANCHES } = require("./create/create_branch");
 const { CREATE_USER } = require("./create/create_user");
@@ -28,5 +35,5 @@ module.exports = {
   Create_Booking,
   Create_Session,
   Update_During_Session,
-  Update_After_Session
+  Update_After_Session,
 };

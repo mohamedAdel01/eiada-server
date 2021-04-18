@@ -40,7 +40,8 @@ const send_verification_email = async (user, emailType, newUser) => {
   mail(
     user.email,
     verificationEmails[emailType].title,
-    `${verificationEmails[emailType].message}: ${verification_code}`
+    verificationEmails[emailType].message,
+    verification_code
   );
 
   return {
@@ -50,7 +51,10 @@ const send_verification_email = async (user, emailType, newUser) => {
 };
 
 const validate_email = async (verification, exUser) => {
-  let { p_emailErrors } = await checkEmailVerification(verification.user_id, false);
+  let { p_emailErrors } = await checkEmailVerification(
+    verification.user_id,
+    false
+  );
   if (p_emailErrors.length) return { errors: p_emailErrors };
 
   let { p_codeErrors } = await checkVerificationCode(verification);
@@ -71,7 +75,9 @@ const validate_email = async (verification, exUser) => {
 };
 
 const Delete_Verification = async (user_id) => {
-  return await Email_Verification.findOneAndDelete({ user_id: ObjectId(user_id) });
+  return await Email_Verification.findOneAndDelete({
+    user_id: ObjectId(user_id),
+  });
 };
 
 const Create_Verification = async (user_id) => {

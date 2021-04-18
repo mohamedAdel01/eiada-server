@@ -19,12 +19,15 @@ const transporter = nodemailer.createTransport({
   // },
 });
 
-let mail = (to, subject, text) => {
+let mail = (to, subject, text, code) => {
   transporter.sendMail({
     from: "mohamed7adel96@gmail.com",
     to: to,
     subject: subject,
     text: text,
+    html: `
+    <a href=http://localhost:3000/verify-email?${code}">Verify Email</a>
+    <p>this code incase of you face any problem: ${code}</p>`,
   });
 };
 

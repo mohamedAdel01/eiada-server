@@ -2,7 +2,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const endOfDay = require("date-fns/endOfDay");
 const startOfDay = require("date-fns/startOfDay");
-const parseISO = require('date-fns/parseISO')
+const parseISO = require("date-fns/parseISO");
 const User = require("../models/user");
 const Clinic = require("../models/clinic");
 const Role = require("../models/role");
@@ -54,17 +54,17 @@ const decodeToken = (token, codeType) => {
   });
 };
 
-const checkEmailExistance = async (email, required) => {
+const checkEmailExistance = async (email, must_be_exist) => {
   let p_emailErrors = [];
   let exUser = await User.findOne({ email: email });
 
-  if (required && !exUser) {
+  if (must_be_exist && !exUser) {
     p_emailErrors.push({
       key: "email",
       message: "Email isn't exist",
     });
     return { p_emailErrors };
-  } else if (!required && exUser) {
+  } else if (!must_be_exist && exUser) {
     p_emailErrors.push({
       key: "email",
       message: "Email is already exist",
@@ -125,7 +125,7 @@ const checkPassword = async (entered, exist) => {
   return { p_passwordErrors };
 };
 
-const checkEmailVerification = async (userID, required) => {
+const checkEmailVerification = async (userID, must_be_verified) => {
   let p_emailErrors = [];
 
   let exUser = await User.findById(userID);
@@ -140,7 +140,7 @@ const checkEmailVerification = async (userID, required) => {
     };
   }
 
-  if (!required && exUser.email_verified) {
+  if (!must_be_verified && exUser.email_verified) {
     p_emailErrors.push({
       key: "Verification",
       message: "Email already verified",
@@ -150,7 +150,7 @@ const checkEmailVerification = async (userID, required) => {
     };
   }
 
-  if (required && !exUser.email_verified) {
+  if (must_be_verified && !exUser.email_verified) {
     p_emailErrors.push({
       key: "Verification",
       message: "Please verify your email first",
@@ -182,17 +182,17 @@ const checkVerificationCode = async (decoded) => {
   return { p_codeErrors };
 };
 
-const checkClinicExist = async (required) => {
+const checkClinicExist = async (must_be_exist) => {
   let p_clinicErrors = [];
   let clinic = await Clinic.find();
-  if (!required && clinic.length) {
+  if (!must_be_exist && clinic.length) {
     p_clinicErrors.push({
       key: "DB",
       message: "A clinic has been established before",
     });
   }
 
-  if (required && !clinic.length) {
+  if (must_be_exist && !clinic.length) {
     p_clinicErrors.push({
       key: "DB",
       message: "Please add Clinic first",
@@ -262,11 +262,9 @@ const checkBookingDate = async (args) => {
 
   let checkTimeTaken = exDoctorBookings[0].doctor_bookings.filter(
     (booking) =>
-      (args.start_time >= booking.start_time  &&
-        args.start_time <= booking.end_time )
-      ||
-      (args.end_time >= booking.start_time  &&
-        args.end_time <= booking.end_time )
+      (args.start_time >= booking.start_time &&
+        args.start_time <= booking.end_time) ||
+      (args.end_time >= booking.start_time && args.end_time <= booking.end_time)
   );
 
   if (!checkTimeTaken.length) return { status: 3, exDate: exDate }; // doctor exist but time is available
@@ -308,5 +306,5 @@ module.exports = {
   checkBranchExist,
   checkPatientPhoneExistance,
   checkBookingDate,
-  checkSessionExist
+  checkSessionExist,
 };
