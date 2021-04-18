@@ -8,7 +8,7 @@ const { Roles } = require("./role");
 module.exports = {
   BRANCHES: Branches,
   ROLES: Roles,
-  clinics: Clinics,
-  users: Users,
+  CLINICS: Clinics,
+  USERS: Users,
   Patient: Patient,
 };
