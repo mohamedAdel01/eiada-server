@@ -13,7 +13,7 @@ const {
   generateToken,
 } = require("../../../policies");
 
-const LoginMutation = {
+const LOGIN = {
   type: RegisterType,
   args: {
     email: { type: new GraphQLNonNull(GraphQLString) },
@@ -24,7 +24,11 @@ const LoginMutation = {
     let v_errors = validate(args);
     if (v_errors.length) return { errors: v_errors };
 
-    let { exUser, p_emailErrors } = await checkEmailExistance(args.email, true);
+    let { exUser, p_emailErrors } = await checkEmailExistance(
+      args.email,
+      true,
+      "Email or Password isn't correct"
+    );
     if (p_emailErrors.length) return { errors: p_emailErrors };
 
     let { p_passwordErrors } = await checkPassword(
@@ -33,13 +37,12 @@ const LoginMutation = {
     );
     if (p_passwordErrors.length) return { errors: p_passwordErrors };
 
-    exUser.token = "";
-
     // Hint we will make check activate clinic or not here before generate new token and login
 
+    exUser.token = true;
     const Token = generateToken(exUser);
 
-    updatedUser = await Update_Auth_Token(exUser._id, Token);
+    let updatedUser = await Update_Auth_Token(exUser._id, Token);
 
     let exClinic = await Read_Clinic();
     let exBranches = await Read_Branches();
@@ -53,4 +56,4 @@ const LoginMutation = {
   },
 };
 
-module.exports = LoginMutation;
+module.exports = LOGIN;

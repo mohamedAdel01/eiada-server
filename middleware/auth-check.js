@@ -17,17 +17,27 @@ const auth_check = async (req, res, next) => {
 
   if (!unAutherized.includes(operation_name)) {
     let { decoded, errors } = decodeToken(req.headers.authorization, false);
-    if (errors.length) return res.status(400).json({ errors });
+    if (errors.length) return res.status(401).json({ errors });
 
-    let { p_userErrors } = await checkUserExistance(
+    let { exUser, p_userErrors } = await checkUserExistance(
       decoded._id,
       req.headers.authorization,
       false
     );
+    if (!exUser.token)
+      return res.status(401).json({
+        errors: [
+          {
+            key: "autherizatoin",
+            message:
+              "For your security, Your Session is expired, So please login again",
+          },
+        ],
+      });
     if (p_userErrors.length)
       return res.status(400).json({ errors: p_userErrors });
   }
-  
+
   next();
 };
 

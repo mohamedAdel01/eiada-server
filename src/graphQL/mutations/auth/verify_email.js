@@ -1,13 +1,16 @@
 const graphql = require("graphql");
 const { GraphQLString, GraphQLNonNull } = graphql;
 
-const { validate_email, send_verification_email } = require("../../../controllers/emails");
+const {
+  validate_email,
+  send_verification_email,
+} = require("../../../controllers/emails");
 
-const { MessageType } = require("../../types/types");
+const { MessageType, RegisterType } = require("../../types/types");
 const { decodeToken, checkUserExistance } = require("../../../policies");
 
-const VerifyEmailMutation = {
-  type: MessageType,
+const VERIFY_EMAIL = {
+  type: RegisterType,
   args: {
     verification_code: { type: new GraphQLNonNull(GraphQLString) },
   },
@@ -16,14 +19,16 @@ const VerifyEmailMutation = {
     let decoded_VCode = decodeToken(args.verification_code, true);
     if (decoded_VCode.errors.length) return decoded_VCode;
 
-    let { exUser, p_userErrors } = await checkUserExistance(decoded_VCode.decoded.user_id);
+    let { exUser, p_userErrors } = await checkUserExistance(
+      decoded_VCode.decoded.user_id
+    );
     if (p_userErrors.length) return { errors: p_userErrors };
 
     return await validate_email(decoded_VCode.decoded, exUser);
   },
 };
 
-const ResendVerificationEmailMutation = {
+const RESEND_VERIFICATION_EMAIL = {
   type: MessageType,
 
   async resolve(parent, args, root) {
@@ -35,6 +40,6 @@ const ResendVerificationEmailMutation = {
 };
 
 module.exports = {
-  VERIFY_EMAIL: VerifyEmailMutation,
-  RESEND_VERIFICATION_EMAIL: ResendVerificationEmailMutation,
+  VERIFY_EMAIL,
+  RESEND_VERIFICATION_EMAIL,
 };

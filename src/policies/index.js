@@ -54,20 +54,20 @@ const decodeToken = (token, codeType) => {
   });
 };
 
-const checkEmailExistance = async (email, must_be_exist) => {
+const checkEmailExistance = async (email, must_be_exist, message) => {
   let p_emailErrors = [];
   let exUser = await User.findOne({ email: email });
 
   if (must_be_exist && !exUser) {
     p_emailErrors.push({
-      key: "email",
-      message: "Email isn't exist",
+      key: "autherization",
+      message: message ? message : "Email isn't exist",
     });
     return { p_emailErrors };
   } else if (!must_be_exist && exUser) {
     p_emailErrors.push({
-      key: "email",
-      message: "Email is already exist",
+      key: "autherization",
+      message: message ? message : "Email is already exist",
     });
     return { p_emailErrors };
   } else {
@@ -114,8 +114,8 @@ const checkPassword = async (entered, exist) => {
 
   if (!check) {
     p_passwordErrors.push({
-      key: "password",
-      message: "wrong password",
+      key: "autherization",
+      message: "Email or Password isn't correct",
     });
     return {
       p_passwordErrors,

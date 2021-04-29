@@ -33,6 +33,7 @@ const send_verification_email = async (user, emailType, newUser) => {
     await Delete_Verification(user._id);
   }
 
+
   let verification = await Create_Verification(user._id);
 
   const verification_code = generateToken(verification);
@@ -55,22 +56,23 @@ const validate_email = async (verification, exUser) => {
     verification.user_id,
     false
   );
-  if (p_emailErrors.length) return { errors: p_emailErrors };
+  if (p_emailErrors.length) return { errors: p_emailErrors, user: exUser };
 
   let { p_codeErrors } = await checkVerificationCode(verification);
 
   if (p_codeErrors.length) {
     await send_verification_email(exUser, "password", false);
-    return { errors: p_codeErrors };
+    return { errors: p_codeErrors, user: exUser };
   }
 
-  await Update_Email_Verify(verification.user_id);
+  let user = await Update_Email_Verify(verification.user_id);
 
   await Delete_Verification(exUser._id);
 
   return {
-    message: "Email verified successfully",
+    user,
     errors: [],
+    message: "Email verified successfully",
   };
 };
 
