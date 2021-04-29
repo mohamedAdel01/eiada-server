@@ -33,11 +33,11 @@ const REGISTER = {
     await send_verification_email(newUser, "email", true);
 
     return {
-      message: "Please check your Email to verify email",
       user: updatedUser,
       clinic: [],
       branches: [],
       errors: [],
+      message: "Please check your Email to verify email",
     };
   },
 };

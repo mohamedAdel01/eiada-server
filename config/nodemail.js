@@ -26,8 +26,17 @@ let mail = (to, subject, text, code) => {
     subject: subject,
     text: text,
     html: `
-    <a href=http://localhost:3000/verify-email?${code}">Verify Email</a>
-    <p>this code incase of you face any problem: ${code}</p>`,
+      <div style="background: #fafafa; border-radius: 10px; padding: 20px; margin: 20px 10px">
+        <div style="margin-bottom: 30px">
+          <h1 style="font-size: 20px">Welcome in Eiada</h1>
+          <p style="font-size: 14px">We are very happy you will join our team</p>
+        </div>
+        <a href="http://localhost:3000/verify-email/${code}">Click here to Verify Email</a>
+        <p>
+          Or copy this link in your browser to verify Email:
+          <span style="margin: 0 10px; color: #24b6de"> http://localhost:3000/verify-email/${code} </span>
+        </p>
+      </div>`,
   });
 };
 
