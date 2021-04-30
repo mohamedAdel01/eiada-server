@@ -11,14 +11,10 @@ const {
 const verificationEmails = {
   email: {
     title: "Email verification",
-    message:
-      "Press here to Verify your email and this code is available for 10min",
     resMSG: "Please check your Email to verify email",
   },
   password: {
     title: "Reset password",
-    message:
-      "Press here to reset your password and this code is available for 10min",
     resMSG: "Please check your Email to continue",
   },
 };
@@ -41,8 +37,8 @@ const send_verification_email = async (user, emailType, newUser) => {
   mail(
     user.email,
     verificationEmails[emailType].title,
-    verificationEmails[emailType].message,
-    verification_code
+    verification_code,
+    emailType
   );
 
   return {

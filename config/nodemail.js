@@ -19,22 +19,33 @@ const transporter = nodemailer.createTransport({
   // },
 });
 
-let mail = (to, subject, text, code) => {
+let mail = (to, subject, code, emailType) => {
+  console.log(emailType);
   transporter.sendMail({
     from: "mohamed7adel96@gmail.com",
     to: to,
     subject: subject,
-    text: text,
     html: `
       <div style="background: #fafafa; border-radius: 10px; padding: 20px; margin: 20px 10px">
         <div style="margin-bottom: 30px">
           <h1 style="font-size: 20px">Welcome in Eiada</h1>
-          <p style="font-size: 14px">We are very happy you will join our team</p>
+          ${
+            emailType === "email"
+              ? '<p style="font-size: 14px">We are very happy you will join our team</p>'
+              : ""
+          }
+         
         </div>
-        <a href="http://localhost:3000/verify-email/${code}">Click here to Verify Email</a>
+        <a href="http://localhost:3000/${
+          emailType === "email" ? "verify-email" : "reset-password"
+        }/${code}">Click here to ${
+      emailType === "email" ? "Verify Email" : "Reset Password"
+    }</a>
         <p>
           Or copy this link in your browser to verify Email:
-          <span style="margin: 0 10px; color: #24b6de"> http://localhost:3000/verify-email/${code} </span>
+          <span style="margin: 0 10px; color: #24b6de"> http://localhost:3000/${
+            emailType === "email" ? "verify-email" : "reset-password"
+          }/${code} </span>
         </p>
       </div>`,
   });

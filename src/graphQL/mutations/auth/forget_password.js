@@ -17,7 +17,7 @@ const {
   checkPassword,
 } = require("../../../policies");
 
-const ForgetPasswordRequestMutation = {
+const FORGET_PASSWORD_REQUREST = {
   type: MessageType,
   args: {
     email: { type: new GraphQLNonNull(GraphQLString) },
@@ -34,7 +34,7 @@ const ForgetPasswordRequestMutation = {
   },
 };
 
-const ChangePasswordMutation = {
+const CHANGE_PASSWORD = {
   type: MessageType,
   args: {
     verification_code: { type: new GraphQLNonNull(GraphQLString) },
@@ -95,7 +95,7 @@ const UpdatePasswordMutation = {
 };
 
 module.exports = {
-  FORGET_PASSWORD_REQUREST: ForgetPasswordRequestMutation,
-  CHANGE_PASSWORD: ChangePasswordMutation,
+  FORGET_PASSWORD_REQUREST,
+  CHANGE_PASSWORD,
   Update_Password: UpdatePasswordMutation,
 };
