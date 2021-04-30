@@ -20,7 +20,6 @@ const transporter = nodemailer.createTransport({
 });
 
 let mail = (to, subject, code, emailType) => {
-  console.log(emailType);
   transporter.sendMail({
     from: "mohamed7adel96@gmail.com",
     to: to,
