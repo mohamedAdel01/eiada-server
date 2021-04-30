@@ -2,7 +2,7 @@ const graphql = require("graphql");
 const { GraphQLString, GraphQLNonNull } = graphql;
 
 const {
-  validate_email,
+  verify_email,
   send_verification_email,
 } = require("../../../controllers/emails");
 
@@ -24,7 +24,7 @@ const VERIFY_EMAIL = {
     );
     if (p_userErrors.length) return { errors: p_userErrors };
 
-    return await validate_email(decoded_VCode.decoded, exUser);
+    return await verify_email(decoded_VCode.decoded, exUser);
   },
 };
 

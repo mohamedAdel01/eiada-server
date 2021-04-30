@@ -133,7 +133,7 @@ const checkEmailVerification = async (userID, must_be_verified) => {
   if (!exUser) {
     p_emailErrors.push({
       key: "Verification",
-      message: "can't find User",
+      message: "User isn't exist",
     });
     return {
       p_emailErrors,
@@ -173,7 +173,8 @@ const checkVerificationCode = async (decoded) => {
   if (!exVerification || exVerification.code != decoded.code) {
     p_codeErrors.push({
       key: "code",
-      message: "Expired code, We will resend you another one",
+      message:
+        "Expired code, Please use last Email or resend new one and use it",
     });
 
     return { p_codeErrors };

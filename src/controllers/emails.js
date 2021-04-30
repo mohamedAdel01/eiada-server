@@ -51,7 +51,7 @@ const send_verification_email = async (user, emailType, newUser) => {
   };
 };
 
-const validate_email = async (verification, exUser) => {
+const verify_email = async (verification, exUser) => {
   let { p_emailErrors } = await checkEmailVerification(
     verification.user_id,
     false
@@ -61,7 +61,6 @@ const validate_email = async (verification, exUser) => {
   let { p_codeErrors } = await checkVerificationCode(verification);
 
   if (p_codeErrors.length) {
-    await send_verification_email(exUser, "password", false);
     return { errors: p_codeErrors, user: exUser };
   }
 
@@ -93,6 +92,6 @@ const Create_Verification = async (user_id) => {
 
 module.exports = {
   send_verification_email,
-  validate_email,
+  verify_email,
   Delete_Verification,
 };
