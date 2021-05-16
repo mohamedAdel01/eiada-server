@@ -35,16 +35,16 @@ let mail = (to, subject, code, emailType) => {
           }
          
         </div>
-        <a href="http://localhost:3000/${
-          emailType === "email" ? "verify-email" : "reset-password"
-        }/${code}">Click here to ${
+        <a href="http://localhost:3000/auth/${
+          emailType === "email" ? "verify-email" : "change-password"
+        }/?code=${code}">Click here to ${
       emailType === "email" ? "Verify Email" : "Reset Password"
     }</a>
         <p>
           Or copy this link in your browser to verify Email:
-          <span style="margin: 0 10px; color: #24b6de"> http://localhost:3000/${
-            emailType === "email" ? "verify-email" : "reset-password"
-          }/${code} </span>
+          <span style="margin: 0 10px; color: #24b6de"> http://localhost:3000/auth/${
+            emailType === "email" ? "verify-email" : "change-password"
+          }/?code=${code} </span>
         </p>
       </div>`,
   });
