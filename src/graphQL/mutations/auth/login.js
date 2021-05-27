@@ -26,8 +26,7 @@ const LOGIN = {
 
     let { exUser, p_emailErrors } = await checkEmailExistance(
       args.email,
-      true,
-      "Email or Password isn't correct"
+      true
     );
     if (p_emailErrors.length) return { errors: p_emailErrors };
 
