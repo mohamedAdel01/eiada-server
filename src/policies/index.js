@@ -75,7 +75,7 @@ const checkEmailExistance = async (email, must_be_exist) => {
   }
 };
 
-const checkUserExistance = async (id, token, skipEmail) => {
+const checkUserExistance = async (id, token, skipEmailVerification) => {
   let p_userErrors = [];
   let exUser = await User.findById(id);
 
@@ -92,16 +92,17 @@ const checkUserExistance = async (id, token, skipEmail) => {
       key: "Verfication",
       message: "Your session is expired, please login again",
     });
-    return { p_userErrors };
+    return { p_userErrors, exUser };
   }
 
-  if (token && !skipEmail && !exUser.email_verified) {
+  if (token && !skipEmailVerification && !exUser.email_verified) {
     p_userErrors.push({
       key: "Verification",
       message: "Please verify your email first",
     });
     return {
       p_userErrors,
+      exUser
     };
   }
 

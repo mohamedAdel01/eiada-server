@@ -24,6 +24,7 @@ const auth_check = async (req, res, next) => {
       req.headers.authorization,
       false
     );
+
     if (!exUser.token)
       return res.status(401).json({
         errors: [
