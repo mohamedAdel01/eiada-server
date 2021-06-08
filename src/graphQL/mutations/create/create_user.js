@@ -38,6 +38,7 @@ const createUserMutation = {
         email: args.email,
         branch_id: args.branch_id,
         role: args.role_name,
+        jop_title: args.jop_title,
       });
 
       await send_verification_email(newUser, "email", true);
@@ -59,6 +60,7 @@ const createUserMutation = {
       email: args.email,
       branch_id: args.branch_id,
       role: role.name,
+      jop_title: role.jop_title,
     });
 
     await send_verification_email(newUser, "email", true);
