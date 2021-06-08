@@ -10,14 +10,14 @@ const { validate } = require("../../../validations");
 const {
   checkRoleExist,
   checkEmailExistance,
-  checkBranchExist
+  checkBranchExist,
 } = require("../../../policies");
 
 const createUserMutation = {
   type: MessageType,
   args: {
     email: { type: new GraphQLNonNull(GraphQLString) },
-    branch_id: {type: new GraphQLNonNull(GraphQLID)},
+    branch_id: { type: new GraphQLNonNull(GraphQLID) },
     jop_title: { type: GraphQLString },
     role_name: { type: new GraphQLNonNull(GraphQLString) },
     new_role: { type: new GraphQLNonNull(RoleInputType) },
@@ -34,14 +34,18 @@ const createUserMutation = {
     if (p_branchErrors.length) return { errors: p_branchErrors };
 
     if (args.role_name != "custom") {
-      let newUser =  await Add_User({ email: args.email,branch_id: args.branch_id, role: args.role_name });
+      let newUser = await Add_User({
+        email: args.email,
+        branch_id: args.branch_id,
+        role: args.role_name,
+      });
 
       await send_verification_email(newUser, "email", true);
 
       return {
-        message: 'New user has been added successfully', 
-        errors: []
-      }
+        message: "New user has been added successfully",
+        errors: [],
+      };
     }
 
     if (!args.new_role.custom) {
@@ -51,14 +55,18 @@ const createUserMutation = {
 
     let { role } = await Create_Role(args.new_role, args.email);
 
-    let newUser = await Add_User({ email: args.email, branch_id: args.branch_id, role: role.name });
+    let newUser = await Add_User({
+      email: args.email,
+      branch_id: args.branch_id,
+      role: role.name,
+    });
 
     await send_verification_email(newUser, "email", true);
 
     return {
-      message: 'New user has been added successfully', 
-      errors: []
-    }
+      message: "New user has been added successfully",
+      errors: [],
+    };
   },
 };
 
