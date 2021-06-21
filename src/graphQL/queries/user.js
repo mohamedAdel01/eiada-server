@@ -1,26 +1,21 @@
 const graphql = require("graphql");
-const { GraphQLID, GraphQLList, GraphQLInt, GraphQLObjectType } = graphql;
+const { GraphQLInt } = graphql;
 
 // GRAPHQL TYPES
-const { UserType } = require("../types/types");
+const { UsersQueryType } = require("../types/types");
 
 // MONGODB MODELS
 const userModel = require("../../models/user");
 
 const USERS = {
   Users: {
-    type: new GraphQLObjectType({
-      name: "users",
-      fields: () => ({
-        users: {type: new GraphQLList(UserType)},
-        total: {type: GraphQLInt},
-      }),
-    }),
+    type: UsersQueryType,
 
     args: {
       page: { type: GraphQLInt },
       limit: { type: GraphQLInt },
     },
+
     resolve(parent, args) {
       let page = args.page ? args.page : 1;
       let limit = args.limit ? args.limit : 10;

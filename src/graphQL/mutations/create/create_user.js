@@ -5,7 +5,7 @@ const { Add_User } = require("../../../controllers/user");
 const { Create_Role } = require("../../../controllers/role");
 const { send_verification_email } = require("../../../controllers/emails");
 
-const { MessageType, RoleInputType } = require("../../types/types");
+const { UserResponseType, RoleInputType } = require("../../types/types");
 const { validate } = require("../../../validations");
 const {
   checkRoleExist,
@@ -13,8 +13,8 @@ const {
   checkBranchExist,
 } = require("../../../policies");
 
-const createUserMutation = {
-  type: MessageType,
+const CREATE_USER = {
+  type: UserResponseType,
   args: {
     email: { type: new GraphQLNonNull(GraphQLString) },
     branch_id: { type: new GraphQLNonNull(GraphQLID) },
@@ -44,6 +44,7 @@ const createUserMutation = {
       await send_verification_email(newUser, "email", true);
 
       return {
+        user: newUser,
         message: "New user has been added successfully",
         errors: [],
       };
@@ -66,6 +67,7 @@ const createUserMutation = {
     await send_verification_email(newUser, "email", true);
 
     return {
+      user: newUser,
       message: "New user has been added successfully",
       errors: [],
     };
@@ -73,5 +75,5 @@ const createUserMutation = {
 };
 
 module.exports = {
-  CREATE_USER: createUserMutation,
+  CREATE_USER,
 };

@@ -103,6 +103,9 @@ const BranchInputType = new GraphQLInputObjectType({
   },
 });
 
+
+// ===== USER TYPES ==========
+
 const UserType = new GraphQLObjectType({
   name: "User",
   fields: () => ({
@@ -119,6 +122,26 @@ const UserType = new GraphQLObjectType({
     jop_title: { type: GraphQLString },
   }),
 });
+
+const UsersQueryType = new GraphQLObjectType({
+  name: "usersQueryType",
+  fields: () => ({
+    users: { type: new GraphQLList(UserType) },
+    total: { type: GraphQLInt },
+  }),
+})
+
+const UserResponseType = new GraphQLObjectType({
+  name: "UserResponseType",
+  fields: () => ({
+    user: { type: UserType },
+    message: { type: GraphQLString },
+    errors: { type: new GraphQLNonNull(new GraphQLList(ErrorType)) },
+  }),
+});
+
+// =========================
+
 
 const PatientType = new GraphQLObjectType({
   name: "Patient",
@@ -245,6 +268,8 @@ module.exports = {
   MessageType,
   ClinicType,
   UserType,
+  UsersQueryType,
+  UserResponseType,
   RoleType,
   BranchType,
   BranchInputType,
