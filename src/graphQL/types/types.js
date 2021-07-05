@@ -82,7 +82,7 @@ const ClinicType = new GraphQLObjectType({
     owner: {
       type: UserType,
       resolve() {
-        return User.findOne({ role: "admin" });
+        return User.findOne({ role: "owner-admin" });
       },
     },
   }),

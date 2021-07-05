@@ -10,7 +10,7 @@ const Create_User = async (args) => {
     email: args.email,
     phone: args.phone,
     password: securedPassword,
-    role: 'admin'
+    role: 'owner-admin'
   });
 
   return await userObj.save();
