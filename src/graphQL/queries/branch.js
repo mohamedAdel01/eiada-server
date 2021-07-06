@@ -9,7 +9,7 @@ const BranchQueries = {
     type: new GraphQLList(BranchType),
     async resolve(_, args, root) {
       let { decoded } = decodeToken(root.headers.authorization, true);
-      return Branch.find({ owner_id: decoded._id });
+      return Branch.find({ owner_id: decoded.owner_id });
     },
   },
 };

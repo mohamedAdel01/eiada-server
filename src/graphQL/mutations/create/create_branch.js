@@ -15,10 +15,10 @@ const createBranchesMutation = {
   async resolve(_, args, root) {
     let { decoded } = decodeToken(root.headers.authorization, true);
 
-    let { p_clinicErrors } = await checkClinicExist(decoded._id, true);
+    let { p_clinicErrors } = await checkClinicExist(decoded.owner_id, true);
     if (p_clinicErrors.length) return { errors: p_clinicErrors };
 
-    return await Create_Branches({ owner_id: decoded._id, addresses: args.addresses });
+    return await Create_Branches({ owner_id: decoded.owner_id, addresses: args.addresses });
   },
 };
 

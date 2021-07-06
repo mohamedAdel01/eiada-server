@@ -19,10 +19,10 @@ const createClinicMutation = {
 
     let { decoded } = decodeToken(root.headers.authorization, true);
 
-    let { p_clinicErrors } = await checkClinicExist(decoded._id, false);
+    let { p_clinicErrors } = await checkClinicExist(decoded.owner_id, false);
     if (p_clinicErrors.length) return { errors: p_clinicErrors };
 
-    return await Create_Clinic({ name: args.name, owner_id: decoded._id });
+    return await Create_Clinic({ name: args.name, owner_id: decoded.owner_id });
   },
 };
 

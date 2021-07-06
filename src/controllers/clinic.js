@@ -15,8 +15,8 @@ const Create_Clinic = async ({ name, owner_id }) => {
   };
 };
 
-const Read_Clinic = async () => {
-  return await Clinic.find({});
+const Read_Clinic = async (owner_id) => {
+  return await Clinic.find({owner_id});
 };
 
 module.exports = {

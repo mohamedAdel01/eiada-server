@@ -23,7 +23,7 @@ const USERS = {
       let limit = args.limit ? args.limit : 10;
       return {
         users: userModel
-          .find({ owner_id: decoded._id })
+          .find({ owner_id: decoded.owner_id })
           .limit(parseInt(limit))
           .skip(parseInt(limit * (page - 1))),
         total: userModel.find().countDocuments(),

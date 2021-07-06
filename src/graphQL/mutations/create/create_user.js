@@ -38,7 +38,7 @@ const CREATE_USER = {
 
     if (args.role_name != "custom") {
       let newUser = await Add_User({
-        owner_id: decoded._id,
+        owner_id: decoded.owner_id,
         email: args.email,
         branch_id: args.branch_id,
         role: args.role_name,
@@ -59,10 +59,10 @@ const CREATE_USER = {
       if (p_roleErrors.length) return { errors: p_roleErrors };
     }
 
-    let { role } = await Create_Role(decoded._id, args.new_role, args.email);
+    let { role } = await Create_Role(decoded.owner_id, args.new_role, args.email);
 
     let newUser = await Add_User({
-      owner_id: decoded._id,
+      owner_id: decoded.owner_id,
       email: args.email,
       branch_id: args.branch_id,
       role: role.name,
