@@ -1,8 +1,8 @@
 const Role = require("../models/role");
 
-const Create_Role = async (role, user_email) => {
-
+const Create_Role = async (owner_id, role, user_email) => {
   let roleObj = new Role({
+    owner_id,
     name: role.custom ? user_email : role.name,
     custom: role.custom,
     create: role.create,

@@ -59,7 +59,7 @@ const CREATE_USER = {
       if (p_roleErrors.length) return { errors: p_roleErrors };
     }
 
-    let { role } = await Create_Role(args.new_role, args.email);
+    let { role } = await Create_Role(decoded._id, args.new_role, args.email);
 
     let newUser = await Add_User({
       owner_id: decoded._id,

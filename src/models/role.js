@@ -11,6 +11,10 @@ const Role = new Schema({
     type: Boolean,
     default: false
   },
+  owner_id: {
+    type: String,
+    required: true,
+  },
   create: {
     type: [String],
     default: []
