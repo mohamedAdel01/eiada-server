@@ -102,7 +102,7 @@ const checkUserExistance = async (id, token, skipEmailVerification) => {
     });
     return {
       p_userErrors,
-      exUser
+      exUser,
     };
   }
 
@@ -184,9 +184,9 @@ const checkVerificationCode = async (decoded) => {
   return { p_codeErrors };
 };
 
-const checkClinicExist = async (must_be_exist) => {
+const checkClinicExist = async (owner_id, must_be_exist) => {
   let p_clinicErrors = [];
-  let clinic = await Clinic.find();
+  let clinic = await Clinic.find({ owner_id });
   if (!must_be_exist && clinic.length) {
     p_clinicErrors.push({
       key: "DB",

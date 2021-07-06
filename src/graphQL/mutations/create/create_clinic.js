@@ -5,7 +5,7 @@ const { Create_Clinic } = require("../../../controllers/clinic");
 
 const { ClinicType_CRUD } = require("../../types/types");
 const { validate } = require("../../../validations");
-const { checkClinicExist } = require("../../../policies");
+const { decodeToken, checkClinicExist } = require("../../../policies");
 
 const createClinicMutation = {
   type: ClinicType_CRUD,
@@ -13,14 +13,16 @@ const createClinicMutation = {
     name: { type: new GraphQLNonNull(GraphQLString) },
   },
 
-  async resolve(parent, args, root) {
+  async resolve(_, args, root) {
     let v_errors = validate(args);
     if (v_errors.length) return { errors: v_errors };
 
-    let { p_clinicErrors } = await checkClinicExist(false);
+    let { decoded } = decodeToken(root.headers.authorization, true);
+
+    let { p_clinicErrors } = await checkClinicExist(decoded._id, false);
     if (p_clinicErrors.length) return { errors: p_clinicErrors };
 
-    return await Create_Clinic({ name: args.name });
+    return await Create_Clinic({ name: args.name, owner_id: decoded._id });
   },
 };
 
