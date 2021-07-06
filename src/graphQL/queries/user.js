@@ -1,11 +1,11 @@
 const graphql = require("graphql");
 const { GraphQLInt } = graphql;
 
-// GRAPHQL TYPES
 const { UsersQueryType } = require("../types/types");
 
-// MONGODB MODELS
 const userModel = require("../../models/user");
+
+const { decodeToken } = require("../../policies");
 
 const USERS = {
   Users: {
@@ -16,12 +16,14 @@ const USERS = {
       limit: { type: GraphQLInt },
     },
 
-    resolve(parent, args) {
+    resolve(_, args, root) {
+      let { decoded } = decodeToken(root.headers.authorization, true);
+
       let page = args.page ? args.page : 1;
       let limit = args.limit ? args.limit : 10;
       return {
         users: userModel
-          .find({})
+          .find({ owner_id: decoded._id })
           .limit(parseInt(limit))
           .skip(parseInt(limit * (page - 1))),
         total: userModel.find().countDocuments(),

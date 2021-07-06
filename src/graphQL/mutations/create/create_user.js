@@ -24,7 +24,7 @@ const CREATE_USER = {
     new_role: { type: new GraphQLNonNull(RoleInputType) },
   },
 
-  async resolve(parent, args, root) {
+  async resolve(_, args, root) {
     let v_errors = validate(args);
     if (v_errors.length) return { errors: v_errors };
 
