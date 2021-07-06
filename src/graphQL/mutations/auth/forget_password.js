@@ -72,7 +72,7 @@ const UpdatePasswordMutation = {
     new_password: { type: new GraphQLNonNull(GraphQLString) },
   },
 
-  async resolve(parent, args, root) {
+  async resolve(_, args, root) {
     let { decoded, errors } = decodeToken(root.headers.authorization, false);
     if (errors.length) return { errors };
 

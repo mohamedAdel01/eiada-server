@@ -9,11 +9,11 @@ const { checkEmailExistance, decodeToken } = require("../../../policies");
 const LoginMutation = {
   type: MessageType,
 
-  async resolve(parent, args, root) {
+  async resolve(_, args, root) {
     let { errors, decoded } = decodeToken(root.headers.authorization, true);
     if (errors.length) return { errors };
 
-    let { exUser, p_emailErrors } = await checkEmailExistance(decoded.email,true);
+    let { p_emailErrors } = await checkEmailExistance(decoded.email,true);
     if (p_emailErrors.length) return { errors: p_emailErrors };
 
     updatedUser = await Update_Auth_Token(decoded._id, null);
