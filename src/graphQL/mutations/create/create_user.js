@@ -8,6 +8,7 @@ const { send_verification_email } = require("../../../controllers/emails");
 const { UserResponseType, RoleInputType } = require("../../types/types");
 const { validate } = require("../../../validations");
 const {
+  decodeToken,
   checkRoleExist,
   checkEmailExistance,
   checkBranchExist,
@@ -33,8 +34,11 @@ const CREATE_USER = {
     let { p_branchErrors } = await checkBranchExist(args.branch_id, false);
     if (p_branchErrors.length) return { errors: p_branchErrors };
 
+    let { decoded } = decodeToken(root.headers.authorization, true);
+
     if (args.role_name != "custom") {
       let newUser = await Add_User({
+        owner_id: decoded._id,
         email: args.email,
         branch_id: args.branch_id,
         role: args.role_name,
@@ -58,6 +62,7 @@ const CREATE_USER = {
     let { role } = await Create_Role(args.new_role, args.email);
 
     let newUser = await Add_User({
+      owner_id: decoded._id,
       email: args.email,
       branch_id: args.branch_id,
       role: role.name,
