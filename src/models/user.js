@@ -29,7 +29,10 @@ const User = new Schema(
       type: Boolean,
       default: false,
     },
-    owner_id: String,
+    owner_id: {
+      type: String,
+      required: true
+    },
     token: String,
     branch_id: String,
     jop_title: String,

@@ -10,6 +10,7 @@ const Create_Owner = async (args) => {
     email: args.email,
     phone: args.phone,
     password: securedPassword,
+    owner_id: "owner-admin",
     role: "owner-admin",
   });
 
