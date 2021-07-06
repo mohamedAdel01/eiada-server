@@ -29,9 +29,8 @@ const User = new Schema(
       type: Boolean,
       default: false,
     },
-    token: {
-      type: String,
-    },
+    owner_id: String,
+    token: String,
     branch_id: String,
     jop_title: String,
     image: String,

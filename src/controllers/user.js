@@ -2,7 +2,7 @@ const bcrypt = require("bcrypt");
 const User = require("../models/user");
 const ObjectId = require("mongodb").ObjectID;
 
-const Create_User = async (args) => {
+const Create_Owner = async (args) => {
   const securedPassword = bcrypt.hashSync(args.password, 10);
 
   let userObj = new User({
@@ -10,22 +10,28 @@ const Create_User = async (args) => {
     email: args.email,
     phone: args.phone,
     password: securedPassword,
-    role: 'owner-admin'
+    role: "owner-admin",
   });
 
-  return await userObj.save();
+  let owner = await userObj.save();
+
+  return await User.findOneAndUpdate(
+    { _id: ObjectId(owner._id) },
+    { owner_id: owner._id },
+    { new: true }
+  );
 };
 
-const Add_User = async ({email, branch_id, role}) => {
-  const securedPassword = bcrypt.hashSync('123456', 10);
+const Add_User = async ({ email, branch_id, role }) => {
+  const securedPassword = bcrypt.hashSync("123456", 10);
 
   let userObj = new User({
-    fullname: 'New User',
+    fullname: "New User",
     email: email,
     phone: "--",
     branch_id: branch_id,
     password: securedPassword,
-    role: role
+    role: role,
   });
 
   return await userObj.save();
@@ -57,7 +63,7 @@ const Update_Auth_Token = async (user_id, Token) => {
 };
 
 module.exports = {
-  Create_User,
+  Create_Owner,
   Add_User,
   Update_Password,
   Update_Email_Verify,

@@ -1,7 +1,7 @@
 const graphql = require("graphql");
 const { GraphQLString, GraphQLNonNull } = graphql;
 
-const { Create_User, Update_Auth_Token } = require("../../../controllers/user");
+const { Create_Owner, Update_Auth_Token } = require("../../../controllers/user");
 const { send_verification_email } = require("../../../controllers/emails");
 
 const { RegisterType } = require("../../types/types");
@@ -24,7 +24,7 @@ const REGISTER = {
     let { p_emailErrors } = await checkEmailExistance(args.email, false);
     if (p_emailErrors.length) return { errors: p_emailErrors };
 
-    let newUser = await Create_User(args);
+    let newUser = await Create_Owner(args);
 
     let Token = generateToken(newUser);
 

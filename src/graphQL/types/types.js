@@ -103,7 +103,6 @@ const BranchInputType = new GraphQLInputObjectType({
   },
 });
 
-
 // ===== USER TYPES ==========
 
 const UserType = new GraphQLObjectType({
@@ -118,6 +117,7 @@ const UserType = new GraphQLObjectType({
     birthdate: { type: GraphQLString },
     password: { type: GraphQLString },
     role: { type: GraphQLString },
+    owner_id: { type: GraphQLID },
     token: { type: GraphQLString },
     jop_title: { type: GraphQLString },
   }),
@@ -129,7 +129,7 @@ const UsersQueryType = new GraphQLObjectType({
     users: { type: new GraphQLList(UserType) },
     total: { type: GraphQLInt },
   }),
-})
+});
 
 const UserResponseType = new GraphQLObjectType({
   name: "UserResponseType",
@@ -141,7 +141,6 @@ const UserResponseType = new GraphQLObjectType({
 });
 
 // =========================
-
 
 const PatientType = new GraphQLObjectType({
   name: "Patient",
