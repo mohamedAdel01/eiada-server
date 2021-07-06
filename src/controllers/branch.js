@@ -1,6 +1,7 @@
 const Branch = require("../models/branch");
 
-const Create_Branches = async ({ addresses }) => {
+const Create_Branches = async ({ owner_id, addresses }) => {
+  addresses.map((address) => (address.owner_id = owner_id));
   let NewBranches = await Branch.insertMany(addresses);
 
   return {

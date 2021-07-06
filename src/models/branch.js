@@ -5,8 +5,7 @@ const Branch = new Schema(
   {
     owner_id: {
       type: String,
-      required: true,
-      unique: true,
+      required: true
     },
     address: {
       type: String,

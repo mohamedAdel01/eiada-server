@@ -93,6 +93,7 @@ const BranchType = new GraphQLObjectType({
   fields: () => ({
     id: { type: GraphQLID },
     address: { type: GraphQLString },
+    owner_id: {type: GraphQLID}
   }),
 });
 
