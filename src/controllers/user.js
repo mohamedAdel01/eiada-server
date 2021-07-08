@@ -57,7 +57,7 @@ const Read_User = async (filter, page, limit) => {
     users: User.find(filter)
       .limit(parseInt(limit))
       .skip(parseInt(limit * (page - 1))),
-    total: User.find().countDocuments(),
+    total: User.find(filter).countDocuments(),
   };
 };
 
