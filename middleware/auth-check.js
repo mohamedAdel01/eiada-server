@@ -16,6 +16,16 @@ const auth_check = async (req, res, next) => {
     .selections[0].name.value;
 
   if (!unAutherized.includes(operation_name)) {
+    if (req.headers.authorization)
+      return res.status(401).json({
+        errors: [
+          {
+            key: "autherizatoin",
+            message: "You aren'n Autherized, Please Login",
+          },
+        ],
+      });
+
     let { decoded, errors } = decodeToken(req.headers.authorization, false);
     if (errors.length) return res.status(401).json({ errors });
 
