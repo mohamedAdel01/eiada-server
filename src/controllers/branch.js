@@ -11,8 +11,8 @@ const Create_Branches = async ({ owner_id, addresses }) => {
   };
 };
 
-const Read_Branches = async () => {
-  return await Branch.find({});
+const Read_Branches = async (owner_id) => {
+  return await Branch.find({ owner_id });
 };
 
 module.exports = {

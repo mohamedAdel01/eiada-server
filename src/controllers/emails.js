@@ -1,4 +1,4 @@
-const { Update_Email_Verify } = require("../controllers/user");
+const { Update_User_Auth_Data } = require("../controllers/user");
 const Email_Verification = require("../models/email_verify");
 const { mail } = require("../../config/nodemail");
 const ObjectId = require("mongodb").ObjectID;
@@ -28,7 +28,6 @@ const send_verification_email = async (user, emailType, newUser) => {
 
     await Delete_Verification(user._id);
   }
-
 
   let verification = await Create_Verification(user._id);
 
@@ -60,7 +59,10 @@ const verify_email = async (verification, exUser) => {
     return { errors: p_codeErrors, user: exUser };
   }
 
-  let user = await Update_Email_Verify(verification.user_id);
+  let user = await Update_User_Auth_Data(
+    ["email_verified", true],
+    verification.user_id
+  );
 
   await Delete_Verification(exUser._id);
 

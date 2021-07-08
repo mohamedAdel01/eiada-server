@@ -1,7 +1,7 @@
 const graphql = require("graphql");
 const { GraphQLString, GraphQLNonNull } = graphql;
 
-const { Update_Auth_Token } = require("../../../controllers/user");
+const { Update_User_Auth_Data } = require("../../../controllers/user");
 const { Read_Clinic } = require("../../../controllers/clinic");
 const { Read_Branches } = require("../../../controllers/branch");
 
@@ -24,10 +24,7 @@ const LOGIN = {
     let v_errors = validate(args);
     if (v_errors.length) return { errors: v_errors };
 
-    let { exUser, p_emailErrors } = await checkEmailExistance(
-      args.email,
-      true
-    );
+    let { exUser, p_emailErrors } = await checkEmailExistance(args.email, true);
     if (p_emailErrors.length) return { errors: p_emailErrors };
 
     let { p_passwordErrors } = await checkPassword(
@@ -41,10 +38,10 @@ const LOGIN = {
     exUser.token = true;
     const Token = generateToken(exUser);
 
-    let updatedUser = await Update_Auth_Token(exUser._id, Token);
+    let updatedUser = await Update_User_Auth_Data(exUser._id, ["token", Token]);
 
-    let exClinic = await Read_Clinic();
-    let exBranches = await Read_Branches();
+    let exClinic = await Read_Clinic(exUser.owner_id);
+    let exBranches = await Read_Branches(exUser.owner_id);
 
     return {
       user: updatedUser,

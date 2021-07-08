@@ -7,7 +7,7 @@ let unAutherized = [
   "CHANGE_PASSWORD",
   "FORGET_PASSWORD_REQUREST",
   "RESEND_VERIFICATION_EMAIL",
-  "Update_Password",
+  "UPDATE_PASSWORD",
   "VERIFY_EMAIL",
 ];
 
@@ -16,7 +16,7 @@ const auth_check = async (req, res, next) => {
     .selections[0].name.value;
 
   if (!unAutherized.includes(operation_name)) {
-    if (req.headers.authorization)
+    if (!req.headers.authorization)
       return res.status(401).json({
         errors: [
           {

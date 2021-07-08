@@ -39,27 +39,12 @@ const Add_User = async ({ owner_id, email, branch_id, role }) => {
   return await userObj.save();
 };
 
-const Update_Password = async (new_password, user_id) => {
-  const new_password_hashed = bcrypt.hashSync(new_password, 10);
+const Update_User_Auth_Data = async (user_id, [key, value]) => {
+  if (key === "password") value = bcrypt.hashSync(value, 10);
 
   return await User.findOneAndUpdate(
     { _id: ObjectId(user_id) },
-    { password: new_password_hashed }
-  );
-};
-
-const Update_Email_Verify = async (user_id) => {
-  return await User.findOneAndUpdate(
-    { _id: ObjectId(user_id) },
-    { email_verified: true },
-    { new: true }
-  );
-};
-
-const Update_Auth_Token = async (user_id, Token) => {
-  return await User.findOneAndUpdate(
-    { _id: ObjectId(user_id) },
-    { token: Token },
+    { [key]: value },
     { new: true }
   );
 };
@@ -67,7 +52,5 @@ const Update_Auth_Token = async (user_id, Token) => {
 module.exports = {
   Create_Owner,
   Add_User,
-  Update_Password,
-  Update_Email_Verify,
-  Update_Auth_Token,
+  Update_User_Auth_Data,
 };

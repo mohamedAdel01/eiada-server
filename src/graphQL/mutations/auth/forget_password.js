@@ -5,7 +5,7 @@ const {
   send_verification_email,
   Delete_Verification,
 } = require("../../../controllers/emails");
-const { Update_Password } = require("../../../controllers/user");
+const { Update_User_Auth_Data } = require("../../../controllers/user");
 
 const { MessageType } = require("../../types/types");
 const { validate } = require("../../../validations");
@@ -54,7 +54,10 @@ const CHANGE_PASSWORD = {
     let { p_codeErrors } = await checkVerificationCode(decoded, exUser);
     if (p_codeErrors.length) return { errors: p_codeErrors };
 
-    await Update_Password(args.new_password, decoded.user_id);
+    await Update_User_Auth_Data(decoded.user_id, [
+      "password",
+      args.new_password,
+    ]);
 
     await Delete_Verification(decoded.user_id);
 
@@ -65,7 +68,7 @@ const CHANGE_PASSWORD = {
   },
 };
 
-const UpdatePasswordMutation = {
+const UPDATE_PASSWORD = {
   type: MessageType,
   args: {
     old_password: { type: new GraphQLNonNull(GraphQLString) },
@@ -85,7 +88,7 @@ const UpdatePasswordMutation = {
     );
     if (p_passwordErrors.length) return { errors: p_passwordErrors };
 
-    await Update_Password(args.new_password, exUser._id);
+    await Update_User_Auth_Data(exUser._id, ["password", args.new_password]);
 
     return {
       message: "Password changed successfully",
@@ -97,5 +100,5 @@ const UpdatePasswordMutation = {
 module.exports = {
   FORGET_PASSWORD_REQUREST,
   CHANGE_PASSWORD,
-  Update_Password: UpdatePasswordMutation,
+  UPDATE_PASSWORD,
 };

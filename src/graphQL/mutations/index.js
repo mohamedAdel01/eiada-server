@@ -8,7 +8,7 @@ const Logout = require("./auth/logout");
 const {
   FORGET_PASSWORD_REQUREST,
   CHANGE_PASSWORD,
-  Update_Password,
+  UPDATE_PASSWORD,
 } = require("./auth/forget_password");
 const { CREATE_CLINIC } = require("./create/create_clinic");
 const { CREATE_BRANCHES } = require("./create/create_branch");
@@ -27,7 +27,7 @@ module.exports = {
   Logout,
   FORGET_PASSWORD_REQUREST,
   CHANGE_PASSWORD,
-  Update_Password,
+  UPDATE_PASSWORD,
   CREATE_CLINIC,
   CREATE_BRANCHES,
   CREATE_USER,
