@@ -49,8 +49,21 @@ const Update_User_Auth_Data = async (user_id, [key, value]) => {
   );
 };
 
+const Read_User = async (filter, page, limit) => {
+  page = page ? page : 1;
+  limit = limit ? limit : 10;
+
+  return {
+    users: User.find(filter)
+      .limit(parseInt(limit))
+      .skip(parseInt(limit * (page - 1))),
+    total: User.find().countDocuments(),
+  };
+};
+
 module.exports = {
   Create_Owner,
   Add_User,
+  Read_User,
   Update_User_Auth_Data,
 };
