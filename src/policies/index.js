@@ -260,7 +260,7 @@ const checkBookingDate = async (args) => {
     (booking) => booking.doctor_id == args.doctor_id
   );
 
-  if (!exDoctorBookings.length) return { status: 2, exDate: exDate }; // date exist but doctor not exist
+  if (!exDoctorBookings.length) return { status: 2, exDate: exDate }; // date exist but doctor timeTable not exist
 
   let checkTimeTaken = exDoctorBookings[0].doctor_bookings.filter(
     (booking) =>
@@ -269,7 +269,7 @@ const checkBookingDate = async (args) => {
       (args.end_time >= booking.start_time && args.end_time <= booking.end_time)
   );
 
-  if (!checkTimeTaken.length) return { status: 3, exDate: exDate }; // doctor exist but time is available
+  if (!checkTimeTaken.length) return { status: 3, exDate: exDate }; // doctor exist and time is available
 
   return { status: 4, exDate: null }; // time is taken before
 };

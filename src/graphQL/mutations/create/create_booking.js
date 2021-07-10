@@ -5,44 +5,44 @@ const { Create_Booking } = require("../../../controllers/booking");
 
 const { MessageType } = require("../../types/types");
 const { validate } = require("../../../validations");
-const {
-  checkBookingDate
-} = require("../../../policies");
+const { checkBookingDate } = require("../../../policies");
 
-const createBookingMutation = {
+const CREATE_BOOKING = {
   type: MessageType,
   args: {
     booking_date: { type: new GraphQLNonNull(GraphQLString) },
     doctor_id: { type: new GraphQLNonNull(GraphQLID) },
     patient_phone: { type: new GraphQLNonNull(GraphQLString) },
     start_time: { type: new GraphQLNonNull(GraphQLFloat) },
-    end_time: { type: new GraphQLNonNull(GraphQLFloat) }
+    end_time: { type: new GraphQLNonNull(GraphQLFloat) },
   },
 
-  async resolve(parent, args, root) {
+  async resolve(_, args, root) {
     let v_errors = validate(args);
     if (v_errors.length) return { errors: v_errors };
 
-    let checkDate = await checkBookingDate(args)
+    let checkDate = await checkBookingDate(args);
 
-    if (checkDate.status == 4) return {
+    if (checkDate.status == 4)
+      return {
         message: "",
-        errors: [{
+        errors: [
+          {
             key: "Validation",
-            message: "Time is not available"
-        }]
-    }
+            message: "Time is not available",
+          },
+        ],
+      };
 
-    await Create_Booking(args, checkDate)
+    await Create_Booking(args, checkDate);
 
     return {
-        message: "Booking reserved",
-        errors: []
-    }
-
+      message: "Booking reserved",
+      errors: [],
+    };
   },
 };
 
 module.exports = {
-  Create_Booking: createBookingMutation,
+  CREATE_BOOKING,
 };
