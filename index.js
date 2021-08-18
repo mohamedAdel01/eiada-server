@@ -1,7 +1,7 @@
 const express = require("express");
 const graphqlHTTP = require("express-graphql");
 const cors = require("cors");
-const helmet = require("helmet");
+// const helmet = require("helmet");
 require("dotenv").config();
 const schema = require("./src/graphQL/schema");
 const { auth_check } = require("./middleware/auth-check");
@@ -11,9 +11,9 @@ require("./config/mongo");
 
 const app = express();
 
-app.use(helmet());
+// app.use(helmet());
 
-app.use(cors());
+// app.use(cors());
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
