@@ -13,6 +13,7 @@ const Specialization = require("../src/models/specialization");
 let roles = [
   {
     name: "admin",
+    owner_id: 1,
     custom: true,
     create: [],
     read: [],
@@ -21,6 +22,7 @@ let roles = [
   },
   {
     name: "doctor",
+    owner_id: 1,
     custom: false,
     create: [],
     read: [],
@@ -29,6 +31,7 @@ let roles = [
   },
   {
     name: "secretary",
+    owner_id: 1,
     custom: false,
     create: [],
     read: [],
