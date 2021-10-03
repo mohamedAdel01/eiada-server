@@ -23,7 +23,7 @@ const Create_Owner = async (args) => {
   );
 };
 
-const Add_User = async ({ owner_id, email, branch_id, role }) => {
+const Add_User = async ({ owner_id, email, branch_id, role, jop_title }) => {
   const securedPassword = bcrypt.hashSync("123456", 10);
 
   let userObj = new User({
@@ -31,6 +31,7 @@ const Add_User = async ({ owner_id, email, branch_id, role }) => {
     email,
     phone: "--",
     branch_id,
+    jop_title,
     password: securedPassword,
     owner_id,
     role,
