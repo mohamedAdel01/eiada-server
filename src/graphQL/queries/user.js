@@ -1,15 +1,14 @@
 const graphql = require("graphql");
 const { GraphQLInt, GraphQLString } = graphql;
 
-const { UsersQueryType } = require("../types/types");
+const { UserResponseType } = require("../types/types");
 
 const { decodeToken } = require("../../policies");
 const { Read_User } = require("../../controllers/user");
-const role = require("../../models/role");
 
 const USERS = {
   Users: {
-    type: UsersQueryType,
+    type: UserResponseType,
 
     args: {
       role: { type: GraphQLString },

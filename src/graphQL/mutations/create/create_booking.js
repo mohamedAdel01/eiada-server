@@ -3,12 +3,12 @@ const { GraphQLString, GraphQLNonNull, GraphQLID, GraphQLFloat } = graphql;
 
 const { Create_Booking } = require("../../../controllers/booking");
 
-const { MessageType } = require("../../types/types");
+const { BookingResponseType } = require("../../types/types");
 const { validate } = require("../../../validations");
-const { checkBookingDate } = require("../../../policies");
+const { decodeToken, checkBookingDate } = require("../../../policies");
 
 const CREATE_BOOKING = {
-  type: MessageType,
+  type: BookingResponseType,
   args: {
     booking_date: { type: new GraphQLNonNull(GraphQLString) },
     doctor_id: { type: new GraphQLNonNull(GraphQLID) },
@@ -23,23 +23,9 @@ const CREATE_BOOKING = {
 
     let checkDate = await checkBookingDate(args);
 
-    if (checkDate.status == 4)
-      return {
-        message: "",
-        errors: [
-          {
-            key: "Validation",
-            message: "Time is not available",
-          },
-        ],
-      };
+    let { decoded } = decodeToken(root.headers.authorization, true);
 
-    await Create_Booking(args, checkDate);
-
-    return {
-      message: "Booking reserved",
-      errors: [],
-    };
+    return await Create_Booking(args, checkDate, decoded.owner_id);
   },
 };
 

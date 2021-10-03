@@ -62,15 +62,6 @@ const PatientType_CRUD = new GraphQLObjectType({
   }),
 });
 
-const BookingType_CRUD = new GraphQLObjectType({
-  name: "Booking_CRUD",
-  fields: () => ({
-    booking: { type: BookingType },
-    message: { type: GraphQLString },
-    errors: { type: new GraphQLNonNull(new GraphQLList(ErrorType)) },
-  }),
-});
-
 const ClinicType = new GraphQLObjectType({
   name: "Clinic",
   fields: () => ({
@@ -93,7 +84,7 @@ const BranchType = new GraphQLObjectType({
   fields: () => ({
     id: { type: GraphQLID },
     address: { type: GraphQLString },
-    owner_id: {type: GraphQLID}
+    owner_id: { type: GraphQLID },
   }),
 });
 
@@ -124,18 +115,12 @@ const UserType = new GraphQLObjectType({
   }),
 });
 
-const UsersQueryType = new GraphQLObjectType({
-  name: "usersQueryType",
-  fields: () => ({
-    users: { type: new GraphQLList(UserType) },
-    total: { type: GraphQLInt },
-  }),
-});
-
 const UserResponseType = new GraphQLObjectType({
   name: "UserResponseType",
   fields: () => ({
     user: { type: UserType },
+    users: { type: new GraphQLNonNull(new GraphQLList(UserType)) },
+    total: { type: GraphQLInt },
     message: { type: GraphQLString },
     errors: { type: new GraphQLNonNull(new GraphQLList(ErrorType)) },
   }),
@@ -171,13 +156,19 @@ const BookingType = new GraphQLObjectType({
   name: "Booking",
   fields: () => ({
     id: { type: GraphQLID },
+    owner_id: { type: GraphQLID },
     booking_date: { type: GraphQLString },
     day_bookings: {
       type: new GraphQLList(
         new GraphQLObjectType({
           name: "Day_Bookings",
           fields: () => ({
-            doctor_id: { type: GraphQLID },
+            doctor: {
+              type: UserType,
+              resolve(parent) {
+                return User.findById(parent.doctor_id);
+              },
+            },
             doctor_bookings: {
               type: new GraphQLList(
                 new GraphQLObjectType({
@@ -202,6 +193,16 @@ const BookingType = new GraphQLObjectType({
         })
       ),
     },
+  }),
+});
+
+const BookingResponseType = new GraphQLObjectType({
+  name: "BookingResponseType",
+  fields: () => ({
+    booking: { type: BookingType },
+    bookings: { type: new GraphQLNonNull(new GraphQLList(BookingType)) },
+    message: { type: GraphQLString },
+    errors: { type: new GraphQLNonNull(new GraphQLList(ErrorType)) },
   }),
 });
 
@@ -268,7 +269,6 @@ module.exports = {
   MessageType,
   ClinicType,
   UserType,
-  UsersQueryType,
   UserResponseType,
   RoleType,
   BranchType,
@@ -278,7 +278,7 @@ module.exports = {
   PatientType,
   PatientType_CRUD,
   BookingType,
-  BookingType_CRUD,
+  BookingResponseType,
   ServiceInputType,
   PartialInputType,
 };
