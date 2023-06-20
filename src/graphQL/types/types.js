@@ -101,7 +101,7 @@ const UserType = new GraphQLObjectType({
   name: "User",
   fields: () => ({
     id: { type: GraphQLID },
-    fullname: { type: GraphQLString },
+    name: { type: GraphQLString },
     email: { type: GraphQLString },
     phone: { type: GraphQLString },
     email_verified: { type: GraphQLBoolean },
@@ -132,7 +132,7 @@ const PatientType = new GraphQLObjectType({
   name: "Patient",
   fields: () => ({
     id: { type: GraphQLID },
-    patient_name: { type: GraphQLString },
+    name: { type: GraphQLString },
     patient_email: { type: GraphQLString },
     patient_phone: { type: GraphQLString },
     imageURL: { type: GraphQLString },
@@ -178,7 +178,7 @@ const BookingType = new GraphQLObjectType({
                     start_time: { type: GraphQLString },
                     end_time: { type: GraphQLString },
                     patient: {
-                      type: UserType,
+                      type: PatientType,
                       resolve(parent) {
                         return Patient.findOne({
                           patient_phone: parent.patient_phone,

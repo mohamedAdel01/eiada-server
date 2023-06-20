@@ -5,12 +5,12 @@ const { Create_Patient } = require("../../../controllers/patient");
 
 const { MessageType } = require("../../types/types");
 const { validate } = require("../../../validations");
-const { checkPatientPhoneExistance } = require("../../../policies");
+const { checkPatientExistance } = require("../../../policies");
 
 const createPatientMutation = {
   type: MessageType,
   args: {
-    patient_name: { type: new GraphQLNonNull(GraphQLString) },
+    name: { type: new GraphQLNonNull(GraphQLString) },
     patient_phone: { type: new GraphQLNonNull(GraphQLString) },
     patient_email: { type: GraphQLString },
     imageURL: { type: GraphQLString },
@@ -20,10 +20,11 @@ const createPatientMutation = {
     let v_errors = validate(args);
     if (v_errors.length) return { errors: v_errors };
 
-    let { p_patientPhoneErrors } = await checkPatientPhoneExistance(
-      args.patient_phone
+    let { p_patientErrors } = await checkPatientExistance(
+      args.patient_phone,
+      false
     );
-    if (p_patientPhoneErrors.length) return { errors: p_patientPhoneErrors };
+    if (p_patientErrors.length) return { errors: p_patientErrors };
 
     await Create_Patient(args);
 

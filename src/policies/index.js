@@ -232,18 +232,25 @@ const checkBranchExist = async (branch_id) => {
   return { p_branchErrors };
 };
 
-const checkPatientPhoneExistance = async (patient_phone) => {
-  let p_patientPhoneErrors = [];
+const checkPatientExistance = async (patient_phone, must_be_exist) => {
+  let p_patientErrors = [];
 
   let patient = await Patient.findOne({ patient_phone: patient_phone });
-  if (patient) {
-    p_patientPhoneErrors.push({
+  if (patient && !must_be_exist) {
+    p_patientErrors.push({
       key: "DB",
       message: "Patient is already exist",
     });
   }
 
-  return { p_patientPhoneErrors };
+  if (!patient && must_be_exist) {
+    p_patientErrors.push({
+      key: "DB",
+      message: "Patient isn't exist",
+    });
+  }
+
+  return { p_patientErrors };
 };
 
 const checkBookingDate = async (args) => {
@@ -306,7 +313,7 @@ module.exports = {
   checkClinicExist,
   checkRoleExist,
   checkBranchExist,
-  checkPatientPhoneExistance,
+  checkPatientExistance,
   checkBookingDate,
   checkSessionExist,
 };

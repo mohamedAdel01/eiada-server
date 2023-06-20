@@ -16,12 +16,10 @@ const validate = (payload) => {
   v_errors = [];
   for (key in payload) {
     switch (key) {
-      case "fullname":
       case "name":
       case "role_name":
       case "address":
       case "branch_id":
-      case "patient_name":
       case "patient_phone":
         checkEmpty(key, payload);
         break;
@@ -50,7 +48,7 @@ const validate = (payload) => {
           });
         }
         break;
-        
+
       case "password":
       case "new_password":
         checkEmpty(key, payload);
@@ -62,7 +60,6 @@ const validate = (payload) => {
           });
         }
         break;
-
     }
   }
 
